@@ -15,7 +15,7 @@ here via the `@/pixel-pilot` barrel.
 | `connectors.ts` | The 4 connectors (Meta Ads, Google Ads, TikTok Ads, Shopify) as fully-typed OAuth definitions + `buildAuthUrl()`. |
 | `services.ts` | All 10 services on the Flight Deck — single source of truth for the marketing surface and the 3D orbit. |
 | `workflows.ts` | Real n8n workflow graphs (nodes + connections) + webhook paths — the automation spine. |
-| `higgsfield.ts` | Higgsfield creative client. Real render when keyed; a shaped simulation otherwise. |
+| `higgsfield.ts` | Higgsfield creative client + `SHOWCASE`: real Higgsfield renders (Soul v2 stills + Kling 3.0 Turbo reels), one per vibe, so the Forge and gallery always show genuine output. Real render when keyed; the showcase stands in otherwise. |
 | `creative-apps.ts` | The in-platform apps a client opens (Creative Forge, Genome Lab, …). |
 | `pricing.ts` | Premium retainer + performance tiers. |
 | `index.ts` | Barrel + `PIXEL_PILOT` brand constants. |

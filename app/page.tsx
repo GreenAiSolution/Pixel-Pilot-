@@ -7,6 +7,8 @@ import {
   CREATIVE_APPS,
   WORKFLOWS,
   TIERS,
+  SHOWCASE,
+  VIBES,
   type Connector,
 } from "@/pixel-pilot";
 import { CreativeForge } from "@/components/pixel-pilot/creative-forge";
@@ -309,6 +311,55 @@ export default function PixelPilotPage() {
           </Reveal>
           <Reveal>
             <CreativeForge />
+          </Reveal>
+
+          {/* Forged with Higgsfield — real renders, one per vibe */}
+          <Reveal className="mt-16">
+            <div className="text-xs uppercase tracking-[0.3em] text-text-tertiary text-center mb-6">
+              ── Forged with Higgsfield · real output
+            </div>
+            <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
+              {VIBES.map((v) => {
+                const shot = SHOWCASE[v.id];
+                return (
+                  <figure
+                    key={v.id}
+                    className="group relative rounded-2xl border border-white/10 bg-black/40 overflow-hidden aspect-[9/16]"
+                  >
+                    {shot.videoUrl ? (
+                      <video
+                        src={shot.videoUrl}
+                        poster={shot.posterUrl}
+                        autoPlay
+                        loop
+                        muted
+                        playsInline
+                        className="h-full w-full object-cover transition duration-500 group-hover:scale-[1.04]"
+                      />
+                    ) : (
+                      // eslint-disable-next-line @next/next/no-img-element
+                      <img
+                        src={shot.posterUrl}
+                        alt={`${v.name} ad forged with Higgsfield`}
+                        className="h-full w-full object-cover transition duration-500 group-hover:scale-[1.04]"
+                      />
+                    )}
+                    <figcaption className="pointer-events-none absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/80 via-black/30 to-transparent p-3">
+                      <div className="flex items-center justify-between gap-2">
+                        <span className="text-sm font-semibold text-white">{v.name}</span>
+                        <span className="rounded-full bg-white/15 px-2 py-0.5 text-[9px] uppercase tracking-widest text-white/90 backdrop-blur">
+                          {shot.videoUrl ? "Reel" : "Still"}
+                        </span>
+                      </div>
+                      <div className="mt-0.5 text-[10px] text-white/70">{shot.caption}</div>
+                      <div className="mt-0.5 text-[9px] uppercase tracking-widest text-white/50">
+                        {shot.model}
+                      </div>
+                    </figcaption>
+                  </figure>
+                );
+              })}
+            </div>
           </Reveal>
 
           {/* Creative apps */}
