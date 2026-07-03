@@ -36,6 +36,7 @@ export default function AutomatorPage() {
   const [deploying, setDeploying] = useState(false);
   const [manifest, setManifest] = useState<Manifest | null>(null);
   const [receipt, setReceipt] = useState<string | null>(null);
+  const [zapier, setZapier] = useState<{ configured: boolean; ok: boolean } | null>(null);
 
   const service = useMemo<Service | undefined>(
     () => SERVICES.find((s) => s.id === config?.serviceId),
@@ -66,6 +67,7 @@ export default function AutomatorPage() {
     if (!config) return;
     setDeploying(true);
     setReceipt(null);
+    setZapier(null);
     const m = toManifest(config);
 
     // Fire the real n8n workflow webhook when this service maps to one. The route
@@ -84,6 +86,26 @@ export default function AutomatorPage() {
         /* non-blocking — the manifest still deploys locally */
       }
     }
+
+    // Fire a real Zapier event. With ZAPIER_HOOK_URL set, this lands in the
+    // user's apps live (Slack, Sheets, Gmail…). Unset → { configured: false }.
+    try {
+      const zres = await fetch("/api/pixel-pilot/zapier", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          event: "automation.deployed",
+          service: m.service,
+          summary: graph?.summary ?? "",
+          manifest: m,
+        }),
+      });
+      const zdata = await zres.json().catch(() => null);
+      setZapier({ configured: Boolean(zdata?.configured), ok: Boolean(zdata?.ok) });
+    } catch {
+      setZapier({ configured: false, ok: false });
+    }
+
     setTimeout(() => {
       setManifest(m);
       setDeploying(false);
@@ -174,6 +196,7 @@ export default function AutomatorPage() {
                   <Review
                     manifest={manifest}
                     receipt={receipt}
+                    zapier={zapier}
                     summary={graph.summary}
                     onEdit={() => setStep(1)}
                     onNew={() => {
@@ -441,12 +464,14 @@ function Designer({
 function Review({
   manifest,
   receipt,
+  zapier,
   summary,
   onEdit,
   onNew,
 }: {
   manifest: Manifest;
   receipt: string | null;
+  zapier: { configured: boolean; ok: boolean } | null;
   summary: string;
   onEdit: () => void;
   onNew: () => void;
@@ -465,6 +490,19 @@ function Review({
           {manifest.workflowId && (
             <span className="rounded-full border border-secondary/30 px-2.5 py-1 text-secondary">
               n8n · {receipt ? `webhook ${receipt}` : manifest.workflowId}
+            </span>
+          )}
+          {zapier?.configured && zapier.ok && (
+            <span className="rounded-full border border-[#FF4F00]/40 bg-[#FF4F00]/10 px-2.5 py-1 text-[#FF7A45]">
+              ⚡ Zapier · sent live
+            </span>
+          )}
+          {zapier?.configured && !zapier.ok && (
+            <span className="rounded-full border border-error/40 px-2.5 py-1 text-error">⚡ Zapier · hook error</span>
+          )}
+          {zapier && !zapier.configured && (
+            <span className="rounded-full border border-white/15 px-2.5 py-1 text-text-tertiary">
+              ⚡ Zapier · set ZAPIER_HOOK_URL to go live
             </span>
           )}
         </div>
