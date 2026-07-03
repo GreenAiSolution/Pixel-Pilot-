@@ -9,6 +9,7 @@ export * from './workflows';
 export * from './higgsfield';
 export * from './creative-apps';
 export * from './pricing';
+export * from './automations';
 
 /** Brand constants shared across the platform. */
 export const PIXEL_PILOT = {

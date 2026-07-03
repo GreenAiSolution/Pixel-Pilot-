@@ -10,11 +10,12 @@ const FlightScene = dynamic(
 );
 
 const NAV = [
-  { href: "#deck", label: "Flight Deck" },
-  { href: "#connectors", label: "Connectors" },
-  { href: "#forge", label: "Creative Forge" },
-  { href: "#automation", label: "Automation" },
-  { href: "#pricing", label: "Pricing" },
+  { href: "/#deck", label: "Flight Deck" },
+  { href: "/#connectors", label: "Connectors" },
+  { href: "/#forge", label: "Creative Forge" },
+  { href: "/#automation", label: "Automation" },
+  { href: "/#pricing", label: "Pricing" },
+  { href: "/automator", label: "Automator" },
 ];
 
 export function Shell({ children }: { children: ReactNode }) {
@@ -92,14 +93,14 @@ export function Shell({ children }: { children: ReactNode }) {
             ))}
           </div>
 
-          <a
-            href="#pricing"
+          <Link
+            href="/automator"
             className="inline-flex items-center gap-1.5 rounded-full px-4 py-1.5 text-sm font-medium text-white transition hover:opacity-90"
             style={{ background: "linear-gradient(90deg,#6C63FF,#FF2E9A)" }}
           >
-            Book a flight
+            Launch Automator
             <span aria-hidden>→</span>
-          </a>
+          </Link>
         </nav>
       </header>
 
