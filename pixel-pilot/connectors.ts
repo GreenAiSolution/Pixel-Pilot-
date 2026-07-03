@@ -178,3 +178,95 @@ export function buildAuthUrl(connector: Connector, opts: BuildAuthUrlOptions): s
 
   return `${authBase}?${params.toString()}`;
 }
+
+// ─── TOKEN EXCHANGE ───────────────────────────────────────────────────────────
+
+export interface TokenResult {
+  readonly accessToken: string;
+  readonly refreshToken?: string;
+  readonly expiresIn?: number;
+  /** The provider's full response, for callers that persist extra fields. */
+  readonly raw: Record<string, unknown>;
+}
+
+export interface ExchangeOptions {
+  readonly code: string;
+  readonly redirectUri: string;
+  /** Required for perShop connectors (Shopify) — the myshopify domain. */
+  readonly shop?: string;
+}
+
+/**
+ * Exchange an authorization code for tokens. Each provider shapes its token
+ * request differently (Meta omits grant_type, TikTok Business posts JSON,
+ * Shopify posts to a per-shop host), so the request is built per-connector.
+ * Throws on missing credentials or a non-OK response — the callback route turns
+ * that into a redirect with a legible error.
+ */
+export async function exchangeCode(
+  connector: Connector,
+  opts: ExchangeOptions
+): Promise<TokenResult> {
+  const clientId = process.env[connector.auth.clientIdEnv];
+  const clientSecret = process.env[connector.auth.clientSecretEnv];
+  if (!clientId || !clientSecret) {
+    throw new Error(
+      `${connector.name} is not configured — set ${connector.auth.clientIdEnv} / ${connector.auth.clientSecretEnv}`
+    );
+  }
+
+  // Resolve the token endpoint (Shopify is per-shop).
+  let tokenUrl = connector.auth.tokenUrl;
+  if (connector.auth.perShop) {
+    if (!opts.shop) throw new Error(`${connector.name} requires a shop domain`);
+    const shop = opts.shop.replace(/\.myshopify\.com$/i, '').replace(/[^a-z0-9-]/gi, '');
+    tokenUrl = tokenUrl.replace('{shop}', shop);
+  }
+
+  // Build the provider-specific request.
+  let init: RequestInit;
+  if (connector.id === 'tiktok_ads') {
+    // TikTok Business posts JSON and nests the payload under `data`.
+    init = {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ app_id: clientId, secret: clientSecret, auth_code: opts.code }),
+    };
+  } else {
+    const form = new URLSearchParams({
+      client_id: clientId,
+      client_secret: clientSecret,
+      code: opts.code,
+    });
+    // Meta and Shopify omit grant_type; Google requires it.
+    if (connector.id === 'google_ads') form.set('grant_type', 'authorization_code');
+    // Shopify's token endpoint does not take redirect_uri.
+    if (!connector.auth.perShop) form.set('redirect_uri', opts.redirectUri);
+    init = {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+      body: form,
+    };
+  }
+
+  const res = await fetch(tokenUrl, init);
+  if (!res.ok) {
+    throw new Error(`${connector.name} token exchange failed (${res.status})`);
+  }
+
+  const data = (await res.json()) as Record<string, unknown>;
+  // TikTok nests the token under `data`; the rest return it at the top level.
+  const payload = (data.data as Record<string, unknown> | undefined) ?? data;
+
+  const accessToken = payload.access_token as string | undefined;
+  if (!accessToken) {
+    throw new Error(`${connector.name} returned no access token`);
+  }
+
+  return {
+    accessToken,
+    refreshToken: payload.refresh_token as string | undefined,
+    expiresIn: payload.expires_in as number | undefined,
+    raw: data,
+  };
+}

@@ -10,6 +10,7 @@ import {
   type Connector,
 } from "@/pixel-pilot";
 import { CreativeForge } from "@/components/pixel-pilot/creative-forge";
+import { ConnectionBanner } from "@/components/pixel-pilot/connection-banner";
 
 // ─── SCROLL-REVEAL WRAPPER ────────────────────────────────────────────────────
 
@@ -125,6 +126,8 @@ function ConnectorCard({ c }: { c: Connector }) {
 export default function PixelPilotPage() {
   return (
     <div className="relative">
+      <ConnectionBanner />
+
       {/* HERO */}
       <section className="min-h-screen flex flex-col justify-center px-6 py-24">
         <div className="container mx-auto max-w-5xl text-center flex flex-col items-center gap-8">
