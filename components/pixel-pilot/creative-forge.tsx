@@ -8,7 +8,7 @@
 // (the route returns a shaped simulated job when none is set).
 
 import { useEffect, useRef, useState } from "react";
-import { VIBES, type CreativeJob, type CreativeVibe } from "@/pixel-pilot";
+import { VIBES, getShowcase, type CreativeJob, type CreativeVibe } from "@/pixel-pilot";
 
 const CHANNELS: { id: CreativeJob["channel"]; label: string }[] = [
   { id: "tiktok", label: "TikTok" },
@@ -164,10 +164,24 @@ export function CreativeForge() {
         />
 
         {!job && !busy && (
-          <div className="relative text-center px-8 space-y-3">
-            <div className="text-5xl">✦</div>
-            <div className="text-text-secondary text-sm max-w-xs mx-auto">
-              Your ad reel renders here. Fill in a brand and forge it — powered by Higgsfield.
+          <div className="relative flex flex-col items-center gap-4 px-8 py-8">
+            {/* A real Higgsfield reel, looping — proof the Forge is live, not mocked. */}
+            <div className="w-40 aspect-[9/16] rounded-xl border border-white/15 overflow-hidden relative">
+              <video
+                src={getShowcase("kinetic").videoUrl ?? undefined}
+                poster={getShowcase("kinetic").posterUrl}
+                autoPlay
+                loop
+                muted
+                playsInline
+                className="h-full w-full object-cover"
+              />
+              <div className="absolute bottom-1.5 left-1.5 rounded-full bg-black/60 px-2 py-0.5 text-[9px] uppercase tracking-widest text-white/90 backdrop-blur">
+                Higgsfield · real
+              </div>
+            </div>
+            <div className="text-text-secondary text-sm max-w-xs mx-auto text-center">
+              A real Higgsfield reel. Fill in a brand, pick a vibe, and forge your own.
             </div>
           </div>
         )}
@@ -206,23 +220,36 @@ export function CreativeForge() {
           </div>
         )}
 
-        {job && !busy && (
+        {job && !busy && (() => {
+          const shot = getShowcase(job.vibe);
+          const preview = job.previewUrl ?? shot.videoUrl ?? shot.posterUrl;
+          const isVideo = preview.endsWith(".mp4") || preview.endsWith(".webm");
+          return (
           <div className="relative w-full px-8 py-8 space-y-4">
             <div
-              className="mx-auto rounded-xl border border-white/15 overflow-hidden relative flex items-center justify-center"
+              className="mx-auto rounded-xl border border-white/15 overflow-hidden relative"
               style={{
                 width: job.aspect === "1:1" ? "220px" : "180px",
                 aspectRatio: job.aspect.replace(":", "/"),
-                background:
-                  "linear-gradient(135deg, rgba(0,212,255,0.5), rgba(108,99,255,0.5), rgba(255,46,154,0.55))",
               }}
             >
-              <div className="absolute inset-0 flex flex-col items-center justify-center text-white">
-                <div className="text-3xl">▶</div>
-                <div className="mt-2 text-sm font-semibold px-3 text-center leading-tight">
-                  {job.brand}
-                </div>
-                <div className="text-[10px] uppercase tracking-widest opacity-80 mt-1">
+              {isVideo ? (
+                <video
+                  src={preview}
+                  poster={shot.posterUrl}
+                  autoPlay
+                  loop
+                  muted
+                  playsInline
+                  className="h-full w-full object-cover"
+                />
+              ) : (
+                // eslint-disable-next-line @next/next/no-img-element
+                <img src={preview} alt={`${job.brand} — ${activeVibe.name} ad`} className="h-full w-full object-cover" />
+              )}
+              <div className="pointer-events-none absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/70 to-transparent p-2.5">
+                <div className="text-sm font-semibold leading-tight text-white truncate">{job.brand}</div>
+                <div className="text-[10px] uppercase tracking-widest text-white/80 mt-0.5">
                   {activeVibe.name} · {job.channel}
                 </div>
               </div>
@@ -231,8 +258,8 @@ export function CreativeForge() {
             <div className="max-w-sm mx-auto grid grid-cols-2 gap-2 text-center text-[11px]">
               <Stat label="Aspect" value={job.aspect} />
               <Stat label="Duration" value={`${job.durationSec}s`} />
-              <Stat label="Preset" value={job.preset} />
-              <Stat label="Source" value={live ? "Higgsfield · live" : "Simulated"} />
+              <Stat label="Model" value={shot.model} />
+              <Stat label="Source" value={live ? "Higgsfield · live" : "Higgsfield · showcase"} />
             </div>
             <div className="text-center">
               <button
@@ -243,7 +270,8 @@ export function CreativeForge() {
               </button>
             </div>
           </div>
-        )}
+          );
+        })()}
       </div>
     </div>
   );
