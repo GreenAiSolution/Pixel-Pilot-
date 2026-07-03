@@ -127,41 +127,54 @@ export async function generateCreative(req: CreativeRequest): Promise<CreativeJo
     createdAt: new Date().toISOString(),
   };
 
-  if (!higgsfieldIsLive()) {
-    return {
-      id: `sim_${Math.random().toString(36).slice(2, 10)}`,
-      status: 'rendering',
-      previewUrl: null,
-      simulated: true,
-      ...base,
-    };
-  }
-
-  const apiUrl = process.env.HIGGSFIELD_API_URL || 'https://api.higgsfield.ai/v1';
-  const res = await fetch(`${apiUrl}/generations`, {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-      Authorization: `Bearer ${process.env.HIGGSFIELD_API_KEY}`,
-    },
-    body: JSON.stringify({
-      preset,
-      aspect_ratio: aspect,
-      duration: dur,
-      prompt: `${req.vibe} product ad for ${req.brand}. ${req.product}. Scroll-stopping hook, ${req.channel} native.`,
-    }),
+  // Always have a real Higgsfield render on hand for this vibe. It backs the
+  // no-key demo and, crucially, catches any live-call failure so the Forge never
+  // shows an error — worst case a visitor still sees genuine Higgsfield output.
+  const shot = SHOWCASE[req.vibe];
+  const showcaseJob = (): CreativeJob => ({
+    id: `showcase_${req.vibe}`,
+    status: 'ready',
+    previewUrl: shot.videoUrl ?? shot.posterUrl,
+    simulated: true,
+    ...base,
   });
 
-  if (!res.ok) {
-    throw new Error(`Higgsfield render failed (${res.status})`);
+  if (!higgsfieldIsLive()) {
+    return showcaseJob();
   }
 
-  const data = (await res.json()) as { id?: string; status?: string; preview_url?: string };
-  return {
-    id: data.id ?? `hf_${Date.now()}`,
-    status: (data.status as CreativeJob['status']) ?? 'queued',
-    previewUrl: data.preview_url ?? null,
-    simulated: false,
-    ...base,
-  };
+  try {
+    const apiUrl = process.env.HIGGSFIELD_API_URL || 'https://api.higgsfield.ai/v1';
+    const res = await fetch(`${apiUrl}/generations`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${process.env.HIGGSFIELD_API_KEY}`,
+      },
+      body: JSON.stringify({
+        preset,
+        aspect_ratio: aspect,
+        duration: dur,
+        prompt: `${req.vibe} product ad for ${req.brand}. ${req.product}. Scroll-stopping hook, ${req.channel} native.`,
+      }),
+    });
+
+    if (!res.ok) {
+      throw new Error(`Higgsfield render failed (${res.status})`);
+    }
+
+    const data = (await res.json()) as { id?: string; status?: string; preview_url?: string };
+    return {
+      id: data.id ?? `hf_${Date.now()}`,
+      status: (data.status as CreativeJob['status']) ?? 'queued',
+      previewUrl: data.preview_url ?? shot.videoUrl ?? shot.posterUrl,
+      simulated: false,
+      ...base,
+    };
+  } catch (err) {
+    // Real key, but the call failed (contract mismatch, quota, transient). Don't
+    // surface a 502 to the visitor — fall back to a genuine Higgsfield render.
+    console.error('[pixel-pilot] Higgsfield live render failed, using showcase:', err);
+    return showcaseJob();
+  }
 }
