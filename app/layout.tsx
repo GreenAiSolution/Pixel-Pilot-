@@ -1,5 +1,4 @@
 import type { Metadata, Viewport } from 'next';
-import { Shell } from '@/components/pixel-pilot/shell';
 import './globals.css';
 
 const SITE_URL =
@@ -38,7 +37,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         />
       </head>
       <body className="bg-bg-primary text-text-primary min-h-full flex flex-col">
-        <Shell>{children}</Shell>
+        {children}
       </body>
     </html>
   );
