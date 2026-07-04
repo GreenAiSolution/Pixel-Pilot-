@@ -1,14 +1,50 @@
 import Link from 'next/link';
-import { EAGLE, EAGLE_AGENTS, eagleWorkflowsForAgent } from '@/eagle';
+import { EAGLE, EAGLE_AGENTS, eagleWorkflowsForAgent, quickbooksConfigured, isConnected } from '@/eagle';
 
 export const metadata = {
   title: 'Eagle Ops — Mission Control',
   description: 'The 5 AI employees running Eagle Landscaping, live.',
 };
 
-export default function EagleOps() {
+const QB_MSG: Record<string, string> = {
+  connected: '✅ QuickBooks connected — new leads now create real customers.',
+  denied: 'QuickBooks connection was cancelled.',
+  error: 'QuickBooks connection failed — try again.',
+  badstate: 'Security check failed — please retry the connection.',
+  missing: 'QuickBooks returned no authorization — try again.',
+};
+
+export default async function EagleOps({ searchParams }: { searchParams: Promise<{ qb?: string }> }) {
+  const { qb } = await searchParams;
+  const qbConfigured = quickbooksConfigured();
+  const qbConnected = qbConfigured ? await isConnected().catch(() => false) : false;
+
   return (
     <div className="mx-auto max-w-6xl px-6 py-16">
+      {/* QuickBooks connect / status */}
+      <div className="mb-6 rounded-2xl border p-5 flex flex-wrap items-center justify-between gap-4"
+        style={{ borderColor: qbConnected ? `${EAGLE.forest}44` : '#00000012', background: qbConnected ? EAGLE.sky : 'white' }}>
+        <div>
+          <div className="flex items-center gap-2 font-semibold" style={{ color: EAGLE.ink }}>
+            <span className="text-lg">🧾</span> QuickBooks Online
+            <span className="text-xs font-medium px-2 py-0.5 rounded-full"
+              style={{ background: qbConnected ? EAGLE.forest : '#00000010', color: qbConnected ? 'white' : '#14261A99' }}>
+              {qbConnected ? 'Connected' : qbConfigured ? 'Ready to connect' : 'Not configured'}
+            </span>
+          </div>
+          <p className="mt-1 text-sm text-[#14261A]/60">
+            {qb && QB_MSG[qb] ? QB_MSG[qb] :
+              qbConnected ? 'Quill is booking new leads straight into QuickBooks.' :
+              qbConfigured ? 'Click connect and approve in Intuit — one time.' :
+              'Add QUICKBOOKS_CLIENT_ID / SECRET / REDIRECT_URI in Vercel, then connect.'}
+          </p>
+        </div>
+        {qbConfigured && !qbConnected && (
+          <a href="/api/eagle/quickbooks/connect" className="rounded-full px-5 py-2.5 text-sm font-semibold text-white transition hover:opacity-90" style={{ background: EAGLE.forest }}>
+            Connect QuickBooks →
+          </a>
+        )}
+      </div>
       {/* Header */}
       <div className="flex flex-wrap items-end justify-between gap-4">
         <div>
