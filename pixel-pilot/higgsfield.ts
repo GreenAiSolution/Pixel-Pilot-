@@ -111,6 +111,14 @@ export function getShowcase(vibe: CreativeVibe): Showcase {
 }
 
 /**
+ * The Pixel Pilot brand reel — a real cinematic sting (Kling 3.0 Turbo): the
+ * cyan→violet→magenta profit-line ascending through deep space. Plays as the
+ * banner over the Creative Forge. Text-free by design; the UI overlays the wordmark.
+ */
+export const PIXEL_PILOT_REEL =
+  'https://d8j0ntlcm91z4.cloudfront.net/user_3EwVHQ4Dd7rCkCpuoJmbv3saPN0/hf_20260704_212045_d53aa573-ed0a-4ac4-9ab9-77883daa67a7.mp4';
+
+/**
  * Kick off a creative render. Returns a CreativeJob either from Higgsfield or,
  * absent credentials, a simulated-but-shaped job so the Forge demo never breaks.
  */
