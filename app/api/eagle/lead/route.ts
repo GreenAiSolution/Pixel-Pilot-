@@ -7,7 +7,7 @@
 // lead and reports what *would* route, so the site never drops a customer.
 
 import { NextRequest, NextResponse } from 'next/server';
-import { getEagleService } from '@/eagle';
+import { getEagleService, createCustomer, quickbooksConfigured } from '@/eagle';
 
 export async function POST(req: NextRequest) {
   let body: Record<string, string> = {};
@@ -39,13 +39,27 @@ export async function POST(req: NextRequest) {
     details,
   };
 
-  const routed = ['QuickBooks (new customer)', 'Slack #leads', 'Gmail auto-reply'];
-  const hook = process.env.EAGLE_ZAPIER_HOOK_URL;
+  const routed: string[] = [];
 
-  if (!hook) {
-    // No hook yet — accept the lead so the site works, report intended routing.
-    return NextResponse.json({ ok: true, configured: false, lead, routed });
+  // 1 · Native QuickBooks — create the customer directly via the Intuit API when
+  // the owner has connected QuickBooks (no Zapier in the path).
+  let quickbooks: { id: string; name: string } | null | undefined;
+  if (quickbooksConfigured()) {
+    try {
+      quickbooks = await createCustomer({ name, email, phone, address, notes: `${service}: ${details}` });
+      if (quickbooks) routed.push(`QuickBooks customer #${quickbooks.id}`);
+    } catch {
+      // Not connected yet or transient — never lose the lead over it.
+    }
   }
+
+  // 2 · Zapier Catch Hook (optional additional fan-out to Slack/Gmail/Sheets).
+  const hook = process.env.EAGLE_ZAPIER_HOOK_URL;
+  if (!hook) {
+    if (!routed.length) routed.push('captured (connect QuickBooks or set EAGLE_ZAPIER_HOOK_URL to route live)');
+    return NextResponse.json({ ok: true, configured: Boolean(quickbooks), quickbooks: quickbooks ?? null, lead, routed });
+  }
+  routed.push('Slack #leads', 'Gmail auto-reply');
 
   try {
     const res = await fetch(hook, {

@@ -4,3 +4,4 @@ export * from './company';
 export * from './services';
 export * from './agents';
 export * from './workflows';
+export * from './quickbooks';
