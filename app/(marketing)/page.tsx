@@ -9,6 +9,7 @@ import {
   TIERS,
   SHOWCASE,
   VIBES,
+  PIXEL_PILOT_REEL,
   type Connector,
 } from "@/pixel-pilot";
 import { CreativeForge } from "@/components/pixel-pilot/creative-forge";
@@ -309,6 +310,33 @@ export default function PixelPilotPage() {
               fatigued creative on your account automatically.
             </p>
           </Reveal>
+
+          {/* Pixel Pilot brand reel — a real Higgsfield (Kling 3.0 Turbo) sting */}
+          <Reveal className="mb-12">
+            <div className="relative mx-auto max-w-4xl aspect-video overflow-hidden rounded-2xl border border-white/10">
+              <video
+                src={PIXEL_PILOT_REEL}
+                autoPlay
+                loop
+                muted
+                playsInline
+                className="h-full w-full object-cover"
+              />
+              <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-[#05060f] via-transparent to-transparent" />
+              <div className="pointer-events-none absolute inset-x-0 bottom-0 p-6 text-center">
+                <div
+                  className="text-2xl font-semibold tracking-[0.18em] uppercase bg-clip-text text-transparent inline-block"
+                  style={{ backgroundImage: "linear-gradient(90deg,#00D4FF,#6C63FF,#FF2E9A)" }}
+                >
+                  Pixel<span className="text-white">/Pilot</span>
+                </div>
+                <div className="mt-1 text-xs uppercase tracking-[0.3em] text-text-tertiary">
+                  Your ad spend, on autopilot · reel forged with Higgsfield
+                </div>
+              </div>
+            </div>
+          </Reveal>
+
           <Reveal>
             <CreativeForge />
           </Reveal>

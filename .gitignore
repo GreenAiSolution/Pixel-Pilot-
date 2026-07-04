@@ -30,3 +30,10 @@ next-env.d.ts
 # vercel
 .vercel
 .env*
+
+# HyperFrames tooling (installed via `npx skills add heygen-com/hyperframes`)
+/.agents/
+/videos/
+/.claude/skills/*
+!/.claude/skills/pixel-pilot-daily-marketing/
+skills-lock.json
