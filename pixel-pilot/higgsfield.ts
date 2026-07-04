@@ -111,11 +111,17 @@ export function getShowcase(vibe: CreativeVibe): Showcase {
 }
 
 /**
- * The Pixel Pilot brand reel — a real cinematic sting (Kling 3.0 Turbo): the
- * cyan→violet→magenta profit-line ascending through deep space. Plays as the
- * banner over the Creative Forge. Text-free by design; the UI overlays the wordmark.
+ * The Pixel Pilot brand film — a real cinematic ad (Kling v3.0 pro, 1080p): a
+ * 4-shot arc from a dark grid of ad platforms → the autonomous pilot igniting →
+ * budget flowing to winners → the climb up the profit curve. Plays as the
+ * featured film over the Creative Forge. Text-free by design; the UI overlays the
+ * wordmark + tagline.
  */
 export const PIXEL_PILOT_REEL =
+  'https://d8j0ntlcm91z4.cloudfront.net/user_3EwVHQ4Dd7rCkCpuoJmbv3saPN0/hf_20260704_213014_55b785b7-72a3-451e-bcba-5327b3e62627.mp4';
+
+/** The short 3s sting (Kling 3.0 Turbo) — kept as a lightweight fallback loop. */
+export const PIXEL_PILOT_STING =
   'https://d8j0ntlcm91z4.cloudfront.net/user_3EwVHQ4Dd7rCkCpuoJmbv3saPN0/hf_20260704_212045_d53aa573-ed0a-4ac4-9ab9-77883daa67a7.mp4';
 
 /**

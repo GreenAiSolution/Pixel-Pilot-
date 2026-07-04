@@ -37,3 +37,10 @@ next-env.d.ts
 /.claude/skills/*
 !/.claude/skills/pixel-pilot-daily-marketing/
 skills-lock.json
+
+# HyperFrames tooling
+/.agents/
+/videos/
+/.claude/skills/*
+!/.claude/skills/pixel-pilot-daily-marketing/
+skills-lock.json

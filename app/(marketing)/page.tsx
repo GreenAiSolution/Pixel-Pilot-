@@ -331,7 +331,7 @@ export default function PixelPilotPage() {
                   Pixel<span className="text-white">/Pilot</span>
                 </div>
                 <div className="mt-1 text-xs uppercase tracking-[0.3em] text-text-tertiary">
-                  Your ad spend, on autopilot · reel forged with Higgsfield
+                  Your ad spend, on autopilot · brand film forged with Higgsfield
                 </div>
               </div>
             </div>
