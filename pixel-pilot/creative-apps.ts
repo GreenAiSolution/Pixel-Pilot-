@@ -68,4 +68,22 @@ export const CREATIVE_APPS: CreativeApp[] = [
     accent: '#33E0FF',
     glyph: '◈',
   },
+  {
+    id: 'motion-studio',
+    name: 'Motion Studio',
+    kind: 'App',
+    blurb: 'Programmable, on-brand video — explainers, demos and animated ads rendered from HTML at any framerate.',
+    poweredBy: 'HyperFrames · HeyGen',
+    accent: '#7C5CFF',
+    glyph: '▤',
+  },
+  {
+    id: 'brand-frames',
+    name: 'Brand Frames',
+    kind: 'Tool',
+    blurb: 'Instant on-brand key visuals + ad stills, composed to spec with your palette and headline space.',
+    poweredBy: 'Gemini · Imagen',
+    accent: '#00D4FF',
+    glyph: '❖',
+  },
 ];

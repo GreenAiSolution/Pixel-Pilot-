@@ -107,10 +107,11 @@ export const EAGLE_AGENTS: EagleAgent[] = [
       'Run the Google Business Profile and post weekly',
       'Generate review requests after every completed job',
       'Publish seasonal offers (spring cleanup, snow, aeration)',
+      'Render before/after video ads + reels (HyperFrames) and brand stills (Gemini)',
       'Draft & schedule local social + neighborhood ads',
       'Track leads by source and double down on winners',
     ],
-    integrations: ['Google Business', 'Meta/Google Ads', 'Gmail', 'Google Sheets', 'Slack'],
+    integrations: ['Google Business', 'Meta/Google Ads', 'HyperFrames (video)', 'Gemini (stills)', 'Gmail', 'Slack'],
     kpis: [
       { label: 'New reviews', value: '↑' },
       { label: 'Local rank', value: 'Tracked' },
