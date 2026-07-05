@@ -55,7 +55,7 @@ Produce, sized to the platform:
 - **Reels/TikTok:** a 15s hook-script + on-screen text beats (pair with a
   Higgsfield reel if that MCP is available).
 - **Email:** subject (<7 words) + preview + 90-word body + CTA.
-Always draft a matching **#war-room Slack blurb** (2 lines) for the internal team.
+Always draft a matching **#pixel-pilot Slack blurb** (2 lines) for the internal team.
 
 ### 4 · Generate the visual
 Render the on-brand ad for today's slot (uses the Gemini brand-ad script):
@@ -69,7 +69,7 @@ available, proceed copy-only and note "visual: pending" in the log.
 ### 5 · Stage & distribute (safe by default)
 Default to **staging for approval** — never auto-publish to public channels
 unless the operator has explicitly turned on auto-publish (see Guardrails):
-- **Slack** (`#war-room` or `#marketing`): post the copy + attach/link the visual
+- **Slack** (`#pixel-pilot` or `#marketing`): post the copy + attach/link the visual
   so a human can approve and hit publish. (Zapier → Slack.)
 - **Gmail:** create a **draft** of the email piece (Zapier → Gmail draft), never
   send automatically.
