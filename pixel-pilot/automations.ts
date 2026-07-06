@@ -29,6 +29,8 @@ export interface AutomationConfig {
   autoApply: boolean;
   notifySlack: boolean;
   notifyEmail: boolean;
+  /** Sync results to the connected QuickBooks Online company. */
+  syncQuickbooks: boolean;
 }
 
 // ── Option catalogs (the UI reads these) ─────────────────────────────────────
@@ -80,6 +82,7 @@ export function defaultConfigFor(serviceId: string): AutomationConfig {
     autoApply: true,
     notifySlack: true,
     notifyEmail: false,
+    syncQuickbooks: false,
   };
 }
 
@@ -229,6 +232,7 @@ export function toManifest(config: AutomationConfig) {
     approvalGate: config.approvalGate,
     autoApply: config.autoApply,
     notify: [config.notifySlack && 'slack', config.notifyEmail && 'email'].filter(Boolean),
+    syncQuickbooks: config.syncQuickbooks,
     webhookPath: wf?.webhookPath ?? null,
     workflowId: wf?.id ?? null,
   };
