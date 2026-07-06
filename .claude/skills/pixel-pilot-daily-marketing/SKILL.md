@@ -34,11 +34,12 @@ It gives you the **pillar, hook, style, format, platform, and the exact visual
 command** for today. Treat the hook as a seed, not the final line.
 
 ### 2 · Check what already shipped (don't repeat)
-If Google Sheets is connected via Zapier, read the **"Pixel Pilot — Content
-Calendar"** sheet (create it if missing: columns `Date, Pillar, Platform, Format,
-Hook, Copy, Asset, Status, Notes`). Skim the last ~14 entries so today's angle,
-hook, and phrasing are genuinely fresh. This is what makes it a *program*, not
-random posts.
+Read the running log to stay fresh. The system of record is **`#pixel-pilot`
+in Slack** plus the durable local files in `out/`:
+- Skim the last ~14 `out/mktg-*.md` files (each is a full logged unit).
+- Optionally read the recent `#pixel-pilot` `LOG ·` posts for the same history.
+Make sure today's angle, hook, and phrasing are genuinely fresh. This is what
+makes it a *program*, not random posts.
 
 ### 3 · Write the copy (this is the craft)
 Write for the day's **platform**, using the day's **style**. Make it excellent:
@@ -69,22 +70,24 @@ available, proceed copy-only and note "visual: pending" in the log.
 ### 5 · Stage & distribute (safe by default)
 Default to **staging for approval** — never auto-publish to public channels
 unless the operator has explicitly turned on auto-publish (see Guardrails):
-- **Slack** (`#pixel-pilot` or `#marketing`): post the copy + attach/link the visual
-  so a human can approve and hit publish. (Zapier → Slack.)
+- **Local first (system of record):** always write the full unit to
+  `out/mktg-<date>.md` next to the visual. This is the durable log — it never
+  depends on an external app.
+- **Slack** (`#pixel-pilot`): post the copy + attach/link the visual so a human
+  can approve and hit publish, then post a one-line **`LOG · <date> · <pillar> ·
+  <platform> · <format> · Status: staged`** entry so the program has a searchable
+  history. (Zapier → Slack; post as *Maverick · Pixel Pilot*.)
 - **Gmail:** create a **draft** of the email piece (Zapier → Gmail draft), never
   send automatically.
-- **Content Calendar sheet:** append today's row with `Status = staged`.
-If a distribution app isn't connected, stage locally: write the copy to
-`out/mktg-<date>.md` next to the visual and say so.
 
 ### 6 · Learn (close the loop)
-If yesterday's row has engagement data (or the operator pasted metrics), note one
-takeaway in the sheet's `Notes` and let it steer tomorrow's hook. Over two weeks
-you'll see which pillars land — lean into winners.
+If the operator pasted engagement data (or replied in `#pixel-pilot`), note one
+takeaway at the bottom of that day's `out/mktg-<date>.md` and let it steer
+tomorrow's hook. Over two weeks you'll see which pillars land — lean into winners.
 
 ## Guardrails
-- **Approval before public posting.** Stage to Slack + draft email + log the
-  sheet. Only publish to public social/email when the operator says auto-publish
+- **Approval before public posting.** Stage to Slack + draft email + log locally
+  in `out/`. Only publish to public social/email when the operator says auto-publish
   is on (they can set `PP_MARKETING_AUTOPUBLISH=true` and connect the channels),
   and even then respect any per-run "just draft it" instruction.
 - **Defensible claims only.** No guaranteed-returns language; we serve regulated
@@ -97,7 +100,8 @@ you'll see which pillars land — lean into winners.
 
 ## Prerequisites for full autonomy
 - `GEMINI_API_KEY` set in the environment → daily visual generation.
-- Zapier connected (Slack + Gmail + Google Sheets) → staging, drafts, logging.
+- Zapier connected (Slack + Gmail) → staging + email drafts. Logging lives in
+  `out/` + `#pixel-pilot`, so it never depends on Google Sheets.
 - Optional: Higgsfield connected → motion reels for creative-showcase days.
 Without these it still runs and stages everything locally — it just can't push to
 your apps.
