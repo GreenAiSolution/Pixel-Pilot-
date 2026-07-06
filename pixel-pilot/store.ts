@@ -3,10 +3,11 @@
 // Upstash) when its env vars are present, and falls back to an in-process map so
 // everything still works in local/dev with nothing configured.
 //
-// Env (optional — durable when set, in-memory when not). Accepts either the
-// Vercel KV names or the Upstash Redis names, whichever the integration injects:
-//   KV_REST_API_URL / KV_REST_API_TOKEN
-//   UPSTASH_REDIS_REST_URL / UPSTASH_REDIS_REST_TOKEN
+// Env (optional — durable when set, in-memory when not). Auto-detects the KV
+// REST credentials no matter what the Vercel/Upstash integration named them —
+// KV_REST_API_URL, UPSTASH_REDIS_REST_URL, or any prefixed variant like
+// STORAGE_KV_REST_API_URL — plus their matching *_TOKEN. So whichever "Custom
+// Environment Variable Prefix" is chosen when connecting the database, it works.
 //
 // This is deliberately small: `get`/`set`/`del` for single keys and
 // `pushToList`/`getList` for append-and-read collections (used for deployed
@@ -17,9 +18,26 @@
 const memKV = new Map<string, string>();
 const memLists = new Map<string, string[]>();
 
+function findEnv(matches: (key: string) => boolean): string | undefined {
+  const key = Object.keys(process.env).find((k) => matches(k) && Boolean(process.env[k]));
+  return key ? process.env[key] : undefined;
+}
+
 function kvEnv(): { url: string; token: string } | null {
-  const url = process.env.KV_REST_API_URL || process.env.UPSTASH_REDIS_REST_URL;
-  const token = process.env.KV_REST_API_TOKEN || process.env.UPSTASH_REDIS_REST_TOKEN;
+  // A REST URL ending in the known suffix (any prefix), preferring the canonical names.
+  const url =
+    process.env.KV_REST_API_URL ||
+    process.env.UPSTASH_REDIS_REST_URL ||
+    findEnv((k) => k.endsWith('KV_REST_API_URL') || k.endsWith('UPSTASH_REDIS_REST_URL'));
+  // The matching write token — never the read-only one.
+  const token =
+    process.env.KV_REST_API_TOKEN ||
+    process.env.UPSTASH_REDIS_REST_TOKEN ||
+    findEnv(
+      (k) =>
+        (k.endsWith('KV_REST_API_TOKEN') || k.endsWith('UPSTASH_REDIS_REST_TOKEN')) &&
+        !k.includes('READ_ONLY')
+    );
   return url && token ? { url, token } : null;
 }
 
