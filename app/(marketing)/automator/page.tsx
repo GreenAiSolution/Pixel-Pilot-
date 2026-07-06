@@ -17,7 +17,6 @@ import {
   buildAutomationGraph,
   defaultConfigFor,
   toManifest,
-  workflowForService,
   type AutomationConfig,
   type Objective,
   type TriggerKind,
@@ -37,6 +36,8 @@ export default function AutomatorPage() {
   const [manifest, setManifest] = useState<Manifest | null>(null);
   const [receipt, setReceipt] = useState<string | null>(null);
   const [zapier, setZapier] = useState<{ configured: boolean; ok: boolean } | null>(null);
+  const [qb, setQb] = useState<{ configured: boolean; ok: boolean; detail?: string } | null>(null);
+  const [durable, setDurable] = useState<boolean>(false);
 
   const service = useMemo<Service | undefined>(
     () => SERVICES.find((s) => s.id === config?.serviceId),
@@ -68,42 +69,34 @@ export default function AutomatorPage() {
     setDeploying(true);
     setReceipt(null);
     setZapier(null);
+    setQb(null);
     const m = toManifest(config);
 
-    // Fire the real n8n workflow webhook when this service maps to one. The route
-    // returns a dry-run receipt with no N8N_BASE_URL set, so it always resolves.
-    const wf = workflowForService(config.serviceId);
-    if (wf) {
-      try {
-        const res = await fetch(`/api/pixel-pilot/workflows/${wf.id}`, {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ automation: m }),
-        });
-        const data = await res.json().catch(() => null);
-        if (data) setReceipt(data.mode ?? data.status ?? "accepted");
-      } catch {
-        /* non-blocking — the manifest still deploys locally */
-      }
-    }
-
-    // Fire a real Zapier event. With ZAPIER_HOOK_URL set, this lands in the
-    // user's apps live (Slack, Sheets, Gmail…). Unset → { configured: false }.
+    // One call to the backend: it persists the automation and runs it
+    // server-side — the n8n workflow, the Zapier fan-out, and (opt-in) a live
+    // QuickBooks check — then returns a receipt per integration. Every step
+    // degrades gracefully, so a deploy always resolves.
     try {
-      const zres = await fetch("/api/pixel-pilot/zapier", {
+      const res = await fetch("/api/pixel-pilot/automations", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          event: "automation.deployed",
-          service: m.service,
-          summary: graph?.summary ?? "",
-          manifest: m,
-        }),
+        body: JSON.stringify({ manifest: m }),
       });
-      const zdata = await zres.json().catch(() => null);
-      setZapier({ configured: Boolean(zdata?.configured), ok: Boolean(zdata?.ok) });
+      const data = await res.json().catch(() => null);
+      const receipts: { target: string; configured: boolean; ok: boolean; mode?: string; status?: number; detail?: string }[] =
+        data?.automation?.receipts ?? [];
+      setDurable(Boolean(data?.durable));
+
+      const n8n = receipts.find((r) => r.target === "n8n");
+      if (n8n) setReceipt(n8n.mode ?? (n8n.status ? String(n8n.status) : "accepted"));
+
+      const z = receipts.find((r) => r.target === "zapier");
+      if (z) setZapier({ configured: z.configured, ok: z.ok });
+
+      const q = receipts.find((r) => r.target === "quickbooks");
+      if (q) setQb({ configured: q.configured, ok: q.ok, detail: q.detail });
     } catch {
-      setZapier({ configured: false, ok: false });
+      /* non-blocking — still advance so the manifest shows locally */
     }
 
     setTimeout(() => {
@@ -197,6 +190,8 @@ export default function AutomatorPage() {
                     manifest={manifest}
                     receipt={receipt}
                     zapier={zapier}
+                    qb={qb}
+                    durable={durable}
                     summary={graph.summary}
                     onEdit={() => setStep(1)}
                     onNew={() => {
@@ -439,6 +434,12 @@ function Designer({
             title="Email digest"
             note="A daily recap in your inbox"
           />
+          <Switch
+            on={config.syncQuickbooks}
+            onToggle={() => patch({ syncQuickbooks: !config.syncQuickbooks })}
+            title="Sync to QuickBooks"
+            note="Push results to your connected QuickBooks company"
+          />
         </div>
       </Panel>
 
@@ -465,6 +466,8 @@ function Review({
   manifest,
   receipt,
   zapier,
+  qb,
+  durable,
   summary,
   onEdit,
   onNew,
@@ -472,6 +475,8 @@ function Review({
   manifest: Manifest;
   receipt: string | null;
   zapier: { configured: boolean; ok: boolean } | null;
+  qb: { configured: boolean; ok: boolean; detail?: string } | null;
+  durable: boolean;
   summary: string;
   onEdit: () => void;
   onNew: () => void;
@@ -505,6 +510,19 @@ function Review({
               ⚡ Zapier · set ZAPIER_HOOK_URL to go live
             </span>
           )}
+          {qb?.configured && qb.ok && (
+            <span className="rounded-full border border-[#2CA01C]/40 bg-[#2CA01C]/10 px-2.5 py-1 text-[#4Fc73a]">
+              {qb.detail ?? "QuickBooks · synced"}
+            </span>
+          )}
+          {qb && !qb.configured && (
+            <span className="rounded-full border border-white/15 px-2.5 py-1 text-text-tertiary">
+              QuickBooks · connect to sync
+            </span>
+          )}
+          <span className="rounded-full border border-white/10 px-2.5 py-1 text-text-tertiary">
+            {durable ? "Saved · durable store" : "Saved · in-memory (add KV)"}
+          </span>
         </div>
       </div>
 
