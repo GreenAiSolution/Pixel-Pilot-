@@ -3,8 +3,10 @@
 // Upstash) when its env vars are present, and falls back to an in-process map so
 // everything still works in local/dev with nothing configured.
 //
-// Env (optional — durable when set, in-memory when not):
-//   KV_REST_API_URL / KV_REST_API_TOKEN   (Vercel KV or Upstash Redis REST)
+// Env (optional — durable when set, in-memory when not). Accepts either the
+// Vercel KV names or the Upstash Redis names, whichever the integration injects:
+//   KV_REST_API_URL / KV_REST_API_TOKEN
+//   UPSTASH_REDIS_REST_URL / UPSTASH_REDIS_REST_TOKEN
 //
 // This is deliberately small: `get`/`set`/`del` for single keys and
 // `pushToList`/`getList` for append-and-read collections (used for deployed
@@ -16,8 +18,8 @@ const memKV = new Map<string, string>();
 const memLists = new Map<string, string[]>();
 
 function kvEnv(): { url: string; token: string } | null {
-  const url = process.env.KV_REST_API_URL;
-  const token = process.env.KV_REST_API_TOKEN;
+  const url = process.env.KV_REST_API_URL || process.env.UPSTASH_REDIS_REST_URL;
+  const token = process.env.KV_REST_API_TOKEN || process.env.UPSTASH_REDIS_REST_TOKEN;
   return url && token ? { url, token } : null;
 }
 
