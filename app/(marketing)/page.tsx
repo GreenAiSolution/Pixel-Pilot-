@@ -124,6 +124,49 @@ function ConnectorCard({ c }: { c: Connector }) {
   );
 }
 
+// ─── FLIGHT PLAN · zero-to-live in <60min ─────────────────────────────────────
+// Turns the "autonomous" promise into a legible T-0 → T+58m sequence. Mirrors the
+// real `zero-to-live` n8n workflow (see pixel-pilot/workflows.ts) so the timeline
+// on the marketing surface matches the brain that actually flies it.
+
+const FLIGHT_PLAN: {
+  mark: string;
+  title: string;
+  detail: string;
+  accent: string;
+}[] = [
+  {
+    mark: "T-0",
+    title: "You paste one product URL",
+    detail: "That's the entire brief. No kickoff call, no intake form, no sprint planning.",
+    accent: "#00D4FF",
+  },
+  {
+    mark: "T+8m",
+    title: "Research + personas",
+    detail: "It scrapes the market, reads your competitors, and builds synthetic buyer personas.",
+    accent: "#00D4FF",
+  },
+  {
+    mark: "T+21m",
+    title: "Strategy + first creative",
+    detail: "Drafts the channel + budget plan across Meta, Google & TikTok, then forges the first ad batch with Higgsfield.",
+    accent: "#6C63FF",
+  },
+  {
+    mark: "T+44m",
+    title: "Tracking wired honest",
+    detail: "Pixels and CAPI in place, Shopify margin plugged in as ground truth so every decision steers by real profit.",
+    accent: "#FF2E9A",
+  },
+  {
+    mark: "T+58m",
+    title: "Campaign live",
+    detail: "It goes live and pings your Slack war room: “It's flying.” Optimization starts today, not next month.",
+    accent: "#C9A84C",
+  },
+];
+
 // ─── PAGE ─────────────────────────────────────────────────────────────────────
 
 export default function PixelPilotPage() {
@@ -474,6 +517,85 @@ export default function PixelPilotPage() {
         </div>
       </section>
 
+      {/* FLIGHT PLAN — zero-to-live in <60min */}
+      <section id="flight-plan" className="px-6 py-24">
+        <div className="container mx-auto max-w-5xl">
+          <Reveal className="text-center max-w-3xl mx-auto space-y-4 mb-14">
+            <div className="text-xs uppercase tracking-[0.3em] text-[#00D4FF]">
+              ── The Flight Plan
+            </div>
+            <h2 className="text-4xl md:text-6xl font-semibold tracking-tight">
+              One URL to live ads,
+              <br />
+              <span
+                className="bg-clip-text text-transparent"
+                style={{ backgroundImage: "linear-gradient(90deg,#00D4FF,#6C63FF,#FF2E9A)" }}
+              >
+                in under 60 minutes.
+              </span>
+            </h2>
+            <p className="text-text-secondary text-lg">
+              The launch agencies take three weeks to fly. Paste a product URL, walk away — Pixel
+              Pilot runs the whole flight plan hands-off, and pings you when it&apos;s airborne.
+            </p>
+          </Reveal>
+
+          <ol className="relative mx-auto max-w-3xl">
+            {/* the flight path spine */}
+            <span
+              className="pointer-events-none absolute left-[7px] top-2 bottom-2 w-px md:left-1/2 md:-translate-x-1/2"
+              style={{ background: "linear-gradient(180deg,#00D4FF,#6C63FF,#FF2E9A,#C9A84C)" }}
+              aria-hidden
+            />
+            {FLIGHT_PLAN.map((stop, i) => (
+              <Reveal key={stop.mark}>
+                <li
+                  className={`relative flex items-start gap-5 pb-10 md:w-1/2 ${
+                    i % 2 === 0 ? "md:pr-10 md:text-right" : "md:ml-auto md:pl-10 md:flex-row-reverse"
+                  }`}
+                >
+                  {/* node dot on the spine */}
+                  <span
+                    className={`absolute top-1 left-0 md:left-auto ${
+                      i % 2 === 0 ? "md:right-0 md:translate-x-1/2" : "md:left-0 md:-translate-x-1/2"
+                    } flex h-4 w-4 items-center justify-center`}
+                    aria-hidden
+                  >
+                    <span
+                      className="h-3 w-3 rounded-full"
+                      style={{ background: stop.accent, boxShadow: `0 0 16px ${stop.accent}` }}
+                    />
+                  </span>
+
+                  <div className="pl-8 md:pl-0 md:pr-0">
+                    <div
+                      className="text-sm font-mono font-semibold tracking-widest tabular-nums"
+                      style={{ color: stop.accent }}
+                    >
+                      {stop.mark}
+                    </div>
+                    <h3 className="mt-1 text-xl font-semibold leading-tight">{stop.title}</h3>
+                    <p className="mt-1.5 text-sm text-text-secondary leading-relaxed">
+                      {stop.detail}
+                    </p>
+                  </div>
+                </li>
+              </Reveal>
+            ))}
+          </ol>
+
+          <Reveal className="text-center mt-4">
+            <a
+              href="#pricing"
+              className="inline-block rounded-full px-7 py-3 text-sm font-semibold text-white transition hover:opacity-90"
+              style={{ background: "linear-gradient(90deg,#6C63FF,#FF2E9A)" }}
+            >
+              Book your zero-to-live launch →
+            </a>
+          </Reveal>
+        </div>
+      </section>
+
       {/* PRICING */}
       <section id="pricing" className="px-6 py-24">
         <div className="container mx-auto max-w-6xl">
@@ -534,7 +656,7 @@ export default function PixelPilotPage() {
 
                   <div className="mt-auto pt-8 text-xs text-text-tertiary">{t.forWho}</div>
                   <a
-                    href="#"
+                    href={t.apex ? "#command" : "#flight-plan"}
                     className={`mt-4 w-full text-center rounded-lg px-6 py-3 text-sm font-semibold transition ${
                       t.featured || t.apex
                         ? "text-white hover:opacity-90"
@@ -560,7 +682,7 @@ export default function PixelPilotPage() {
       </section>
 
       {/* FINAL */}
-      <section className="px-6 py-32">
+      <section id="command" className="px-6 py-32">
         <Reveal className="container mx-auto max-w-3xl text-center space-y-6">
           <h2 className="text-4xl md:text-7xl font-semibold tracking-tight leading-[1.02]">
             Stop managing ads.
