@@ -11,9 +11,11 @@ const FlightScene = dynamic(
 
 const NAV = [
   { href: "/#deck", label: "Flight Deck" },
+  { href: "/#agents", label: "Agents" },
   { href: "/#connectors", label: "Connectors" },
   { href: "/#forge", label: "Creative Forge" },
   { href: "/#automation", label: "Automation" },
+  { href: "/stack", label: "Stack" },
   { href: "/#pricing", label: "Pricing" },
   { href: "/automator", label: "Automator" },
 ];
