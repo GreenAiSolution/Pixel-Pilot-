@@ -15,6 +15,8 @@
 // in a shared store in production — connector tokens go through here only because
 // the KV instance is private to the deployment.
 
+import type { BoardMeeting } from './board';
+
 const memKV = new Map<string, string>();
 const memLists = new Map<string, string[]>();
 
@@ -102,4 +104,34 @@ export async function getList<T>(key: string): Promise<T[]> {
   if (viaKV) return viaKV;
   const local = memLists.get(key);
   return local ? local.map((x) => JSON.parse(x) as T) : [];
+}
+
+// ── Daily Board Meeting persistence ──────────────────────────────────────────
+// Meetings are keyed by date (one per day) and also tracked in a newest-first
+// index list for the /boardroom page. Same durable-when-KV, in-memory-otherwise
+// behavior as everything else above.
+
+const BOARD_INDEX_KEY = 'pixel-pilot:board:index';
+const boardKey = (date: string) => `pixel-pilot:board:meeting:${date}`;
+
+/** Persist a board meeting by date and keep the index list current (deduped). */
+export async function saveBoardMeeting(meeting: BoardMeeting): Promise<void> {
+  await set(boardKey(meeting.date), meeting);
+  const index = await getList<BoardMeeting>(BOARD_INDEX_KEY);
+  const next = [meeting, ...index.filter((m) => m.date !== meeting.date)]
+    .sort((a, b) => (a.date < b.date ? 1 : -1))
+    .slice(0, 200);
+  memLists.set(BOARD_INDEX_KEY, next.map((x) => JSON.stringify(x)));
+  await set(BOARD_INDEX_KEY, next);
+}
+
+/** Read a single day's minutes (null when none). */
+export async function getBoardMeeting(date: string): Promise<BoardMeeting | null> {
+  return get<BoardMeeting>(boardKey(date));
+}
+
+/** List recent meetings, newest first. */
+export async function listBoardMeetings(limit = 30): Promise<BoardMeeting[]> {
+  const index = await getList<BoardMeeting>(BOARD_INDEX_KEY);
+  return index.slice(0, limit);
 }

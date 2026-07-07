@@ -49,3 +49,54 @@ integration checks for its credentials at request time and falls back to a
 believable simulation, so the site is always demoable.
 
 Live at **`/pixel-pilot`**.
+
+## Daily Board Meeting
+
+Every morning a three-seat AI board holds a stand-up, reads the overnight numbers,
+and leaves behind persisted minutes. A Slack message then points the user at the
+day's minutes on a new page.
+
+**The board** (`board.ts`):
+
+| Seat | Name | Role | Owns |
+| --- | --- | --- | --- |
+| `atlas` | Atlas | Chief Growth Officer | Media buying, budget allocation, ROAS, scale-or-kill |
+| `nova` | Nova | Chief Creative Officer | Ad creative performance, creative refresh, hooks/angles |
+| `ledger` | Ledger | Chief Revenue Officer | Pipeline, revenue, CAC/LTV, cash, forecast |
+
+**The page** — recent meetings live at **`/boardroom`**; a single day's full minutes
+(agenda, each member's brief, decisions, action items, summary) at
+**`/boardroom/{YYYY-MM-DD}`**.
+
+**Wired endpoints**
+
+| Route | Does |
+| --- | --- |
+| `GET /api/pixel-pilot/board` | Lists recent meetings (`?date=YYYY-MM-DD` for one, `?limit=N`). |
+| `POST /api/pixel-pilot/board` | Runs a meeting now (optional `{ "date": "YYYY-MM-DD" }`) and returns the minutes. |
+| `GET /api/pixel-pilot/board/cron` | Vercel Cron target: runs the meeting, then posts the Slack link. GET-only. |
+
+**The cron** — `vercel.json` schedules the cron:
+
+```
+{ "path": "/api/pixel-pilot/board/cron", "schedule": "0 6 * * *" }
+```
+
+`0 6 * * *` means **06:00 UTC** — Vercel Crons always run in **UTC**. Adjust the
+`schedule` for your timezone (e.g. `0 13 * * *` is 6am US Pacific during PST /
+7am during PDT — pick the UTC hour that matches your local 6am).
+
+**Environment (all optional — everything dry-runs with an empty .env)**
+
+```
+ANTHROPIC_API_KEY         # optional — real per-member briefs via the Anthropic Messages
+                          #   API (plain fetch, no SDK, model claude-haiku-4-5-20251001).
+                          #   Absent → deterministic templated briefs.
+ZAPIER_HOOK_URL           # optional — Slack "board meeting ready" message (via fireZapier).
+                          #   Absent → dry-run receipt.
+CRON_SECRET               # optional — when set, the cron requires
+                          #   `Authorization: Bearer ${CRON_SECRET}` (Vercel sends it
+                          #   automatically); when unset, the cron is open (demo-friendly).
+KV_REST_API_URL / _TOKEN  # optional — durable persistence of minutes (Vercel KV / Upstash).
+                          #   Absent → in-memory for the process.
+```
