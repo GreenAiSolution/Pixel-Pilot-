@@ -18,7 +18,23 @@ here via the `@/pixel-pilot` barrel.
 | `higgsfield.ts` | Higgsfield creative client + `SHOWCASE`: real Higgsfield renders (Soul v2 stills + Kling 3.0 Turbo reels), one per vibe, so the Forge and gallery always show genuine output. Real render when keyed; the showcase stands in otherwise. |
 | `creative-apps.ts` | The in-platform apps a client opens (Creative Forge, Genome Lab, …). |
 | `pricing.ts` | Premium retainer + performance tiers. |
+| `agents.ts` | The seven autonomous operators that run strategy, buying, creative, profit, compliance, automation and ops. |
 | `index.ts` | Barrel + `PIXEL_PILOT` brand constants. |
+
+## Agent Crew
+
+The app now has a typed agent roster in `agents.ts`, and each command has a
+matching Claude subagent prompt under `.claude/agents/`:
+
+| Command | Owns |
+| --- | --- |
+| `@pixel-growth-strategist` | URL-to-launch strategy, personas, offers and channel mix. |
+| `@pixel-media-buyer` | Cross-channel budget moves, scaling, cutting and optimization logs. |
+| `@pixel-creative-director` | Creative genome diagnosis, Higgsfield briefs and fatigue refresh. |
+| `@pixel-profit-analyst` | Shopify/QuickBooks truth, margin checks and attribution confidence. |
+| `@pixel-compliance-guard` | Policy review, rewrites, blocking and escalation. |
+| `@pixel-automation-engineer` | n8n/Zapier/OAuth wiring, deploy manifests and graceful fallbacks. |
+| `@pixel-ops-commander` | Release readiness, Vercel health and incident coordination. |
 
 ## Wired endpoints
 

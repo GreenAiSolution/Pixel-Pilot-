@@ -6,6 +6,7 @@ import {
   CONNECTOR_LIST,
   CREATIVE_APPS,
   WORKFLOWS,
+  PIXEL_AGENTS,
   TIERS,
   SHOWCASE,
   VIBES,
@@ -303,6 +304,89 @@ export default function PixelPilotPage() {
               </Reveal>
             ))}
           </div>
+        </div>
+      </section>
+
+      {/* AGENT CREW */}
+      <section id="agents" className="px-6 py-24">
+        <div className="container mx-auto max-w-6xl">
+          <Reveal className="grid lg:grid-cols-[0.85fr_1.15fr] gap-12 items-start">
+            <div className="lg:sticky lg:top-28 space-y-4">
+              <div className="text-xs uppercase tracking-[0.3em] text-[#00D4FF]">── Agent Crew</div>
+              <h2 className="text-4xl md:text-5xl font-semibold tracking-tight leading-tight">
+                Seven operators.
+                <br />
+                One media buyer.
+              </h2>
+              <p className="text-text-secondary text-lg max-w-md">
+                Pixel Pilot is not one giant prompt. It is a crew of specialized agents that plan,
+                buy, forge creative, check profit, guard policy, wire automations and watch the
+                flight deck.
+              </p>
+              <div className="grid grid-cols-3 gap-3 pt-3 max-w-md">
+                <div>
+                  <div className="text-2xl font-semibold text-text-primary">{PIXEL_AGENTS.length}</div>
+                  <div className="text-[10px] uppercase tracking-widest text-text-tertiary">Agents</div>
+                </div>
+                <div>
+                  <div className="text-2xl font-semibold text-text-primary">4</div>
+                  <div className="text-[10px] uppercase tracking-widest text-text-tertiary">Workflows</div>
+                </div>
+                <div>
+                  <div className="text-2xl font-semibold text-text-primary">24/7</div>
+                  <div className="text-[10px] uppercase tracking-widest text-text-tertiary">Cadence</div>
+                </div>
+              </div>
+            </div>
+
+            <div className="grid sm:grid-cols-2 gap-4">
+              {PIXEL_AGENTS.map((agent) => (
+                <div
+                  key={agent.id}
+                  className="group relative rounded-2xl border border-white/10 bg-white/[0.03] backdrop-blur-md p-5 overflow-hidden hover:border-white/20 transition"
+                >
+                  <div
+                    className="absolute inset-x-0 top-0 h-px opacity-70"
+                    style={{ background: `linear-gradient(90deg,transparent,${agent.accent},transparent)` }}
+                  />
+                  <div className="flex items-start justify-between gap-4">
+                    <div>
+                      <div className="text-[10px] uppercase tracking-[0.25em] text-text-tertiary">
+                        {agent.domain}
+                      </div>
+                      <h3 className="mt-2 text-xl font-semibold leading-tight">{agent.name}</h3>
+                      <div className="mt-1 text-sm" style={{ color: agent.accent }}>
+                        {agent.role}
+                      </div>
+                    </div>
+                    <span
+                      className="shrink-0 rounded-md border border-white/10 px-2 py-1 text-[10px] uppercase tracking-widest"
+                      style={{ color: agent.accent }}
+                    >
+                      {agent.callsign}
+                    </span>
+                  </div>
+                  <p className="mt-3 text-sm text-text-primary">{agent.tagline}</p>
+                  <p className="mt-2 text-[13px] text-text-secondary leading-relaxed">
+                    {agent.intelligence}
+                  </p>
+                  <div className="mt-4 flex flex-wrap gap-2">
+                    {agent.kpis.map((kpi) => (
+                      <span
+                        key={`${agent.id}-${kpi.label}`}
+                        className="rounded-full border border-white/10 bg-black/20 px-2.5 py-1 text-[10px] text-text-secondary"
+                      >
+                        <span style={{ color: agent.accent }}>{kpi.value}</span> {kpi.label}
+                      </span>
+                    ))}
+                  </div>
+                  <div className="mt-4 border-t border-white/10 pt-3 text-[11px] text-text-tertiary">
+                    Invoke <code className="text-text-secondary">@{agent.command}</code>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </Reveal>
         </div>
       </section>
 
