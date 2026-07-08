@@ -1,0 +1,60 @@
+{
+  "nodes": [
+    {"id":"g1","type":"group","label":"① PRODUCT — what a customer does","x":-60,"y":-60,"width":940,"height":290},
+    {"id":"g2","type":"group","label":"② BACKEND + ENGINE (on Vercel)","x":-60,"y":270,"width":940,"height":230},
+    {"id":"g3","type":"group","label":"③ INTEGRATIONS → your apps","x":-60,"y":540,"width":1210,"height":230},
+    {"id":"g4","type":"group","label":"④ AUTONOMY — Maverick runs 24/7","x":-60,"y":810,"width":940,"height":290},
+    {"id":"g5","type":"group","label":"⑤ DELIVERY — how it ships","x":-60,"y":1140,"width":940,"height":130},
+
+    {"id":"cust","type":"text","text":"👤 **You / a customer**\nsigns in → builds an automation","x":310,"y":0,"width":250,"height":70,"color":"5"},
+    {"id":"auto","type":"text","text":"🛠️ **The Automator**\nagent creator · design + deploy","x":0,"y":140,"width":260,"height":70,"color":"4"},
+    {"id":"site","type":"text","text":"🌐 **Marketing site**\nFlight Plan · pricing · live","x":600,"y":140,"width":260,"height":70,"color":"4"},
+
+    {"id":"api","type":"text","text":"⚙️ **/api/pixel-pilot/automations**\npersist + run each deploy","x":0,"y":300,"width":260,"height":70,"color":"4"},
+    {"id":"oauth","type":"text","text":"🔐 **OAuth connectors**\nMeta · Google · TikTok · Shopify","x":300,"y":300,"width":260,"height":70,"color":"4"},
+    {"id":"qbc","type":"text","text":"🔗 **QuickBooks connect**\none-click OAuth route","x":600,"y":300,"width":260,"height":70,"color":"4"},
+    {"id":"kv","type":"text","text":"💾 **Upstash KV store**\nsaves deploys · ⚠️ needs keys","x":0,"y":410,"width":260,"height":70,"color":"3"},
+    {"id":"exec","type":"text","text":"🚀 **Executor**\nfires the integrations","x":600,"y":410,"width":260,"height":70,"color":"4"},
+
+    {"id":"n8n","type":"text","text":"🔁 **n8n engine**\nad-loop workflows · optional","x":0,"y":580,"width":250,"height":66},
+    {"id":"zap","type":"text","text":"⚡ **Zapier hook**\nfan-out bridge · ⚠️ needs URL","x":290,"y":580,"width":250,"height":66,"color":"3"},
+    {"id":"qbn","type":"text","text":"📊 **QuickBooks (native)**\n⚠️ needs Intuit app","x":580,"y":580,"width":250,"height":66,"color":"3"},
+    {"id":"hf","type":"text","text":"🎬 **Higgsfield**\nad visuals · connected","x":870,"y":580,"width":250,"height":66,"color":"4"},
+
+    {"id":"slack1","type":"text","text":"Slack ✓","x":290,"y":688,"width":150,"height":46,"color":"4"},
+    {"id":"gmail","type":"text","text":"Gmail ✓","x":455,"y":688,"width":150,"height":46,"color":"4"},
+    {"id":"sheets","type":"text","text":"Sheets · read-only","x":620,"y":688,"width":180,"height":46,"color":"3"},
+    {"id":"qbapp","type":"text","text":"QuickBooks","x":815,"y":688,"width":150,"height":46,"color":"3"},
+    {"id":"more","type":"text","text":"+9,000 apps","x":980,"y":688,"width":140,"height":46},
+
+    {"id":"mav","type":"text","text":"✈️ **Maverick — AI operator**\nscheduled daily · 8:10am","x":310,"y":850,"width":260,"height":70,"color":"6"},
+    {"id":"creative","type":"text","text":"🎨 **Creative**\nHiggsfield ad visuals","x":0,"y":990,"width":260,"height":70,"color":"4"},
+    {"id":"slack2","type":"text","text":"💬 **Slack #pixel-pilot**\nposts flight-logs","x":300,"y":990,"width":260,"height":70,"color":"4"},
+    {"id":"prs","type":"text","text":"🔀 **GitHub PRs**\nships code changes","x":600,"y":990,"width":260,"height":70,"color":"4"},
+
+    {"id":"gh","type":"text","text":"📦 **GitHub repo**\nsource of truth","x":0,"y":1170,"width":260,"height":66,"color":"4"},
+    {"id":"vercel","type":"text","text":"▲ **Vercel**\nauto-deploys main","x":300,"y":1170,"width":260,"height":66,"color":"4"},
+    {"id":"live","type":"text","text":"🟢 **Live site**\npixel-pilot-snowy","x":600,"y":1170,"width":260,"height":66,"color":"4"}
+  ],
+  "edges": [
+    {"id":"e1","fromNode":"cust","fromSide":"bottom","toNode":"auto","toSide":"top"},
+    {"id":"e2","fromNode":"auto","fromSide":"bottom","toNode":"api","toSide":"top","label":"deploy"},
+    {"id":"e3","fromNode":"api","fromSide":"bottom","toNode":"kv","toSide":"top","label":"persist"},
+    {"id":"e4","fromNode":"api","fromSide":"right","toNode":"exec","toSide":"top","label":"run"},
+    {"id":"e5","fromNode":"exec","fromSide":"bottom","toNode":"n8n","toSide":"top"},
+    {"id":"e6","fromNode":"exec","fromSide":"bottom","toNode":"zap","toSide":"top"},
+    {"id":"e7","fromNode":"exec","fromSide":"bottom","toNode":"qbn","toSide":"top"},
+    {"id":"e8","fromNode":"exec","fromSide":"bottom","toNode":"hf","toSide":"top"},
+    {"id":"e9","fromNode":"zap","fromSide":"bottom","toNode":"slack1","toSide":"top","label":"fan-out"},
+    {"id":"e10","fromNode":"zap","fromSide":"bottom","toNode":"gmail","toSide":"top"},
+    {"id":"e11","fromNode":"zap","fromSide":"bottom","toNode":"sheets","toSide":"top"},
+    {"id":"e12","fromNode":"zap","fromSide":"bottom","toNode":"qbapp","toSide":"top"},
+    {"id":"e13","fromNode":"zap","fromSide":"bottom","toNode":"more","toSide":"top"},
+    {"id":"e14","fromNode":"mav","fromSide":"bottom","toNode":"creative","toSide":"top"},
+    {"id":"e15","fromNode":"mav","fromSide":"bottom","toNode":"slack2","toSide":"top"},
+    {"id":"e16","fromNode":"mav","fromSide":"bottom","toNode":"prs","toSide":"top"},
+    {"id":"e17","fromNode":"prs","fromSide":"bottom","toNode":"gh","toSide":"top","label":"PRs"},
+    {"id":"e18","fromNode":"gh","fromSide":"right","toNode":"vercel","toSide":"left","label":"push"},
+    {"id":"e19","fromNode":"vercel","fromSide":"right","toNode":"live","toSide":"left","label":"deploy"}
+  ]
+}

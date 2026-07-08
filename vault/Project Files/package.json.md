@@ -1,0 +1,45 @@
+---
+tags: [pixel-pilot, source]
+file: package.json
+---
+
+# `package.json`
+
+Part of [[📁 Codebase]] — live copy at `~/Pixel-Pilot/package.json`
+
+`````json
+{
+  "name": "pixel-pilot",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Pixel Pilot — the autonomous media buyer that flies your ad spend to profit. An immersive 3D platform for the ads / media-buying niche.",
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "eslint",
+    "gen:ad": "node scripts/generate-brand-ad.mjs"
+  },
+  "dependencies": {
+    "@react-three/fiber": "^9.6.1",
+    "clsx": "^2.1.1",
+    "next": "16.2.9",
+    "react": "19.2.4",
+    "react-dom": "19.2.4",
+    "tailwind-merge": "^3.6.0",
+    "three": "0.184.0"
+  },
+  "devDependencies": {
+    "@tailwindcss/postcss": "^4",
+    "@types/node": "^20",
+    "@types/react": "^19",
+    "@types/react-dom": "^19",
+    "@types/three": "^0.184.0",
+    "eslint": "^9",
+    "eslint-config-next": "16.2.9",
+    "tailwindcss": "^4",
+    "typescript": "^5"
+  }
+}
+
+`````
