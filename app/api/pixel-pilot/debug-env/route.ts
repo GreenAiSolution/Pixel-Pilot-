@@ -7,7 +7,7 @@ import { NextResponse } from 'next/server';
 
 export async function GET() {
   const keys = Object.keys(process.env)
-    .filter((k) => /KV|UPSTASH|REDIS|STORAGE/i.test(k))
+    .filter((k) => /KV|UPSTASH|REDIS|STORAGE|ANTHROPIC|CLAUDE/i.test(k))
     .sort();
   return NextResponse.json({ matchingEnvKeys: keys });
 }
