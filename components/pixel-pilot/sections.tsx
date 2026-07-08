@@ -24,6 +24,7 @@ import {
   SHOWCASE,
   VIBES,
   PIXEL_PILOT_REEL,
+  serviceStudioHref,
   type Connector,
 } from "@/pixel-pilot";
 import { CreativeForge } from "@/components/pixel-pilot/creative-forge";
@@ -271,7 +272,7 @@ export function FlightDeck() {
                     <span aria-hidden>◆</span>
                     <span className="text-text-secondary italic">{s.edge}</span>
                   </div>
-                  <Link href="/studio" className="mt-5 inline-flex text-sm font-medium transition hover:opacity-90" style={{ color: s.accent }}>
+                  <Link href={serviceStudioHref(s.id)} className="mt-5 inline-flex text-sm font-medium transition hover:opacity-90" style={{ color: s.accent }}>
                     Run it in the Studio →
                   </Link>
                 </div>
@@ -646,7 +647,7 @@ export function Pricing() {
                   </div>
                   <div className="mt-auto pt-8 text-xs text-text-tertiary">{t.forWho}</div>
                   <Link
-                    href="/automator"
+                    href={`/automator?plan=${t.id.toLowerCase()}`}
                     className={`mt-4 w-full text-center rounded-lg px-6 py-3 text-sm font-semibold transition ${t.featured || t.apex ? "text-white hover:opacity-90" : "border border-white/15 text-text-primary hover:bg-white/5"}`}
                     style={t.featured || t.apex ? { background: "linear-gradient(90deg,#6C63FF,#FF2E9A)" } : undefined}
                   >

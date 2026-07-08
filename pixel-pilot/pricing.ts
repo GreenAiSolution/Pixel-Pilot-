@@ -104,7 +104,7 @@ export const SERVICE_PRICING: ServicePrice[] = [
     tagline: 'A product or URL → a complete, profit-first launch plan.',
     includes: ['Market + competitor research', 'Synthetic buyer personas', 'Channel & budget split', 'Creative concepts + tracking plan'],
     accent: '#00D4FF',
-    tool: '/studio',
+    tool: '/studio?tool=launch',
   },
   {
     id: 'brand',
@@ -114,7 +114,7 @@ export const SERVICE_PRICING: ServicePrice[] = [
     tagline: 'Name, tagline, positioning, a real color system + voice.',
     includes: ['Name + tagline + positioning', 'Full color system (hex)', 'Type + voice principles', 'Do / don’t brand rules'],
     accent: '#C9A84C',
-    tool: '/studio',
+    tool: '/studio?tool=brand',
   },
   {
     id: 'funnel',
@@ -124,7 +124,7 @@ export const SERVICE_PRICING: ServicePrice[] = [
     tagline: 'An irresistible offer — value stack, tiers, guarantee, funnel.',
     includes: ['Core promise + value stack', '3 pricing tiers', 'Risk-reversal guarantee', 'Full funnel + upsell map'],
     accent: '#6C63FF',
-    tool: '/studio',
+    tool: '/studio?tool=funnel',
   },
   {
     id: 'website',
@@ -135,7 +135,7 @@ export const SERVICE_PRICING: ServicePrice[] = [
     tagline: 'A complete, responsive, deploy-ready landing page — live.',
     includes: ['Sitemap + conversion copy', 'Responsive, accessible build', 'Deployed to a live URL', 'You own the code'],
     accent: '#00D4FF',
-    tool: '/studio',
+    tool: '/studio?tool=website',
     popular: true,
   },
   {
@@ -147,7 +147,7 @@ export const SERVICE_PRICING: ServicePrice[] = [
     tagline: 'Scroll-stopping ad copy + compliance + a visual brief.',
     includes: ['Platform-native copy sets', 'Policy compliance screen', 'On-brand visual briefs', 'Fresh creative on demand'],
     accent: '#FF2E9A',
-    tool: '/studio',
+    tool: '/studio?tool=ads',
   },
   {
     id: 'content',
@@ -157,7 +157,7 @@ export const SERVICE_PRICING: ServicePrice[] = [
     tagline: 'A ready-to-post content calendar — hook, caption, CTA per day.',
     includes: ['Up to 14-day calendars', 'Hook + caption + format', 'Platform-native voice', 'Hashtag sets'],
     accent: '#FF2E9A',
-    tool: '/studio',
+    tool: '/studio?tool=content',
   },
   {
     id: 'pretest',
@@ -167,7 +167,7 @@ export const SERVICE_PRICING: ServicePrice[] = [
     tagline: 'Score ad variants on synthetic buyers before you spend.',
     includes: ['Synthetic buyer personas', 'Scroll-stop + clarity scores', 'Launch / iterate / kill verdicts', 'Ranked best-first'],
     accent: '#C9A84C',
-    tool: '/studio',
+    tool: '/studio?tool=pretest',
   },
   {
     id: 'employees',
@@ -178,6 +178,6 @@ export const SERVICE_PRICING: ServicePrice[] = [
     tagline: 'Hire a crew of AI operators + a first-week deployment plan.',
     includes: ['Specialist agent crew', 'First-week deployment plan', 'Lives in your Slack', 'Works 24/7'],
     accent: '#6C63FF',
-    tool: '/studio',
+    tool: '/studio?tool=employees',
   },
 ];
