@@ -7,7 +7,7 @@ file: pixel-pilot/higgsfield.ts
 
 Part of [[📁 Codebase]] — live copy at `~/Pixel-Pilot/pixel-pilot/higgsfield.ts`
 
-`````ts
+````ts
 // ─── PIXEL PILOT · HIGGSFIELD CREATIVE AUTOMATION ────────────────────────────
 // Higgsfield is our cinematic render farm. Point it at a brand and it returns
 // scroll-stopping, motion-first product reels — the raw creative the Genome then
@@ -202,5 +202,4 @@ export async function generateCreative(req: CreativeRequest): Promise<CreativeJo
     return showcaseJob();
   }
 }
-
-`````
+````

@@ -7,7 +7,7 @@ file: app/api/pixel-pilot/workflows/[id]/route.ts
 
 Part of [[📁 Codebase]] — live copy at `~/Pixel-Pilot/app/api/pixel-pilot/workflows/[id]/route.ts`
 
-`````ts
+````ts
 // ─── PIXEL PILOT · n8n WORKFLOW TRIGGER ──────────────────────────────────────
 // POST /api/pixel-pilot/workflows/[id]
 // Forwards a payload to the workflow's n8n webhook. With no N8N_BASE_URL set it
@@ -73,5 +73,4 @@ export async function POST(
     );
   }
 }
-
-`````
+````

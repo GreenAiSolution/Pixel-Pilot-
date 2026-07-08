@@ -7,7 +7,7 @@ file: app/eagle/layout.tsx
 
 Part of [[📁 Codebase]] — live copy at `~/Pixel-Pilot/app/eagle/layout.tsx`
 
-`````tsx
+````tsx
 import type { Metadata } from 'next';
 import Link from 'next/link';
 import { EAGLE } from '@/eagle';
@@ -90,5 +90,4 @@ export default function EagleLayout({ children }: { children: React.ReactNode })
     </div>
   );
 }
-
-`````
+````

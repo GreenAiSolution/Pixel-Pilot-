@@ -7,7 +7,7 @@ file: components/pixel-pilot/flight-scene.tsx
 
 Part of [[📁 Codebase]] — live copy at `~/Pixel-Pilot/components/pixel-pilot/flight-scene.tsx`
 
-`````tsx
+````tsx
 "use client";
 
 /* eslint-disable react-hooks/purity, react-hooks/refs, react-hooks/set-state-in-effect, react-hooks/immutability --
@@ -490,5 +490,4 @@ function LowTierFallback() {
     </div>
   );
 }
-
-`````
+````

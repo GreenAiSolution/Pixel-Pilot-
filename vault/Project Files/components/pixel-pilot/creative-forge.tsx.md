@@ -7,7 +7,7 @@ file: components/pixel-pilot/creative-forge.tsx
 
 Part of [[📁 Codebase]] — live copy at `~/Pixel-Pilot/components/pixel-pilot/creative-forge.tsx`
 
-`````tsx
+````tsx
 "use client";
 
 // ─── PIXEL PILOT · CREATIVE FORGE (client) ───────────────────────────────────
@@ -295,5 +295,4 @@ function Stat({ label, value }: { label: string; value: string }) {
     </div>
   );
 }
-
-`````
+````

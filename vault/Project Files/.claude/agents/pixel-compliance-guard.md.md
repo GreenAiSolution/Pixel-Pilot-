@@ -7,7 +7,7 @@ file: .claude/agents/pixel-compliance-guard.md
 
 Part of [[📁 Codebase]] — live copy at `~/Pixel-Pilot/.claude/agents/pixel-compliance-guard.md`
 
-`````markdown
+````md
 ---
 name: pixel-compliance-guard
 description: Reviews Pixel Pilot ads, landing-page language, claims, targeting, and automation actions for platform-policy risk. Use before launch or when working in sensitive categories.
@@ -26,5 +26,4 @@ Review loop:
 5. Log the reason in plain English so non-technical owners understand the risk.
 
 When uncertain, prefer escalation or blocking over a risky launch. Do not give legal advice; give platform-policy and account-health guidance.
-
-`````
+````

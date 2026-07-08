@@ -7,7 +7,7 @@ file: next.config.ts
 
 Part of [[📁 Codebase]] — live copy at `~/Pixel-Pilot/next.config.ts`
 
-`````ts
+````ts
 import type { NextConfig } from 'next';
 
 const nextConfig: NextConfig = {
@@ -52,5 +52,4 @@ const nextConfig: NextConfig = {
 };
 
 export default nextConfig;
-
-`````
+````

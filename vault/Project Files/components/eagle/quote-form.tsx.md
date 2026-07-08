@@ -7,7 +7,7 @@ file: components/eagle/quote-form.tsx
 
 Part of [[📁 Codebase]] — live copy at `~/Pixel-Pilot/components/eagle/quote-form.tsx`
 
-`````tsx
+````tsx
 "use client";
 
 // ─── EAGLE LANDSCAPING · QUOTE / LEAD FORM ───────────────────────────────────
@@ -99,5 +99,4 @@ export function QuoteForm() {
     </form>
   );
 }
-
-`````
+````

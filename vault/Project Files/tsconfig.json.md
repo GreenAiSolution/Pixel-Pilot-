@@ -7,7 +7,7 @@ file: tsconfig.json
 
 Part of [[📁 Codebase]] — live copy at `~/Pixel-Pilot/tsconfig.json`
 
-`````json
+````json
 {
   "compilerOptions": {
     "target": "ES2017",
@@ -41,5 +41,4 @@ Part of [[📁 Codebase]] — live copy at `~/Pixel-Pilot/tsconfig.json`
   ],
   "exclude": ["node_modules"]
 }
-
-`````
+````

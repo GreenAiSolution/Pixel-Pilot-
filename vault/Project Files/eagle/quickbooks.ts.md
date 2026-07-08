@@ -7,7 +7,7 @@ file: eagle/quickbooks.ts
 
 Part of [[📁 Codebase]] — live copy at `~/Pixel-Pilot/eagle/quickbooks.ts`
 
-`````ts
+````ts
 // ─── EAGLE LANDSCAPING · QUICKBOOKS ONLINE (native) ──────────────────────────
 // A first-class QuickBooks Online integration — no Zapier in the path. The owner
 // sets Intuit app credentials, clicks "Connect QuickBooks" once (OAuth2), and new
@@ -176,5 +176,4 @@ export async function createCustomer(lead: {
   const d = (await res.json()) as { Customer?: { Id: string; DisplayName: string } };
   return d.Customer ? { id: d.Customer.Id, name: d.Customer.DisplayName } : null;
 }
-
-`````
+````

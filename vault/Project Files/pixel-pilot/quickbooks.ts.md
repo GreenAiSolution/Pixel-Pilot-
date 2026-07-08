@@ -7,7 +7,7 @@ file: pixel-pilot/quickbooks.ts
 
 Part of [[📁 Codebase]] — live copy at `~/Pixel-Pilot/pixel-pilot/quickbooks.ts`
 
-`````ts
+````ts
 // ─── PIXEL PILOT · QUICKBOOKS ONLINE (native) ────────────────────────────────
 // A first-class QuickBooks Online integration — no Zapier in the path. Set Intuit
 // app credentials, click "Connect QuickBooks" once (OAuth2), and Pixel Pilot can
@@ -163,5 +163,4 @@ export async function createCustomer(lead: {
   const d = (await res.json()) as { Customer?: { Id: string; DisplayName: string } };
   return d.Customer ? { id: d.Customer.Id, name: d.Customer.DisplayName } : null;
 }
-
-`````
+````

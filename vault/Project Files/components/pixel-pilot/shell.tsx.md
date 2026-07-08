@@ -7,7 +7,7 @@ file: components/pixel-pilot/shell.tsx
 
 Part of [[📁 Codebase]] — live copy at `~/Pixel-Pilot/components/pixel-pilot/shell.tsx`
 
-`````tsx
+````tsx
 "use client";
 
 import { ReactNode, useEffect, useState } from "react";
@@ -20,14 +20,15 @@ const FlightScene = dynamic(
 );
 
 const NAV = [
-  { href: "/#deck", label: "Flight Deck" },
-  { href: "/#agents", label: "Agents" },
-  { href: "/#connectors", label: "Connectors" },
-  { href: "/#forge", label: "Creative Forge" },
-  { href: "/#automation", label: "Automation" },
+  { href: "/results", label: "Results" },
+  { href: "/services", label: "Flight Deck" },
+  { href: "/studio", label: "Studio" },
+  { href: "/agents", label: "Agents" },
+  { href: "/connectors", label: "Connectors" },
+  { href: "/forge", label: "Creative Forge" },
+  { href: "/automation", label: "Automation" },
   { href: "/stack", label: "Stack" },
-  { href: "/#pricing", label: "Pricing" },
-  { href: "/automator", label: "Automator" },
+  { href: "/pricing", label: "Pricing" },
 ];
 
 export function Shell({ children }: { children: ReactNode }) {
@@ -95,13 +96,13 @@ export function Shell({ children }: { children: ReactNode }) {
 
           <div className="hidden md:flex items-center gap-1 rounded-full border border-white/10 bg-white/[0.03] px-1 py-1 backdrop-blur-md">
             {NAV.map((l) => (
-              <a
+              <Link
                 key={l.href}
                 href={l.href}
                 className="px-4 py-1.5 rounded-full text-sm text-text-secondary hover:text-text-primary hover:bg-white/5 transition"
               >
                 {l.label}
-              </a>
+              </Link>
             ))}
           </div>
 
@@ -139,5 +140,4 @@ export function Shell({ children }: { children: ReactNode }) {
     </div>
   );
 }
-
-`````
+````

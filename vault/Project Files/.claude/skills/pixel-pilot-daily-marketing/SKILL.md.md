@@ -7,7 +7,7 @@ file: .claude/skills/pixel-pilot-daily-marketing/SKILL.md
 
 Part of [[📁 Codebase]] — live copy at `~/Pixel-Pilot/.claude/skills/pixel-pilot-daily-marketing/SKILL.md`
 
-`````markdown
+````md
 ---
 name: pixel-pilot-daily-marketing
 description: Run Pixel Pilot's daily marketing like a skilled growth operator — pick today's strategic angle from a non-repeating 14-day rotation, write platform-native copy, generate an on-brand visual, then stage/distribute and log it. Use for the daily marketing routine, when asked to "market Pixel Pilot", or when the daily marketing trigger fires.
@@ -115,5 +115,4 @@ tomorrow's hook. Over two weeks you'll see which pillars land — lean into winn
 - Optional: Higgsfield connected → motion reels for creative-showcase days.
 Without these it still runs and stages everything locally — it just can't push to
 your apps.
-
-`````
+````

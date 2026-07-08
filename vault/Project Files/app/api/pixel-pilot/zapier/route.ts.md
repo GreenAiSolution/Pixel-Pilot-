@@ -7,7 +7,7 @@ file: app/api/pixel-pilot/zapier/route.ts
 
 Part of [[📁 Codebase]] — live copy at `~/Pixel-Pilot/app/api/pixel-pilot/zapier/route.ts`
 
-`````ts
+````ts
 // ─── PIXEL PILOT · ZAPIER TRIGGER ────────────────────────────────────────────
 // POST /api/pixel-pilot/zapier
 // Forwards a JSON payload to a Zapier "Catch Hook" webhook (ZAPIER_HOOK_URL).
@@ -52,5 +52,4 @@ export async function POST(req: NextRequest) {
     );
   }
 }
-
-`````
+````

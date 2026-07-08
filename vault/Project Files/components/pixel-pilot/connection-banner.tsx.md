@@ -7,7 +7,7 @@ file: components/pixel-pilot/connection-banner.tsx
 
 Part of [[📁 Codebase]] — live copy at `~/Pixel-Pilot/components/pixel-pilot/connection-banner.tsx`
 
-`````tsx
+````tsx
 "use client";
 
 /* eslint-disable react-hooks/set-state-in-effect --
@@ -89,5 +89,4 @@ export function ConnectionBanner() {
     </div>
   );
 }
-
-`````
+````

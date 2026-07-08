@@ -7,7 +7,7 @@ file: pixel-pilot/executor.ts
 
 Part of [[📁 Codebase]] — live copy at `~/Pixel-Pilot/pixel-pilot/executor.ts`
 
-`````ts
+````ts
 // ─── PIXEL PILOT · EXECUTOR ──────────────────────────────────────────────────
 // The server-side runtime that actually *runs* a deployed automation. Two real
 // side-effects, each degrading gracefully when its target isn't configured:
@@ -76,5 +76,4 @@ export async function fireZapier(event: string, payload: Record<string, unknown>
     return { target: 'zapier', configured: true, ok: false, detail: err instanceof Error ? err.message : 'zapier failed' };
   }
 }
-
-`````
+````

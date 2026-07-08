@@ -7,7 +7,7 @@ file: app/api/eagle/quickbooks/connect/route.ts
 
 Part of [[📁 Codebase]] — live copy at `~/Pixel-Pilot/app/api/eagle/quickbooks/connect/route.ts`
 
-`````ts
+````ts
 // ─── EAGLE · QUICKBOOKS OAUTH START ──────────────────────────────────────────
 // GET /api/eagle/quickbooks/connect
 // The "Connect QuickBooks" button. Redirects the owner to Intuit's consent
@@ -32,5 +32,4 @@ export async function GET() {
   res.cookies.set('qbo_state', state, { httpOnly: true, secure: true, sameSite: 'lax', maxAge: 600, path: '/' });
   return res;
 }
-
-`````
+````

@@ -7,7 +7,7 @@ file: pixel-pilot/workflows.ts
 
 Part of [[📁 Codebase]] — live copy at `~/Pixel-Pilot/pixel-pilot/workflows.ts`
 
-`````ts
+````ts
 // ─── PIXEL PILOT · n8n WORKFLOWS ─────────────────────────────────────────────
 // The automation spine. Each entry is a real n8n workflow graph (nodes +
 // connections in n8n's export shape) that can be imported straight into an n8n
@@ -152,5 +152,4 @@ export const WORKFLOWS: Workflow[] = [
 export function getWorkflow(id: string): Workflow | undefined {
   return WORKFLOWS.find((w) => w.id === id);
 }
-
-`````
+````

@@ -7,7 +7,7 @@ file: app/api/pixel-pilot/stack/route.ts
 
 Part of [[📁 Codebase]] — live copy at `~/Pixel-Pilot/app/api/pixel-pilot/stack/route.ts`
 
-`````ts
+````ts
 // ─── PIXEL PILOT · STACK API ─────────────────────────────────────────────────
 // GET /api/pixel-pilot/stack
 // Returns the full integration catalog grouped by category, each tool marked
@@ -32,5 +32,4 @@ export async function GET() {
 
   return NextResponse.json({ ok: true, stats: stackStats(), categories });
 }
-
-`````
+````

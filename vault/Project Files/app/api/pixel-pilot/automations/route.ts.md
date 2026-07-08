@@ -7,7 +7,7 @@ file: app/api/pixel-pilot/automations/route.ts
 
 Part of [[📁 Codebase]] — live copy at `~/Pixel-Pilot/app/api/pixel-pilot/automations/route.ts`
 
-`````ts
+````ts
 // ─── PIXEL PILOT · AUTOMATIONS (persist + execute) ───────────────────────────
 // POST /api/pixel-pilot/automations   → save a deployed automation and run it
 // GET  /api/pixel-pilot/automations   → list what's been deployed
@@ -105,5 +105,4 @@ export async function POST(req: NextRequest) {
 
   return NextResponse.json({ ok: true, durable: storeIsDurable(), automation: record });
 }
-
-`````
+````

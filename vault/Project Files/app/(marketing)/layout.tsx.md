@@ -7,7 +7,7 @@ file: app/(marketing)/layout.tsx
 
 Part of [[📁 Codebase]] — live copy at `~/Pixel-Pilot/app/(marketing)/layout.tsx`
 
-`````tsx
+````tsx
 import { Shell } from '@/components/pixel-pilot/shell';
 
 // Pixel Pilot marketing chrome (nav, footer, 3D flight scene). Scoped to this
@@ -15,5 +15,4 @@ import { Shell } from '@/components/pixel-pilot/shell';
 export default function MarketingLayout({ children }: { children: React.ReactNode }) {
   return <Shell>{children}</Shell>;
 }
-
-`````
+````

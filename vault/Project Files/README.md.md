@@ -7,7 +7,7 @@ file: README.md
 
 Part of [[📁 Codebase]] — live copy at `~/Pixel-Pilot/README.md`
 
-`````markdown
+````md
 # Pixel Pilot
 
 **The autonomous media buyer that flies your ad spend to profit.**
@@ -70,5 +70,4 @@ Autonomous Media Buyer · Profit-Optimized (not ROAS) · Cross-Channel Conductor
 Creative Genome Engine · Synthetic Pre-Testing · Self-Improving Data Flywheel ·
 Compliance-Safe Autopilot · Attribution Truth Engine · Zero-to-Live in <60min ·
 Impression-Level Generative Creative.
-
-`````
+````

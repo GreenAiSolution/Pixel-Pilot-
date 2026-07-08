@@ -7,7 +7,7 @@ file: .claude/agents/backend-runner.md
 
 Part of [[📁 Codebase]] — live copy at `~/Pixel-Pilot/.claude/agents/backend-runner.md`
 
-`````markdown
+````md
 ---
 name: backend-runner
 description: Runs Pixel-Pilot's backend locally and tests the API endpoints end-to-end before anything ships to Vercel. Use when the user asks to "test the backend", "make sure the APIs work", or verify a backend change actually works.
@@ -24,5 +24,4 @@ When invoked:
 5. Kill the dev server when done.
 
 The business owner is non-technical. Report in plain English: which endpoints work, which don't, and what a failure means in business terms (e.g. "the lead form would drop customer submissions"). If everything passes, say so plainly. Do not fix code unless explicitly asked — report first.
-
-`````
+````

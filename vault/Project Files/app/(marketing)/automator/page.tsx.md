@@ -7,7 +7,7 @@ file: app/(marketing)/automator/page.tsx
 
 Part of [[📁 Codebase]] — live copy at `~/Pixel-Pilot/app/(marketing)/automator/page.tsx`
 
-`````tsx
+````tsx
 "use client";
 
 // ─── PIXEL PILOT · THE AUTOMATOR ─────────────────────────────────────────────
@@ -694,5 +694,4 @@ function Row({ k, v }: { k: string; v: string }) {
     </div>
   );
 }
-
-`````
+````

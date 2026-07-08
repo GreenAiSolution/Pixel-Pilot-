@@ -7,7 +7,7 @@ file: package.json
 
 Part of [[📁 Codebase]] — live copy at `~/Pixel-Pilot/package.json`
 
-`````json
+````json
 {
   "name": "pixel-pilot",
   "version": "1.0.0",
@@ -41,5 +41,4 @@ Part of [[📁 Codebase]] — live copy at `~/Pixel-Pilot/package.json`
     "typescript": "^5"
   }
 }
-
-`````
+````

@@ -7,7 +7,7 @@ file: app/(marketing)/stack/page.tsx
 
 Part of [[📁 Codebase]] — live copy at `~/Pixel-Pilot/app/(marketing)/stack/page.tsx`
 
-`````tsx
+````tsx
 // ─── PIXEL PILOT · THE STACK ─────────────────────────────────────────────────
 // The "business brain" page — the full catalog of apps, connectors and tools,
 // grouped by function, with live status read from the environment server-side.
@@ -32,9 +32,10 @@ const VIA_LABEL: Record<IntegrationVia, string> = {
 function StatusBadge({ tool }: { tool: StackTool }) {
   const live = toolIsLive(tool);
   if (live) {
+    const label = !tool.connected && tool.via === 'zapier' ? 'Live · Zapier' : 'Live';
     return (
       <span className="inline-flex items-center gap-1.5 rounded-full border border-[#22c55e]/40 bg-[#22c55e]/10 px-2.5 py-0.5 text-[11px] font-medium text-[#4ade80]">
-        <span className="h-1.5 w-1.5 rounded-full bg-[#4ade80]" /> Live
+        <span className="h-1.5 w-1.5 rounded-full bg-[#4ade80]" /> {label}
       </span>
     );
   }
@@ -165,5 +166,4 @@ export default function StackPage() {
     </main>
   );
 }
-
-`````
+````

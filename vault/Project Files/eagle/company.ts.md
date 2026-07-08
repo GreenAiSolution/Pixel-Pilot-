@@ -7,7 +7,7 @@ file: eagle/company.ts
 
 Part of [[📁 Codebase]] — live copy at `~/Pixel-Pilot/eagle/company.ts`
 
-`````ts
+````ts
 // ─── EAGLE LANDSCAPING · BRAND ───────────────────────────────────────────────
 // Brand constants for the Eagle Landscaping client instance. Professional,
 // natural, trustworthy — forest greens + warm earth, not the Pixel Pilot neon.
@@ -31,5 +31,4 @@ export const EAGLE = {
   sky: '#EAF4EC', // pale green wash
   ink: '#14261A', // near-black green for text
 } as const;
-
-`````
+````

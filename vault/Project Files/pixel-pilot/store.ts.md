@@ -7,7 +7,7 @@ file: pixel-pilot/store.ts
 
 Part of [[📁 Codebase]] — live copy at `~/Pixel-Pilot/pixel-pilot/store.ts`
 
-`````ts
+````ts
 // ─── PIXEL PILOT · PERSISTENCE ───────────────────────────────────────────────
 // One tiny datastore for the whole engine. Talks to a KV REST API (Vercel KV /
 // Upstash) when its env vars are present, and falls back to an in-process map so
@@ -113,5 +113,4 @@ export async function getList<T>(key: string): Promise<T[]> {
   const local = memLists.get(key);
   return local ? local.map((x) => JSON.parse(x) as T) : [];
 }
-
-`````
+````

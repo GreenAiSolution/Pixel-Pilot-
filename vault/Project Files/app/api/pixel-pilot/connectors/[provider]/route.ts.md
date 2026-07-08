@@ -7,7 +7,7 @@ file: app/api/pixel-pilot/connectors/[provider]/route.ts
 
 Part of [[📁 Codebase]] — live copy at `~/Pixel-Pilot/app/api/pixel-pilot/connectors/[provider]/route.ts`
 
-`````ts
+````ts
 // ─── PIXEL PILOT · CONNECTOR OAUTH START ─────────────────────────────────────
 // GET /api/pixel-pilot/connectors/[provider]
 // Mints a live OAuth consent URL for one of the four connectors and redirects to
@@ -74,5 +74,4 @@ export async function GET(
     );
   }
 }
-
-`````
+````

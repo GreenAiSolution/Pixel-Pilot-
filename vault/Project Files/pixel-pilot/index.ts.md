@@ -7,7 +7,7 @@ file: pixel-pilot/index.ts
 
 Part of [[📁 Codebase]] — live copy at `~/Pixel-Pilot/pixel-pilot/index.ts`
 
-`````ts
+````ts
 // ─── PIXEL PILOT · ENGINE BARREL ─────────────────────────────────────────────
 // One import surface for the whole product. UI pulls types + data from here;
 // API routes pull the wiring helpers. Keeps the boundary between the "engine"
@@ -19,6 +19,7 @@ export * from './workflows';
 export * from './higgsfield';
 export * from './creative-apps';
 export * from './pricing';
+export * from './proof';
 export * from './automations';
 export * from './agents';
 export * from './stack';
@@ -31,5 +32,4 @@ export const PIXEL_PILOT = {
   gradient: 'linear-gradient(90deg, #00D4FF 0%, #6C63FF 45%, #FF2E9A 100%)',
   hues: { cyan: '#00D4FF', violet: '#6C63FF', magenta: '#FF2E9A', gold: '#C9A84C' },
 } as const;
-
-`````
+````

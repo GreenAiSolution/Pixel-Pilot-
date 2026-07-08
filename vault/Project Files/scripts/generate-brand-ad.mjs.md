@@ -7,7 +7,7 @@ file: scripts/generate-brand-ad.mjs
 
 Part of [[📁 Codebase]] — live copy at `~/Pixel-Pilot/scripts/generate-brand-ad.mjs`
 
-`````js
+````js
 #!/usr/bin/env node
 // ─── PIXEL PILOT · GEMINI BRAND-AD GENERATOR ─────────────────────────────────
 // Generates an on-brand, ad-ready image with Google's Gemini image models.
@@ -205,5 +205,4 @@ main().catch((err) => {
   console.error("\n✗ Generation failed:", err.message);
   process.exit(1);
 });
-
-`````
+````

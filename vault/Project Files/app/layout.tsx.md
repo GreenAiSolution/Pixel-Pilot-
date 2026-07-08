@@ -7,7 +7,7 @@ file: app/layout.tsx
 
 Part of [[📁 Codebase]] — live copy at `~/Pixel-Pilot/app/layout.tsx`
 
-`````tsx
+````tsx
 import type { Metadata, Viewport } from 'next';
 import './globals.css';
 
@@ -52,5 +52,4 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     </html>
   );
 }
-
-`````
+````

@@ -7,7 +7,7 @@ file: pixel-pilot/README.md
 
 Part of [[📁 Codebase]] — live copy at `~/Pixel-Pilot/pixel-pilot/README.md`
 
-`````markdown
+````md
 # Pixel Pilot — the autonomous media buyer
 
 The premium sub-brand inside Nexus Studio. Pixel Pilot flies a brand's paid media
@@ -75,5 +75,4 @@ integration checks for its credentials at request time and falls back to a
 believable simulation, so the site is always demoable.
 
 Live at **`/pixel-pilot`**.
-
-`````
+````

@@ -7,7 +7,7 @@ file: app/globals.css
 
 Part of [[📁 Codebase]] — live copy at `~/Pixel-Pilot/app/globals.css`
 
-`````css
+````css
 @import "tailwindcss";
 
 :root {
@@ -98,5 +98,4 @@ body {
     transition-duration: 0.01ms !important;
   }
 }
-
-`````
+````

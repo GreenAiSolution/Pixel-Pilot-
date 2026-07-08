@@ -7,7 +7,7 @@ file: app/eagle/page.tsx
 
 Part of [[📁 Codebase]] — live copy at `~/Pixel-Pilot/app/eagle/page.tsx`
 
-`````tsx
+````tsx
 import Link from 'next/link';
 import { EAGLE, EAGLE_SERVICES, EAGLE_AGENTS } from '@/eagle';
 import { QuoteForm } from '@/components/eagle/quote-form';
@@ -157,5 +157,4 @@ export default function EagleHome() {
     </div>
   );
 }
-
-`````
+````

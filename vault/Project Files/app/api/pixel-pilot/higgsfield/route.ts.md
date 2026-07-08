@@ -7,7 +7,7 @@ file: app/api/pixel-pilot/higgsfield/route.ts
 
 Part of [[📁 Codebase]] — live copy at `~/Pixel-Pilot/app/api/pixel-pilot/higgsfield/route.ts`
 
-`````ts
+````ts
 // ─── PIXEL PILOT · HIGGSFIELD CREATIVE FORGE ─────────────────────────────────
 // POST /api/pixel-pilot/higgsfield
 // Body: { brand, product, vibe, channel }
@@ -59,5 +59,4 @@ export async function POST(req: NextRequest) {
     );
   }
 }
-
-`````
+````

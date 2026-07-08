@@ -7,7 +7,7 @@ file: pixel-pilot/creative-apps.ts
 
 Part of [[📁 Codebase]] — live copy at `~/Pixel-Pilot/pixel-pilot/creative-apps.ts`
 
-`````ts
+````ts
 // ─── PIXEL PILOT · CREATIVE TOOLS & APPS ─────────────────────────────────────
 // The in-platform apps a client actually opens. Each is a surface on top of the
 // engine (connectors + workflows + Higgsfield) — the "studio" side of the buyer.
@@ -97,5 +97,4 @@ export const CREATIVE_APPS: CreativeApp[] = [
     glyph: '❖',
   },
 ];
-
-`````
+````

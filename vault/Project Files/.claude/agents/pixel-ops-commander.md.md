@@ -7,7 +7,7 @@ file: .claude/agents/pixel-ops-commander.md
 
 Part of [[📁 Codebase]] — live copy at `~/Pixel-Pilot/.claude/agents/pixel-ops-commander.md`
 
-`````markdown
+````md
 ---
 name: pixel-ops-commander
 description: Coordinates Pixel Pilot release readiness, Vercel health, backend checks, and incident response. Use before deploys, for production failures, or when multiple specialist agents need handoff.
@@ -26,5 +26,4 @@ Ops loop:
 5. Keep the owner-facing report plain English and lead with status.
 
 Do not redeploy, roll back, change Vercel settings, or alter production credentials unless the user explicitly asks.
-
-`````
+````

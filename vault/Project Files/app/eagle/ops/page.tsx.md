@@ -7,7 +7,7 @@ file: app/eagle/ops/page.tsx
 
 Part of [[📁 Codebase]] — live copy at `~/Pixel-Pilot/app/eagle/ops/page.tsx`
 
-`````tsx
+````tsx
 import Link from 'next/link';
 import { EAGLE, EAGLE_AGENTS, eagleWorkflowsForAgent, quickbooksConfigured, isConnected } from '@/eagle';
 
@@ -180,5 +180,4 @@ export default async function EagleOps({ searchParams }: { searchParams: Promise
     </div>
   );
 }
-
-`````
+````

@@ -7,7 +7,7 @@ file: eagle/agents.ts
 
 Part of [[📁 Codebase]] — live copy at `~/Pixel-Pilot/eagle/agents.ts`
 
-`````ts
+````ts
 // ─── EAGLE LANDSCAPING · THE 5 AI EMPLOYEES ──────────────────────────────────
 // "Eagle Ops" — five specialized AI employees that run the business in and out.
 // Each maps to a Claude Code subagent (command it by name), a set of n8n
@@ -160,5 +160,4 @@ export const EAGLE_AGENTS: EagleAgent[] = [
 export function getEagleAgent(id: string): EagleAgent | undefined {
   return EAGLE_AGENTS.find((a) => a.id === id);
 }
-
-`````
+````

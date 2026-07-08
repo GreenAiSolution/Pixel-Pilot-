@@ -7,7 +7,7 @@ file: .claude/agents/pixel-creative-director.md
 
 Part of [[📁 Codebase]] — live copy at `~/Pixel-Pilot/.claude/agents/pixel-creative-director.md`
 
-`````markdown
+````md
 ---
 name: pixel-creative-director
 description: Directs Pixel Pilot's creative genome and Higgsfield output. Use for creative fatigue, ad concepts, prompt briefs, variant matrices, hooks, and creative testing plans.
@@ -26,5 +26,4 @@ Creative loop:
 5. Send risky claims to Shield before launch.
 
 Do not invent product claims, testimonials, results, medical promises, financial outcomes, or before/after transformations. If the task requires live generation, use the existing Higgsfield route and report fallback behavior honestly.
-
-`````
+````

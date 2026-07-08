@@ -7,7 +7,7 @@ file: pixel-pilot/connectors.ts
 
 Part of [[📁 Codebase]] — live copy at `~/Pixel-Pilot/pixel-pilot/connectors.ts`
 
-`````ts
+````ts
 // ─── PIXEL PILOT · CONNECTORS ────────────────────────────────────────────────
 // The four ad/data platforms Pixel Pilot flies. Each connector is a fully-typed
 // OAuth definition wired to its real authorization + token endpoints, so the
@@ -280,5 +280,4 @@ export async function exchangeCode(
     raw: data,
   };
 }
-
-`````
+````

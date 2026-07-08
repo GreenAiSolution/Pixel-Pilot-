@@ -7,7 +7,7 @@ file: components/pixel-pilot/automation-graph.tsx
 
 Part of [[📁 Codebase]] — live copy at `~/Pixel-Pilot/components/pixel-pilot/automation-graph.tsx`
 
-`````tsx
+````tsx
 "use client";
 
 // ─── PIXEL PILOT · LIVE AUTOMATION GRAPH ─────────────────────────────────────
@@ -91,5 +91,4 @@ export function AutomationGraph({ graph }: { graph: AutoGraph }) {
     </div>
   );
 }
-
-`````
+````

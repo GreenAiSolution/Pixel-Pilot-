@@ -7,7 +7,7 @@ file: scripts/marketing-angle.mjs
 
 Part of [[📁 Codebase]] — live copy at `~/Pixel-Pilot/scripts/marketing-angle.mjs`
 
-`````js
+````js
 #!/usr/bin/env node
 // ─── PIXEL PILOT · DAILY MARKETING ANGLE ENGINE ──────────────────────────────
 // Deterministic "what do we say today" planner. Given a date, it returns the
@@ -118,5 +118,4 @@ if (week) {
   const a = angleFor(dateArg ? new Date(dateArg + "T00:00:00Z") : new Date());
   human ? printHuman(a) : console.log(JSON.stringify(a, null, 2));
 }
-
-`````
+````

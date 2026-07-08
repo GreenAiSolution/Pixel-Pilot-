@@ -7,7 +7,7 @@ file: app/api/eagle/quickbooks/callback/route.ts
 
 Part of [[📁 Codebase]] — live copy at `~/Pixel-Pilot/app/api/eagle/quickbooks/callback/route.ts`
 
-`````ts
+````ts
 // ─── EAGLE · QUICKBOOKS OAUTH CALLBACK ───────────────────────────────────────
 // GET /api/eagle/quickbooks/callback?code=…&realmId=…&state=…
 // Intuit redirects here after the owner approves. Verify state, exchange the
@@ -48,5 +48,4 @@ export async function GET(req: NextRequest) {
   res.cookies.delete('qbo_state');
   return res;
 }
-
-`````
+````

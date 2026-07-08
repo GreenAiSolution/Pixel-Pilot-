@@ -7,7 +7,7 @@ file: eagle/services.ts
 
 Part of [[📁 Codebase]] — live copy at `~/Pixel-Pilot/eagle/services.ts`
 
-`````ts
+````ts
 // ─── EAGLE LANDSCAPING · SERVICES ────────────────────────────────────────────
 // What Eagle sells. Drives the site's services grid and the quote form.
 
@@ -70,5 +70,4 @@ export const EAGLE_SERVICES: EagleService[] = [
 export function getEagleService(id: string): EagleService | undefined {
   return EAGLE_SERVICES.find((s) => s.id === id);
 }
-
-`````
+````

@@ -9,6 +9,7 @@ export * from './workflows';
 export * from './higgsfield';
 export * from './creative-apps';
 export * from './pricing';
+export * from './proof';
 export * from './automations';
 export * from './agents';
 export * from './stack';

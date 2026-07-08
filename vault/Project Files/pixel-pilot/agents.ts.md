@@ -7,7 +7,7 @@ file: pixel-pilot/agents.ts
 
 Part of [[📁 Codebase]] — live copy at `~/Pixel-Pilot/pixel-pilot/agents.ts`
 
-`````ts
+````ts
 // ─── PIXEL PILOT · AUTONOMOUS AGENTS ─────────────────────────────────────────
 // The operating crew behind the product. Each agent maps to a Claude Code
 // subagent prompt in `.claude/agents`, owns a slice of the n8n automation spine,
@@ -292,5 +292,4 @@ export const PIXEL_AGENTS: PixelAgent[] = [
 export function getPixelAgent(id: string): PixelAgent | undefined {
   return PIXEL_AGENTS.find((agent) => agent.id === id);
 }
-
-`````
+````

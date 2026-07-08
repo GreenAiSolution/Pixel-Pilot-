@@ -7,7 +7,7 @@ file: app/api/pixel-pilot/connectors/[provider]/callback/route.ts
 
 Part of [[📁 Codebase]] — live copy at `~/Pixel-Pilot/app/api/pixel-pilot/connectors/[provider]/callback/route.ts`
 
-`````ts
+````ts
 // ─── PIXEL PILOT · CONNECTOR OAUTH CALLBACK ──────────────────────────────────
 // GET /api/pixel-pilot/connectors/[provider]/callback
 // The other half of the round-trip. Verifies the CSRF state cookie set by the
@@ -90,5 +90,4 @@ export async function GET(
     return backHome(req, { connect_error: provider, reason: 'exchange' });
   }
 }
-
-`````
+````

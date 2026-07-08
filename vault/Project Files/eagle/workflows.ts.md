@@ -7,7 +7,7 @@ file: eagle/workflows.ts
 
 Part of [[📁 Codebase]] — live copy at `~/Pixel-Pilot/eagle/workflows.ts`
 
-`````ts
+````ts
 // ─── EAGLE LANDSCAPING · n8n WORKFLOWS ───────────────────────────────────────
 // The automation spine behind the five agents. Each is a real n8n workflow graph
 // (nodes + connections in n8n's export shape) + a webhook path. QuickBooks steps
@@ -167,5 +167,4 @@ export const EAGLE_WORKFLOWS: EagleWorkflow[] = [
 export function eagleWorkflowsForAgent(agentId: string): EagleWorkflow[] {
   return EAGLE_WORKFLOWS.filter((w) => w.agentId === agentId);
 }
-
-`````
+````

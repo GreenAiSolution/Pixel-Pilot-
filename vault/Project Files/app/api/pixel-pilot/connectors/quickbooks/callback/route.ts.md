@@ -7,7 +7,7 @@ file: app/api/pixel-pilot/connectors/quickbooks/callback/route.ts
 
 Part of [[📁 Codebase]] — live copy at `~/Pixel-Pilot/app/api/pixel-pilot/connectors/quickbooks/callback/route.ts`
 
-`````ts
+````ts
 // ─── PIXEL PILOT · QUICKBOOKS OAUTH CALLBACK ─────────────────────────────────
 // GET /api/pixel-pilot/connectors/quickbooks/callback?code=…&realmId=…&state=…
 // Intuit redirects here after consent. Verify the CSRF state, exchange the code
@@ -48,5 +48,4 @@ export async function GET(req: NextRequest) {
   res.cookies.delete('pp_qbo_state');
   return res;
 }
-
-`````
+````

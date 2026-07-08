@@ -7,7 +7,7 @@ file: app/api/eagle/lead/route.ts
 
 Part of [[📁 Codebase]] — live copy at `~/Pixel-Pilot/app/api/eagle/lead/route.ts`
 
-`````ts
+````ts
 // ─── EAGLE LANDSCAPING · LEAD INTAKE ─────────────────────────────────────────
 // POST /api/eagle/lead
 // The live front door for Rowan (Sales Closer). Captures a quote request and
@@ -90,5 +90,4 @@ export async function POST(req: NextRequest) {
     });
   }
 }
-
-`````
+````

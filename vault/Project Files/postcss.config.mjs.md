@@ -7,7 +7,7 @@ file: postcss.config.mjs
 
 Part of [[📁 Codebase]] — live copy at `~/Pixel-Pilot/postcss.config.mjs`
 
-`````js
+````js
 const config = {
   plugins: {
     '@tailwindcss/postcss': {},
@@ -15,5 +15,4 @@ const config = {
 };
 
 export default config;
-
-`````
+````

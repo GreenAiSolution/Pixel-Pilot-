@@ -7,7 +7,7 @@ file: .claude/agents/pixel-automation-engineer.md
 
 Part of [[📁 Codebase]] — live copy at `~/Pixel-Pilot/.claude/agents/pixel-automation-engineer.md`
 
-`````markdown
+````md
 ---
 name: pixel-automation-engineer
 description: Wires and verifies Pixel Pilot's n8n, Zapier, OAuth, Higgsfield, and automation deployment paths. Use for workflow manifests, connector health, API route behavior, and integration debugging.
@@ -26,5 +26,4 @@ Execution loop:
 5. Report whether the path is live, dry-run, or blocked by missing credentials.
 
 Do not make destructive production changes. Do not hide failed integrations behind vague success messages.
-
-`````
+````

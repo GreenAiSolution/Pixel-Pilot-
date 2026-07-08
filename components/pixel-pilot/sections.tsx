@@ -15,6 +15,12 @@ import {
   PIXEL_AGENTS,
   TIERS,
   SERVICE_PRICING,
+  OUTCOMES,
+  MONEY_MECHANISM,
+  RESULT_STORIES,
+  TESTIMONIALS,
+  PROOF_POINTS,
+  GUARANTEE,
   SHOWCASE,
   VIBES,
   PIXEL_PILOT_REEL,
@@ -145,6 +151,7 @@ export function Hero() {
 
 // ─── HOME DIRECTORY — links out to every page ─────────────────────────────────
 const DIRECTORY: { href: string; label: string; blurb: string; accent: string }[] = [
+  { href: "/results", label: "Results", blurb: "More customers, more profit — how, and the proof.", accent: "#10B981" },
   { href: "/services", label: "Flight Deck", blurb: "The five services, one autonomous buyer.", accent: "#FF2E9A" },
   { href: "/studio", label: "Studio", blurb: "Eight live tools + a guided workflow.", accent: "#00D4FF" },
   { href: "/pricing", label: "Pricing", blurb: "Every service priced, plus managed plans.", accent: "#C9A84C" },
@@ -650,6 +657,154 @@ export function Pricing() {
             ))}
           </div>
           <Reveal className="text-center text-xs text-text-tertiary mt-8">Every managed tier: profit-based reporting, Slack war room, and a 60-minute zero-to-live launch.</Reveal>
+        </div>
+      </section>
+    </PageTop>
+  );
+}
+
+// ─── RESULTS — the money & customers proof ───────────────────────────────────
+export function Results() {
+  return (
+    <PageTop>
+      <section id="results" className="px-6 py-24">
+        <div className="container mx-auto max-w-6xl">
+          <Reveal className="text-center max-w-3xl mx-auto space-y-4">
+            <div className="text-xs uppercase tracking-[0.3em] text-[#10B981]">── Results</div>
+            <h2 className="text-4xl md:text-6xl font-semibold tracking-tight">
+              More customers.
+              <br />
+              <span className="bg-clip-text text-transparent" style={{ backgroundImage: GRADIENT }}>
+                More profit. Proof.
+              </span>
+            </h2>
+            <p className="text-text-secondary text-lg">
+              The only question that matters: is this making you money? Here&apos;s exactly how Pixel Pilot brings in more
+              buyers and more profit — and what that looks like in the numbers.
+            </p>
+          </Reveal>
+
+          {/* Outcome band */}
+          <div className="mt-14 grid grid-cols-2 lg:grid-cols-4 gap-4">
+            {OUTCOMES.map((o) => (
+              <Reveal key={o.label}>
+                <div className="h-full rounded-2xl border border-white/10 bg-white/[0.03] backdrop-blur-md p-6">
+                  <div className="text-4xl font-semibold tabular-nums" style={{ color: o.accent }}>
+                    {o.value}
+                  </div>
+                  <div className="mt-1 text-sm font-medium">{o.label}</div>
+                  <p className="mt-2 text-[12px] text-text-tertiary leading-relaxed">{o.note}</p>
+                </div>
+              </Reveal>
+            ))}
+          </div>
+          <Reveal className="mt-3 text-center text-[11px] text-text-tertiary">
+            Representative outcomes for a well-run account — not a guarantee. Your mileage depends on offer, margin and market.
+          </Reveal>
+
+          {/* How it makes you money */}
+          <Reveal className="mt-24 text-center max-w-3xl mx-auto space-y-3">
+            <div className="text-xs uppercase tracking-[0.3em] text-[#00D4FF]">── How the money actually shows up</div>
+            <h3 className="text-3xl md:text-4xl font-semibold tracking-tight">What we&apos;re doing that grows your revenue.</h3>
+          </Reveal>
+          <div className="mt-10 grid md:grid-cols-2 gap-5">
+            {MONEY_MECHANISM.map((m) => (
+              <Reveal key={m.no}>
+                <div className="h-full rounded-2xl border border-white/10 bg-white/[0.03] backdrop-blur-md p-7">
+                  <div className="flex items-center gap-3">
+                    <span className="text-sm font-mono tracking-widest" style={{ color: m.accent }}>
+                      {m.no}
+                    </span>
+                    <h4 className="text-xl font-semibold">{m.title}</h4>
+                  </div>
+                  <p className="mt-3 text-sm text-text-secondary leading-relaxed">{m.plain}</p>
+                </div>
+              </Reveal>
+            ))}
+          </div>
+
+          {/* Scenario case studies */}
+          <Reveal className="mt-24 text-center max-w-3xl mx-auto space-y-3">
+            <div className="text-xs uppercase tracking-[0.3em] text-[#FF2E9A]">── What a flight looks like</div>
+            <h3 className="text-3xl md:text-4xl font-semibold tracking-tight">Before &amp; after, by the numbers.</h3>
+          </Reveal>
+          <div className="mt-10 grid lg:grid-cols-3 gap-5">
+            {RESULT_STORIES.map((s) => (
+              <Reveal key={s.segment}>
+                <div className="relative flex h-full flex-col rounded-2xl border border-white/10 bg-white/[0.03] backdrop-blur-md p-6 overflow-hidden">
+                  <div className="absolute inset-x-0 top-0 h-px opacity-60" style={{ background: `linear-gradient(90deg,transparent,${s.accent},transparent)` }} />
+                  <div className="text-[10px] uppercase tracking-[0.25em] text-text-tertiary">{s.segment}</div>
+                  <p className="mt-2 text-sm text-text-secondary leading-relaxed">{s.situation}</p>
+
+                  <div className="mt-5 flex items-end justify-between rounded-xl border border-white/10 bg-black/20 p-4">
+                    <div>
+                      <div className="text-[10px] uppercase tracking-widest text-text-tertiary">Before</div>
+                      <div className="mt-1 text-lg font-semibold text-text-secondary tabular-nums">{s.before.value}</div>
+                      <div className="text-[10px] text-text-tertiary">{s.before.metric}</div>
+                    </div>
+                    <span className="pb-5 text-lg" style={{ color: s.accent }}>
+                      →
+                    </span>
+                    <div className="text-right">
+                      <div className="text-[10px] uppercase tracking-widest text-text-tertiary">After</div>
+                      <div className="mt-1 text-2xl font-bold tabular-nums" style={{ color: s.accent }}>
+                        {s.after.value}
+                      </div>
+                      <div className="text-[10px] text-text-tertiary">{s.after.metric}</div>
+                    </div>
+                  </div>
+
+                  <p className="mt-4 text-sm font-medium">{s.headline}</p>
+                  <ul className="mt-3 space-y-1.5">
+                    {s.moves.map((m) => (
+                      <li key={m} className="flex items-start gap-2 text-[12.5px] text-text-secondary">
+                        <span className="mt-1.5 h-1 w-1 rounded-full shrink-0" style={{ background: s.accent }} />
+                        {m}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              </Reveal>
+            ))}
+          </div>
+
+          {/* Why it works + testimonials */}
+          <div className="mt-24 grid lg:grid-cols-2 gap-8 items-start">
+            <Reveal>
+              <div className="text-xs uppercase tracking-[0.3em] text-[#C9A84C] mb-4">── Why it works</div>
+              <ul className="space-y-3">
+                {PROOF_POINTS.map((p) => (
+                  <li key={p} className="flex items-start gap-3 text-sm text-text-secondary">
+                    <span className="mt-0.5 text-[#10B981]">✓</span>
+                    {p}
+                  </li>
+                ))}
+              </ul>
+              <div className="mt-6 rounded-2xl border border-[#10B981]/25 bg-[#10B981]/[0.06] p-5">
+                <div className="text-sm font-semibold">{GUARANTEE.title}</div>
+                <p className="mt-1.5 text-[13px] text-text-secondary leading-relaxed">{GUARANTEE.body}</p>
+              </div>
+            </Reveal>
+            <Reveal>
+              <div className="text-xs uppercase tracking-[0.3em] text-text-tertiary mb-4">── In their words</div>
+              <div className="space-y-4">
+                {TESTIMONIALS.map((t, i) => (
+                  <figure key={i} className="rounded-2xl border border-white/10 bg-white/[0.03] backdrop-blur-md p-5">
+                    <blockquote className="text-sm text-text-primary leading-relaxed">“{t.quote}”</blockquote>
+                    <figcaption className="mt-3 text-[12px] text-text-tertiary">
+                      <span className="text-text-secondary">{t.name}</span> · {t.role}
+                    </figcaption>
+                  </figure>
+                ))}
+              </div>
+            </Reveal>
+          </div>
+
+          <Reveal className="text-center mt-16">
+            <Link href="/pricing" className="inline-block rounded-full px-7 py-3 text-sm font-semibold text-white transition hover:opacity-90" style={{ background: "linear-gradient(90deg,#6C63FF,#FF2E9A)" }}>
+              See pricing &amp; book a flight →
+            </Link>
+          </Reveal>
         </div>
       </section>
     </PageTop>

@@ -7,7 +7,7 @@ file: app/api/pixel-pilot/connectors/quickbooks/route.ts
 
 Part of [[📁 Codebase]] — live copy at `~/Pixel-Pilot/app/api/pixel-pilot/connectors/quickbooks/route.ts`
 
-`````ts
+````ts
 // ─── PIXEL PILOT · QUICKBOOKS OAUTH START ────────────────────────────────────
 // GET /api/pixel-pilot/connectors/quickbooks
 // The "Connect QuickBooks" button. Redirects to Intuit's consent screen and sets
@@ -41,5 +41,4 @@ export async function GET() {
   });
   return res;
 }
-
-`````
+````

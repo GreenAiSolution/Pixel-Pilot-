@@ -7,7 +7,7 @@ file: pixel-pilot/stack.ts
 
 Part of [[📁 Codebase]] — live copy at `~/Pixel-Pilot/pixel-pilot/stack.ts`
 
-`````ts
+````ts
 // ─── PIXEL PILOT · THE STACK ─────────────────────────────────────────────────
 // The "business brain" — the full, curated catalog of apps, connectors and tools
 // Pixel Pilot flies with, grouped by business function. Each tool declares HOW it
@@ -131,10 +131,19 @@ export const STACK: readonly StackTool[] = [
   { id: 'make', name: 'Make', category: 'Automation', blurb: 'Visual automation builder.', via: 'planned', hue: '#6D00CC' },
 ];
 
-/** Is a native connector live in the current environment? */
+/** Is the Zapier fan-out bridge configured? When set, every `via: 'zapier'`
+ *  tool becomes reachable through it and reads as live. */
+export function zapierBridgeLive(): boolean {
+  return Boolean(process.env.ZAPIER_HOOK_URL);
+}
+
+/** Is a tool live in the current environment? Native connectors light up when
+ *  their credentials are present; Zapier-bridged tools light up when the hook is
+ *  set; a few internal tools are always connected. */
 export function toolIsLive(tool: StackTool): boolean {
   if (tool.connected) return true;
   if (tool.via === 'native' && tool.env) return tool.env.every((e) => Boolean(process.env[e]));
+  if (tool.via === 'zapier') return zapierBridgeLive();
   return false;
 }
 
@@ -162,5 +171,4 @@ export function stackStats(): StackStats {
     planned: STACK.filter((t) => t.via === 'planned').length,
   };
 }
-
-`````
+````

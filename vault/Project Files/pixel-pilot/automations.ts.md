@@ -7,7 +7,7 @@ file: pixel-pilot/automations.ts
 
 Part of [[📁 Codebase]] — live copy at `~/Pixel-Pilot/pixel-pilot/automations.ts`
 
-`````ts
+````ts
 // ─── PIXEL PILOT · AUTOMATION DESIGNER ───────────────────────────────────────
 // The brain behind the post-sign-up Automator. Pure data + wiring, no React:
 // the option catalogs a client picks from, a per-service default, and a builder
@@ -247,5 +247,4 @@ export function toManifest(config: AutomationConfig) {
     workflowId: wf?.id ?? null,
   };
 }
-
-`````
+````
