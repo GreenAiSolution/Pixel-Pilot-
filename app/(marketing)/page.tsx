@@ -329,7 +329,7 @@ export default function PixelPilotPage() {
                   <div className="text-[10px] uppercase tracking-widest text-text-tertiary">Agents</div>
                 </div>
                 <div>
-                  <div className="text-2xl font-semibold text-text-primary">4</div>
+                  <div className="text-2xl font-semibold text-text-primary">{WORKFLOWS.length}</div>
                   <div className="text-[10px] uppercase tracking-widest text-text-tertiary">Workflows</div>
                 </div>
                 <div>
