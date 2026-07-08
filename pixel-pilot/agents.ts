@@ -77,20 +77,22 @@ export const PIXEL_AGENTS: PixelAgent[] = [
     accent: '#6C63FF',
     tagline: 'Moves budget toward marginal profit.',
     intelligence:
-      'Compares Meta, Google and TikTok as one portfolio, then shifts spend according to marginal return instead of platform vanity metrics.',
+      'Compares Meta, Google and TikTok as one portfolio, then shifts spend according to marginal return instead of platform vanity metrics. Runs lifecycle-aware: it suppresses existing customers and closed-won contacts from prospecting, retargets stalled/MQL deals, and seeds lookalikes from closed-won — synced from HubSpot as hashed custom audiences.',
     responsibilities: [
       'Pull spend, delivery, conversions and blended revenue',
       'Detect winners, losers, learning-phase traps and fatigue',
       'Recommend or apply budget, bid and target changes',
+      'Keep lifecycle audiences current: suppress customers, retarget stalled deals, seed lookalikes',
       'Log every move with the reason and expected impact',
     ],
     decisions: [
       'Scale, hold, reduce or kill each campaign',
       'How much budget can safely move in one run',
       'When a platform-reported win is contradicted by blended truth',
+      'Who to exclude, retarget, or model as a lookalike based on CRM lifecycle',
     ],
-    workflows: ['budget-reallocation'],
-    integrations: ['Meta Ads', 'Google Ads', 'TikTok Ads', 'Shopify', 'Slack'],
+    workflows: ['budget-reallocation', 'audience-sync'],
+    integrations: ['Meta Ads', 'Google Ads', 'TikTok Ads', 'Shopify', 'HubSpot', 'Slack'],
     kpis: [
       { label: 'Optimization loop', value: '15m' },
       { label: 'Max shift/run', value: 'Guarded' },

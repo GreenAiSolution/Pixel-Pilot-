@@ -31,6 +31,8 @@ export interface AutomationConfig {
   notifyEmail: boolean;
   /** Sync results to the connected QuickBooks Online company. */
   syncQuickbooks: boolean;
+  /** Keep lifecycle audiences (suppression / retarget / lookalike seed) synced to the ad platforms from HubSpot. */
+  syncAudiences: boolean;
 }
 
 // ── Option catalogs (the UI reads these) ─────────────────────────────────────
@@ -83,6 +85,7 @@ export function defaultConfigFor(serviceId: string): AutomationConfig {
     notifySlack: true,
     notifyEmail: false,
     syncQuickbooks: false,
+    syncAudiences: false,
   };
 }
 
@@ -179,6 +182,13 @@ export function buildAutomationGraph(config: AutomationConfig): AutoGraph {
         kind: 'guard',
         note: 'Hold the big moves for a human',
       },
+    ]);
+  }
+
+  // 6b · Lifecycle audiences (opt-in) — sync suppression / retarget / lookalike.
+  if (config.syncAudiences) {
+    stages.push([
+      { id: 'audiences', label: 'Sync lifecycle audiences', kind: 'action', note: 'Suppress · retarget · lookalike (approval-gated)' },
     ]);
   }
 

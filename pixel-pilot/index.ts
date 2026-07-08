@@ -13,6 +13,10 @@ export * from './proof';
 export * from './automations';
 export * from './agents';
 export * from './stack';
+// NOTE: ./hubspot and ./crypto are SERVER-ONLY (node:crypto, secrets, token store)
+// and are intentionally not re-exported here — the barrel is imported by client
+// components. Import them directly from '@/pixel-pilot/hubspot' / '@/pixel-pilot/crypto'
+// (same pattern as ./quickbooks).
 
 /** Brand constants shared across the platform. */
 export const PIXEL_PILOT = {

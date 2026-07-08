@@ -1,0 +1,450 @@
+{
+  "name": "Pixel Pilot · Pipeline Truth Sync",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "pp-pipeline-truth-sync",
+        "responseMode": "onReceived",
+        "options": {}
+      },
+      "id": "deal-stage-changed",
+      "name": "Deal Stage Changed",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2,
+      "position": [
+        0,
+        300
+      ],
+      "webhookId": "pp-pipeline-truth-sync"
+    },
+    {
+      "parameters": {
+        "language": "javaScript",
+        "jsCode": "// HubSpot deal webhooks arrive as an array of change events (or a single object).\nconst body = items[0].json;\nconst ev = Array.isArray(body) ? body[0] : (body.payload || body.event || body);\nconst dealId = String(ev.objectId || ev.dealId || ev.id || '');\nconst stage = String(ev.propertyValue || ev.dealstage || ev.stage || '');\nconst dryRun = String($env.PP_DRY_RUN || '').toLowerCase() === 'true' || body.dryRun === true;\nif (!dealId) { throw new Error('Pipeline Truth Sync: no deal id in webhook payload'); }\nreturn [{ json: { dealId, stage, dryRun, receivedAt: new Date().toISOString() } }];"
+      },
+      "id": "extract-guard",
+      "name": "Extract & Guard",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        220,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "language": "javaScript",
+        "jsCode": "// Idempotency: dedupe on the HubSpot deal id (+ stage) using n8n static data.\n// NOTE: static data persists only across PRODUCTION (active) executions. For\n// cross-instance dedupe, back this with Redis/KV (see README).\nconst data = $getWorkflowStaticData('global');\ndata.synced = data.synced || {};\nconst j = items[0].json;\nconst dedupeKey = j.dealId + ':' + j.stage;\nconst duplicate = Boolean(data.synced[dedupeKey]);\nreturn [{ json: { ...j, dedupeKey, duplicate } }];"
+      },
+      "id": "check-idempotency",
+      "name": "Check Idempotency",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        440,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "loose"
+          },
+          "combinator": "and",
+          "conditions": [
+            {
+              "id": "c1",
+              "leftValue": "={{ $json.duplicate }}",
+              "rightValue": "",
+              "operator": {
+                "type": "boolean",
+                "operation": "true",
+                "singleValue": true
+              }
+            }
+          ]
+        }
+      },
+      "id": "new-deal-",
+      "name": "New Deal?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2,
+      "position": [
+        660,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "language": "javaScript",
+        "jsCode": "const j = items[0].json;\nconsole.log('[pipeline-truth-sync] duplicate deal, skipping', j.dedupeKey);\nreturn [{ json: { ...j, result: 'skipped-duplicate' } }];"
+      },
+      "id": "log-skip",
+      "name": "Log Skip",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        880,
+        120
+      ]
+    },
+    {
+      "parameters": {
+        "method": "GET",
+        "sendHeaders": true,
+        "options": {},
+        "url": "=https://api.hubapi.com/crm/v3/objects/deals/{{ $json.dealId }}?associations=contacts&properties=amount,dealstage,pipeline,closedate,pp_gclid,pp_fbclid,pp_ttclid",
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Authorization",
+              "value": "={{ 'Bearer ' + $env.HUBSPOT_PRIVATE_APP_TOKEN }}"
+            }
+          ]
+        }
+      },
+      "id": "read-deal",
+      "name": "Read Deal",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        880,
+        420
+      ],
+      "retryOnFail": true,
+      "maxTries": 4,
+      "waitBetweenTries": 2000
+    },
+    {
+      "parameters": {
+        "method": "GET",
+        "sendHeaders": true,
+        "options": {},
+        "url": "=https://api.hubapi.com/crm/v3/objects/contacts/{{ $json.associations?.contacts?.results?.[0]?.id || '0' }}?properties=email,pp_gclid,pp_fbclid,pp_ttclid",
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Authorization",
+              "value": "={{ 'Bearer ' + $env.HUBSPOT_PRIVATE_APP_TOKEN }}"
+            }
+          ]
+        }
+      },
+      "id": "read-contact",
+      "name": "Read Contact",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        1100,
+        420
+      ],
+      "retryOnFail": true,
+      "maxTries": 4,
+      "waitBetweenTries": 2000,
+      "onError": "continueRegularOutput"
+    },
+    {
+      "parameters": {
+        "language": "javaScript",
+        "jsCode": "// Pull the deal + associated contact + stored click ids into one conversion.\nconst base = $('Check Idempotency').first().json;\nconst deal = $('Read Deal').first().json || {};\nlet contact = {};\ntry { contact = $('Read Contact').first().json || {}; } catch (e) { contact = {}; }\nconst dp = deal.properties || {};\nconst cp = contact.properties || {};\nconst pick = (k) => dp['pp_' + k] || cp['pp_' + k] || null; // prefer deal, fall back to contact\nconst amount = Number(dp.amount || 0);\nconst stage = String(dp.dealstage || base.stage || '');\nconst isClosedWon = /closedwon/i.test(stage);\nconst closeMs = dp.closedate ? Date.parse(dp.closedate) : Date.now();\nreturn [{ json: {\n  dealId: base.dealId,\n  dedupeKey: base.dedupeKey,\n  dryRun: base.dryRun,\n  stage,\n  isClosedWon,\n  value: amount,\n  currency: $env.PP_CONVERSION_CURRENCY || 'USD',\n  gclid: pick('gclid'),\n  fbclid: pick('fbclid'),\n  ttclid: pick('ttclid'),\n  email: cp.email || null,\n  eventTimeUnix: Math.floor(closeMs / 1000),\n  eventTimeIso: new Date(closeMs).toISOString(),\n} }];"
+      },
+      "id": "assemble-conversion",
+      "name": "Assemble Conversion",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1320,
+        420
+      ]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "loose"
+          },
+          "combinator": "and",
+          "conditions": [
+            {
+              "id": "c1",
+              "leftValue": "={{ $json.isClosedWon }}",
+              "rightValue": "",
+              "operator": {
+                "type": "boolean",
+                "operation": "true",
+                "singleValue": true
+              }
+            }
+          ]
+        }
+      },
+      "id": "closed-won-",
+      "name": "Closed-Won?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2,
+      "position": [
+        1540,
+        420
+      ]
+    },
+    {
+      "parameters": {
+        "language": "javaScript",
+        "jsCode": "const c = items[0].json;\nconst RES = { platform: 'meta', status: 'skipped', httpStatus: null, detail: '' };\nif (!c.fbclid) { RES.detail = 'no fbclid'; return [{ json: { ...c, meta: RES } }]; }\nif (c.dryRun) { RES.status = 'dry-run'; RES.detail = 'PP_DRY_RUN'; return [{ json: { ...c, meta: RES } }]; }\nconst token = $env.META_CAPI_TOKEN, pixel = $env.META_PIXEL_ID;\nif (!token || !pixel) { RES.status = 'error'; RES.detail = 'META_CAPI_TOKEN / META_PIXEL_ID unset'; return [{ json: { ...c, meta: RES } }]; }\nconst url = 'https://graph.facebook.com/v21.0/' + pixel + '/events?access_token=' + token;\nconst body = { data: [{ event_name: 'Purchase', event_time: c.eventTimeUnix, action_source: 'crm', event_id: 'pp_' + c.dealId, user_data: { fbc: c.fbclid }, custom_data: { value: c.value, currency: c.currency } }] };\nlet a = 0; const max = 5;\nwhile (a < max) {\n  try {\n    const r = await this.helpers.httpRequest({ method: 'POST', url, body, json: true, returnFullResponse: true });\n    RES.status = 'sent'; RES.httpStatus = r.statusCode; RES.detail = 'ok'; break;\n  } catch (e) {\n    RES.httpStatus = e.httpCode || e.statusCode || null;\n    if (a === max - 1) { RES.status = 'error'; RES.detail = String(e.message || e).slice(0, 200); }\n    else { await new Promise(x => setTimeout(x, Math.min(30000, 500 * 2 ** a) + Math.floor(Math.random() * 250))); }\n    a++;\n  }\n}\nreturn [{ json: { ...c, meta: RES } }];"
+      },
+      "id": "meta-capi",
+      "name": "Meta CAPI",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1780,
+        240
+      ]
+    },
+    {
+      "parameters": {
+        "language": "javaScript",
+        "jsCode": "const c = items[0].json;\nconst RES = { platform: 'google', status: 'skipped', httpStatus: null, detail: '' };\nif (!c.gclid) { RES.detail = 'no gclid'; return [{ json: { ...c, google: RES } }]; }\nif (c.dryRun) { RES.status = 'dry-run'; RES.detail = 'PP_DRY_RUN'; return [{ json: { ...c, google: RES } }]; }\nconst cust = $env.GOOGLE_ADS_CUSTOMER_ID, dev = $env.GOOGLE_ADS_DEVELOPER_TOKEN, tok = $env.GOOGLE_ADS_ACCESS_TOKEN, action = $env.GOOGLE_ADS_CONVERSION_ACTION;\nif (!cust || !dev || !tok || !action) { RES.status = 'error'; RES.detail = 'GOOGLE_ADS_* env unset'; return [{ json: { ...c, google: RES } }]; }\nconst d = new Date(c.eventTimeUnix * 1000), pad = (n) => String(n).padStart(2, '0');\nconst cdt = d.getUTCFullYear() + '-' + pad(d.getUTCMonth() + 1) + '-' + pad(d.getUTCDate()) + ' ' + pad(d.getUTCHours()) + ':' + pad(d.getUTCMinutes()) + ':' + pad(d.getUTCSeconds()) + '+00:00';\nconst url = 'https://googleads.googleapis.com/v17/customers/' + cust + ':uploadClickConversions';\nconst headers = { 'developer-token': dev, 'login-customer-id': cust, Authorization: 'Bearer ' + tok };\nconst body = { partialFailure: true, conversions: [{ gclid: c.gclid, conversionAction: action, conversionDateTime: cdt, conversionValue: c.value, currencyCode: c.currency }] };\nlet a = 0; const max = 5;\nwhile (a < max) {\n  try {\n    const r = await this.helpers.httpRequest({ method: 'POST', url, headers, body, json: true, returnFullResponse: true });\n    RES.status = 'sent'; RES.httpStatus = r.statusCode; RES.detail = 'ok'; break;\n  } catch (e) {\n    RES.httpStatus = e.httpCode || e.statusCode || null;\n    if (a === max - 1) { RES.status = 'error'; RES.detail = String(e.message || e).slice(0, 200); }\n    else { await new Promise(x => setTimeout(x, Math.min(30000, 500 * 2 ** a) + Math.floor(Math.random() * 250))); }\n    a++;\n  }\n}\nreturn [{ json: { ...c, google: RES } }];"
+      },
+      "id": "google-offline-import",
+      "name": "Google Offline Import",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1780,
+        420
+      ]
+    },
+    {
+      "parameters": {
+        "language": "javaScript",
+        "jsCode": "const c = items[0].json;\nconst RES = { platform: 'tiktok', status: 'skipped', httpStatus: null, detail: '' };\nif (!c.ttclid) { RES.detail = 'no ttclid'; return [{ json: { ...c, tiktok: RES } }]; }\nif (c.dryRun) { RES.status = 'dry-run'; RES.detail = 'PP_DRY_RUN'; return [{ json: { ...c, tiktok: RES } }]; }\nconst tok = $env.TIKTOK_ACCESS_TOKEN, eventSet = $env.TIKTOK_EVENT_SET_ID;\nif (!tok || !eventSet) { RES.status = 'error'; RES.detail = 'TIKTOK_* env unset'; return [{ json: { ...c, tiktok: RES } }]; }\nconst url = 'https://business-api.tiktok.com/open_api/v1.3/event/track/';\nconst headers = { 'Access-Token': tok, 'Content-Type': 'application/json' };\nconst body = { event_source: 'offline', event_source_id: eventSet, data: [{ event: 'CompletePayment', event_time: c.eventTimeUnix, event_id: 'pp_' + c.dealId, user: { ttclid: c.ttclid }, properties: { value: c.value, currency: c.currency, content_type: 'deal' } }] };\nlet a = 0; const max = 5;\nwhile (a < max) {\n  try {\n    const r = await this.helpers.httpRequest({ method: 'POST', url, headers, body, json: true, returnFullResponse: true });\n    RES.status = 'sent'; RES.httpStatus = r.statusCode; RES.detail = 'ok'; break;\n  } catch (e) {\n    RES.httpStatus = e.httpCode || e.statusCode || null;\n    if (a === max - 1) { RES.status = 'error'; RES.detail = String(e.message || e).slice(0, 200); }\n    else { await new Promise(x => setTimeout(x, Math.min(30000, 500 * 2 ** a) + Math.floor(Math.random() * 250))); }\n    a++;\n  }\n}\nreturn [{ json: { ...c, tiktok: RES } }];"
+      },
+      "id": "tiktok-events-api",
+      "name": "TikTok Events API",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1780,
+        600
+      ]
+    },
+    {
+      "parameters": {
+        "language": "javaScript",
+        "jsCode": "const j = items[0].json;\nconsole.log('[pipeline-truth-sync] stage change but not closed-won, no conversion', j.dealId, j.stage);\nreturn [{ json: { ...j, result: 'noop-not-closed-won' } }];"
+      },
+      "id": "log-non-won",
+      "name": "Log Non-Won",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1780,
+        800
+      ]
+    },
+    {
+      "parameters": {
+        "language": "javaScript",
+        "jsCode": "// Three parallel senders converge here (three items on one input).\nconst all = items.map(i => i.json);\nconst base = all[0] || {};\nconst results = {\n  meta: (all.find(x => x.meta) || {}).meta || null,\n  google: (all.find(x => x.google) || {}).google || null,\n  tiktok: (all.find(x => x.tiktok) || {}).tiktok || null,\n};\nconst anySent = Object.values(results).some(r => r && r.status === 'sent');\nconst anyError = Object.values(results).some(r => r && r.status === 'error');\n// Mark synced when we made progress (a real send or a clean dry-run). If every\n// platform errored we DON'T mark, so the next event can safely retry.\nconst data = $getWorkflowStaticData('global');\ndata.synced = data.synced || {};\nconst marked = Boolean(base.dedupeKey && (anySent || base.dryRun));\nif (marked) { data.synced[base.dedupeKey] = new Date().toISOString(); }\nconst line = (p, r) => p + ': ' + (r ? (r.status + (r.httpStatus ? ' (' + r.httpStatus + ')' : '') + (r.detail ? ' — ' + r.detail : '')) : 'n/a');\nconst slackText = [\n  '*Pipeline Truth Sync* — deal ' + base.dealId + (base.dryRun ? '  _(DRY-RUN)_' : ''),\n  'value: ' + base.value + ' ' + base.currency,\n  line('Meta', results.meta),\n  line('Google', results.google),\n  line('TikTok', results.tiktok),\n  anyError ? ':warning: a platform failed — not fully marked, will retry on next event' : ':white_check_mark: marked synced',\n].join('\\n');\nconst summary = { dealId: base.dealId, dedupeKey: base.dedupeKey, dryRun: base.dryRun, value: base.value, currency: base.currency, results, anyError, marked, slackText, finishedAt: new Date().toISOString() };\nconsole.log('[pipeline-truth-sync]', JSON.stringify({ ...summary, slackText: undefined }));\nreturn [{ json: summary }];"
+      },
+      "id": "summarize-mark",
+      "name": "Summarize & Mark",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        2040,
+        420
+      ]
+    },
+    {
+      "parameters": {
+        "language": "javaScript",
+        "jsCode": "const j = items[0].json;\nconst url = $env.SLACK_WEBHOOK_URL;\nif (!url) { console.log('[pipeline-truth-sync] SLACK_WEBHOOK_URL unset; summary:\\n' + j.slackText); return [{ json: { ...j, slack: 'unconfigured' } }]; }\nlet a = 0; const max = 4; let st = 'error';\nwhile (a < max) {\n  try { await this.helpers.httpRequest({ method: 'POST', url, body: { text: j.slackText }, json: true }); st = 'sent'; break; }\n  catch (e) { if (a === max - 1) { st = 'error'; } else { await new Promise(x => setTimeout(x, Math.min(15000, 500 * 2 ** a))); } a++; }\n}\nreturn [{ json: { ...j, slack: st } }];"
+      },
+      "id": "log-to-slack",
+      "name": "Log to Slack",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        2260,
+        420
+      ]
+    }
+  ],
+  "connections": {
+    "Deal Stage Changed": {
+      "main": [
+        [
+          {
+            "node": "Extract & Guard",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Extract & Guard": {
+      "main": [
+        [
+          {
+            "node": "Check Idempotency",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Check Idempotency": {
+      "main": [
+        [
+          {
+            "node": "New Deal?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "New Deal?": {
+      "main": [
+        [
+          {
+            "node": "Log Skip",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Read Deal",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Read Deal": {
+      "main": [
+        [
+          {
+            "node": "Read Contact",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Read Contact": {
+      "main": [
+        [
+          {
+            "node": "Assemble Conversion",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Assemble Conversion": {
+      "main": [
+        [
+          {
+            "node": "Closed-Won?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Closed-Won?": {
+      "main": [
+        [
+          {
+            "node": "Meta CAPI",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Google Offline Import",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "TikTok Events API",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Log Non-Won",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Meta CAPI": {
+      "main": [
+        [
+          {
+            "node": "Summarize & Mark",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Offline Import": {
+      "main": [
+        [
+          {
+            "node": "Summarize & Mark",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "TikTok Events API": {
+      "main": [
+        [
+          {
+            "node": "Summarize & Mark",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Summarize & Mark": {
+      "main": [
+        [
+          {
+            "node": "Log to Slack",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "pinData": {},
+  "meta": {
+    "pixelPilot": {
+      "id": "pipeline-truth-sync",
+      "webhookPath": "/webhook/pp-pipeline-truth-sync"
+    }
+  }
+}
