@@ -440,6 +440,12 @@ function Designer({
             title="Sync to QuickBooks"
             note="Push results to your connected QuickBooks company"
           />
+          <Switch
+            on={config.syncAudiences}
+            onToggle={() => patch({ syncAudiences: !config.syncAudiences })}
+            title="Sync lifecycle audiences"
+            note="Suppress customers, retarget stalled deals, seed lookalikes"
+          />
         </div>
       </Panel>
 

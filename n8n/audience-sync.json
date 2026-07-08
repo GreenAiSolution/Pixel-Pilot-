@@ -1,0 +1,533 @@
+{
+  "name": "Pixel Pilot · Audience Sync",
+  "nodes": [
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "field": "days",
+              "triggerAtHour": 4
+            }
+          ]
+        }
+      },
+      "id": "daily-schedule",
+      "name": "Daily Schedule",
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.2,
+      "position": [
+        0,
+        400
+      ]
+    },
+    {
+      "parameters": {
+        "method": "GET",
+        "url": "={{ $env.PP_APP_URL }}/api/pixel-pilot/audiences?portalId={{ $env.HUBSPOT_PORTAL_ID }}",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "x-pp-signature",
+              "value": "={{ $env.N8N_WEBHOOK_SECRET }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "compute-audiences",
+      "name": "Compute Audiences",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        220,
+        400
+      ],
+      "retryOnFail": true,
+      "maxTries": 3,
+      "waitBetweenTries": 2000
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "loose"
+          },
+          "combinator": "and",
+          "conditions": [
+            {
+              "id": "c1",
+              "leftValue": "={{ $json.approval.autoApprove }}",
+              "rightValue": "",
+              "operator": {
+                "type": "boolean",
+                "operation": "true",
+                "singleValue": true
+              }
+            }
+          ]
+        }
+      },
+      "id": "auto-approve",
+      "name": "Auto-Approve?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2,
+      "position": [
+        440,
+        400
+      ]
+    },
+    {
+      "parameters": {
+        "language": "javaScript",
+        "jsCode": "const spec = $('Compute Audiences').first().json;\nconst url = $env.SLACK_WEBHOOK_URL;\nconst resume = $execution.resumeUrl;\nconst lines = ['*Audience Sync needs approval* — portal ' + spec.portalId, 'reasons: ' + (spec.approval.reasons.join('; ') || 'threshold exceeded')];\nfor (const seg of ['suppression', 'retarget', 'seed']) { const d = spec.segments[seg]; if (d) lines.push(seg + ': +' + d.adds.length + ' / -' + d.removes.length + ' (total ' + d.total + ')'); }\nlines.push('Approve: ' + resume + '?approved=true');\nlines.push('Reject: ' + resume + '?approved=false');\nconst text = lines.join('\\n');\nif (url) { try { await this.helpers.httpRequest({ method: 'POST', url: url, body: { text: text }, json: true }); } catch (e) {} }\nelse { console.log('[audience-sync] approval needed (no SLACK_WEBHOOK_URL):\\n' + text); }\nreturn [{ json: spec }];"
+      },
+      "id": "request-approval",
+      "name": "Request Approval",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        660,
+        560
+      ]
+    },
+    {
+      "parameters": {
+        "resume": "webhook",
+        "options": {}
+      },
+      "id": "wait-for-approval",
+      "name": "Wait for Approval",
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [
+        880,
+        560
+      ],
+      "webhookId": "pp-audience-approval"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "loose"
+          },
+          "combinator": "and",
+          "conditions": [
+            {
+              "id": "c1",
+              "leftValue": "={{ ($json.query && $json.query.approved === 'true') || ($json.body && $json.body.approved === true) }}",
+              "rightValue": "",
+              "operator": {
+                "type": "boolean",
+                "operation": "true",
+                "singleValue": true
+              }
+            }
+          ]
+        }
+      },
+      "id": "approved",
+      "name": "Approved?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2,
+      "position": [
+        1100,
+        560
+      ]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "={{ $env.PP_APP_URL }}/api/pixel-pilot/audiences",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "x-pp-signature",
+              "value": "={{ $env.N8N_WEBHOOK_SECRET }}"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ JSON.stringify({ portalId: $('Compute Audiences').first().json.portalId, runId: $('Compute Audiences').first().json.runId, decision: 'reject' }) }}",
+        "options": {}
+      },
+      "id": "reject-run",
+      "name": "Reject Run",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        1320,
+        720
+      ],
+      "retryOnFail": true,
+      "maxTries": 3,
+      "waitBetweenTries": 2000
+    },
+    {
+      "parameters": {
+        "language": "javaScript",
+        "jsCode": "const spec = $('Compute Audiences').first().json;\nconst url = $env.SLACK_WEBHOOK_URL;\nconst text = '*Audience Sync* — portal ' + spec.portalId + ' :no_entry: rejected by reviewer; no changes applied.';\nif (url) { try { await this.helpers.httpRequest({ method: 'POST', url: url, body: { text: text }, json: true }); } catch (e) {} }\nelse { console.log('[audience-sync] ' + text); }\nreturn [{ json: { rejected: true, portalId: spec.portalId } }];"
+      },
+      "id": "log-rejected",
+      "name": "Log Rejected",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1540,
+        720
+      ]
+    },
+    {
+      "parameters": {
+        "language": "javaScript",
+        "jsCode": "// Both the auto-approved and human-approved paths converge here; re-load the spec\n// (a resumed Wait replaces the item with the approval payload).\nreturn [{ json: $('Compute Audiences').first().json }];"
+      },
+      "id": "fan-apply",
+      "name": "Fan Apply",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1100,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "language": "javaScript",
+        "jsCode": "const spec = $('Compute Audiences').first().json;\nconst dryRun = String($env.PP_DRY_RUN || '').toLowerCase() === 'true';\nconst RES = { platform: 'meta', dryRun: dryRun, segments: {}, status: 'ok', detail: '' };\nconst token = $env.META_ACCESS_TOKEN || $env.META_CAPI_TOKEN, act = $env.META_AD_ACCOUNT_ID;\nif (!token || !act) { RES.status = 'error'; RES.detail = 'META_ACCESS_TOKEN / META_AD_ACCOUNT_ID unset'; return [{ json: { ...spec, meta: RES } }]; }\nconst sd = $getWorkflowStaticData('global'); sd.metaAud = sd.metaAud || {};\nconst base = 'https://graph.facebook.com/v21.0';\nconst call = async (method, path, body) => { let a = 0; const max = 5; while (true) { try { return await this.helpers.httpRequest({ method: method, url: base + path, body: body, json: true, returnFullResponse: true }); } catch (e) { if (a >= max - 1) throw e; await new Promise(x => setTimeout(x, Math.min(30000, 500 * 2 ** a))); a++; } } };\nconst ensure = async (seg, subtype, originId) => {\n  const key = 'meta:' + spec.portalId + ':' + seg;\n  if (sd.metaAud[key]) return sd.metaAud[key];\n  if (dryRun) return 'dry-run-id';\n  const body = { name: 'PP ' + seg + ' ' + spec.portalId, subtype: subtype, access_token: token };\n  if (subtype === 'CUSTOM') body.customer_file_source = 'USER_PROVIDED_ONLY';\n  if (subtype === 'LOOKALIKE') { body.origin_audience_id = originId; body.lookalike_spec = { type: 'similarity', country: $env.META_LOOKALIKE_COUNTRY || 'US' }; }\n  const r = await call('POST', '/act_' + act + '/customaudiences', body);\n  const id = r.body && r.body.id; sd.metaAud[key] = id; return id;\n};\ntry {\n  for (const seg of ['suppression', 'retarget', 'seed']) {\n    const d = spec.segments[seg]; if (!d) continue;\n    const id = await ensure(seg, 'CUSTOM');\n    if (!dryRun && d.adds.length) await call('POST', '/' + id + '/users', { access_token: token, payload: { schema: ['EMAIL'], data: d.adds.map(h => [h]) } });\n    if (!dryRun && d.removes.length) await call('DELETE', '/' + id + '/users', { access_token: token, payload: { schema: ['EMAIL'], data: d.removes.map(h => [h]) } });\n    RES.segments[seg] = { id: id, added: d.adds.length, removed: d.removes.length };\n  }\n  if (spec.lookalike && spec.lookalike.ready) {\n    const seedId = sd.metaAud['meta:' + spec.portalId + ':seed'];\n    RES.lookalike = { id: await ensure('lookalike', 'LOOKALIKE', seedId) };\n  }\n} catch (e) { RES.status = 'error'; RES.detail = String(e.message || e).slice(0, 200); }\nreturn [{ json: { ...spec, meta: RES } }];"
+      },
+      "id": "apply-meta",
+      "name": "Apply Meta",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1320,
+        140
+      ]
+    },
+    {
+      "parameters": {
+        "language": "javaScript",
+        "jsCode": "const spec = $('Compute Audiences').first().json;\nconst dryRun = String($env.PP_DRY_RUN || '').toLowerCase() === 'true';\nconst RES = { platform: 'google', dryRun: dryRun, segments: {}, status: 'ok', detail: '' };\nconst cust = $env.GOOGLE_ADS_CUSTOMER_ID, dev = $env.GOOGLE_ADS_DEVELOPER_TOKEN, tok = $env.GOOGLE_ADS_ACCESS_TOKEN;\nconst lists = { suppression: $env.GOOGLE_USERLIST_SUPPRESSION, retarget: $env.GOOGLE_USERLIST_RETARGET, seed: $env.GOOGLE_USERLIST_SEED };\nif (!cust || !dev || !tok) { RES.status = 'error'; RES.detail = 'GOOGLE_ADS_* env unset'; return [{ json: { ...spec, google: RES } }]; }\nconst base = 'https://googleads.googleapis.com/v17';\nconst headers = { 'developer-token': dev, 'login-customer-id': cust, Authorization: 'Bearer ' + tok };\nconst call = async (method, path, body) => { let a = 0; const max = 5; while (true) { try { return await this.helpers.httpRequest({ method: method, url: base + path, headers: headers, body: body, json: true, returnFullResponse: true }); } catch (e) { if (a >= max - 1) throw e; await new Promise(x => setTimeout(x, Math.min(30000, 500 * 2 ** a))); a++; } } };\ntry {\n  for (const seg of ['suppression', 'retarget', 'seed']) {\n    const d = spec.segments[seg]; if (!d) continue;\n    const list = lists[seg];\n    if (!list) { RES.segments[seg] = { skipped: 'no userList env' }; continue; }\n    if (dryRun) { RES.segments[seg] = { added: d.adds.length, removed: d.removes.length, dryRun: true }; continue; }\n    const created = await call('POST', '/customers/' + cust + '/offlineUserDataJobs:create', { job: { type: 'CUSTOMER_MATCH_USER_LIST', customerMatchUserListMetadata: { userList: list } } });\n    const job = created.body && created.body.resourceName;\n    const ops = [];\n    for (const h of d.adds) ops.push({ create: { userIdentifiers: [{ hashedEmail: h }] } });\n    for (const h of d.removes) ops.push({ remove: { userIdentifiers: [{ hashedEmail: h }] } });\n    await call('POST', '/' + job + ':addOperations', { operations: ops, enablePartialFailure: true });\n    await call('POST', '/' + job + ':run', {});\n    RES.segments[seg] = { added: d.adds.length, removed: d.removes.length, job: job };\n  }\n} catch (e) { RES.status = 'error'; RES.detail = String(e.message || e).slice(0, 200); }\nreturn [{ json: { ...spec, google: RES } }];"
+      },
+      "id": "apply-google",
+      "name": "Apply Google",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1320,
+        320
+      ]
+    },
+    {
+      "parameters": {
+        "language": "javaScript",
+        "jsCode": "const spec = $('Compute Audiences').first().json;\nconst dryRun = String($env.PP_DRY_RUN || '').toLowerCase() === 'true';\nconst RES = { platform: 'tiktok', dryRun: dryRun, segments: {}, status: 'ok', detail: '' };\nconst tok = $env.TIKTOK_ACCESS_TOKEN, adv = $env.TIKTOK_ADVERTISER_ID;\nif (!tok || !adv) { RES.status = 'error'; RES.detail = 'TIKTOK_* env unset'; return [{ json: { ...spec, tiktok: RES } }]; }\nconst sd = $getWorkflowStaticData('global'); sd.ttAud = sd.ttAud || {};\nconst base = 'https://business-api.tiktok.com/open_api/v1.3';\nconst headers = { 'Access-Token': tok, 'Content-Type': 'application/json' };\nconst call = async (path, body) => { let a = 0; const max = 5; while (true) { try { return await this.helpers.httpRequest({ method: 'POST', url: base + path, headers: headers, body: body, json: true, returnFullResponse: true }); } catch (e) { if (a >= max - 1) throw e; await new Promise(x => setTimeout(x, Math.min(30000, 500 * 2 ** a))); a++; } } };\nconst ensure = async (seg) => { const k = 'tt:' + spec.portalId + ':' + seg; if (sd.ttAud[k]) return sd.ttAud[k]; if (dryRun) return 'dry-run-id'; const r = await call('/dmp/custom_audience/create/', { advertiser_id: adv, custom_audience_name: 'PP ' + seg + ' ' + spec.portalId, audience_sub_type: 'NORMAL' }); const id = r.body && r.body.data && r.body.data.custom_audience_id; sd.ttAud[k] = id; return id; };\ntry {\n  for (const seg of ['suppression', 'retarget', 'seed']) {\n    const d = spec.segments[seg]; if (!d) continue;\n    const id = await ensure(seg);\n    if (!dryRun && d.adds.length) await call('/dmp/custom_audience/update/', { advertiser_id: adv, custom_audience_id: id, action: 'append', calculate_type: 'EMAIL_SHA256', data: d.adds });\n    if (!dryRun && d.removes.length) await call('/dmp/custom_audience/update/', { advertiser_id: adv, custom_audience_id: id, action: 'delete', calculate_type: 'EMAIL_SHA256', data: d.removes });\n    RES.segments[seg] = { id: id, added: d.adds.length, removed: d.removes.length };\n  }\n  if (spec.lookalike && spec.lookalike.ready && !dryRun) {\n    const seedId = sd.ttAud['tt:' + spec.portalId + ':seed'];\n    const r = await call('/dmp/custom_audience/lookalike/create/', { advertiser_id: adv, custom_audience_id: seedId, lookalike_spec: {} });\n    RES.lookalike = { id: r.body && r.body.data && r.body.data.custom_audience_id };\n  }\n} catch (e) { RES.status = 'error'; RES.detail = String(e.message || e).slice(0, 200); }\nreturn [{ json: { ...spec, tiktok: RES } }];"
+      },
+      "id": "apply-tiktok",
+      "name": "Apply TikTok",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1320,
+        500
+      ]
+    },
+    {
+      "parameters": {
+        "language": "javaScript",
+        "jsCode": "const spec = $('Compute Audiences').first().json;\nconst all = items.map(i => i.json);\nconst results = { meta: (all.find(x => x.meta) || {}).meta || null, google: (all.find(x => x.google) || {}).google || null, tiktok: (all.find(x => x.tiktok) || {}).tiktok || null };\nconst anyError = Object.values(results).some(r => r && r.status === 'error');\nconst dryRun = Object.values(results).some(r => r && r.dryRun);\nconst seg = (r) => { if (!r) return 'n/a'; if (r.status === 'error') return 'error: ' + (r.detail || ''); const parts = Object.keys(r.segments || {}).map(k => k + ' +' + (r.segments[k].added || 0) + '/-' + (r.segments[k].removed || 0)); return (r.dryRun ? '(dry-run) ' : '') + (parts.join(', ') || 'no changes'); };\nconst slackText = ['*Audience Sync* — portal ' + spec.portalId + (dryRun ? ' (DRY-RUN)' : ''), 'Meta: ' + seg(results.meta), 'Google: ' + seg(results.google), 'TikTok: ' + seg(results.tiktok), anyError ? ':warning: a platform errored — snapshot NOT committed, will retry next run' : ':white_check_mark: applied; committing snapshot'].join('\\n');\nreturn [{ json: { portalId: spec.portalId, runId: spec.runId, dryRun: dryRun, results: results, anyError: anyError, slackText: slackText } }];"
+      },
+      "id": "summarize-apply",
+      "name": "Summarize Apply",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1560,
+        320
+      ]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "loose"
+          },
+          "combinator": "and",
+          "conditions": [
+            {
+              "id": "c1",
+              "leftValue": "={{ $json.anyError }}",
+              "rightValue": "",
+              "operator": {
+                "type": "boolean",
+                "operation": "false",
+                "singleValue": true
+              }
+            }
+          ]
+        }
+      },
+      "id": "applied-clean",
+      "name": "Applied Clean?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2,
+      "position": [
+        1780,
+        320
+      ]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "={{ $env.PP_APP_URL }}/api/pixel-pilot/audiences",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "x-pp-signature",
+              "value": "={{ $env.N8N_WEBHOOK_SECRET }}"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ JSON.stringify({ portalId: $json.portalId, runId: $json.runId, decision: 'commit' }) }}",
+        "options": {}
+      },
+      "id": "commit-snapshot",
+      "name": "Commit Snapshot",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        2000,
+        220
+      ],
+      "retryOnFail": true,
+      "maxTries": 3,
+      "waitBetweenTries": 2000
+    },
+    {
+      "parameters": {
+        "language": "javaScript",
+        "jsCode": "const j = items[0].json;\nconst url = $env.SLACK_WEBHOOK_URL;\nif (!url) { console.log('[audience-sync]\\n' + j.slackText); return [{ json: j }]; }\ntry { await this.helpers.httpRequest({ method: 'POST', url: url, body: { text: j.slackText }, json: true }); } catch (e) {}\nreturn [{ json: j }];"
+      },
+      "id": "log-result",
+      "name": "Log Result",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        2220,
+        320
+      ]
+    }
+  ],
+  "connections": {
+    "Daily Schedule": {
+      "main": [
+        [
+          {
+            "node": "Compute Audiences",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Compute Audiences": {
+      "main": [
+        [
+          {
+            "node": "Auto-Approve?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Auto-Approve?": {
+      "main": [
+        [
+          {
+            "node": "Fan Apply",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Request Approval",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Request Approval": {
+      "main": [
+        [
+          {
+            "node": "Wait for Approval",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Wait for Approval": {
+      "main": [
+        [
+          {
+            "node": "Approved?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Approved?": {
+      "main": [
+        [
+          {
+            "node": "Fan Apply",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Reject Run",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Reject Run": {
+      "main": [
+        [
+          {
+            "node": "Log Rejected",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Fan Apply": {
+      "main": [
+        [
+          {
+            "node": "Apply Meta",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Apply Google",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Apply TikTok",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Apply Meta": {
+      "main": [
+        [
+          {
+            "node": "Summarize Apply",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Apply Google": {
+      "main": [
+        [
+          {
+            "node": "Summarize Apply",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Apply TikTok": {
+      "main": [
+        [
+          {
+            "node": "Summarize Apply",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Summarize Apply": {
+      "main": [
+        [
+          {
+            "node": "Applied Clean?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Applied Clean?": {
+      "main": [
+        [
+          {
+            "node": "Commit Snapshot",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Log Result",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Commit Snapshot": {
+      "main": [
+        [
+          {
+            "node": "Log Result",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "pinData": {},
+  "meta": {
+    "pixelPilot": {
+      "id": "audience-sync",
+      "webhookPath": "/webhook/pp-audience-sync"
+    }
+  }
+}

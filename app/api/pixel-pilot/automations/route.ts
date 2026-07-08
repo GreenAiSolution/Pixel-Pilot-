@@ -21,6 +21,7 @@ interface Manifest {
   service?: string;
   workflowId?: string | null;
   syncQuickbooks?: boolean;
+  syncAudiences?: boolean;
   [k: string]: unknown;
 }
 
@@ -83,6 +84,11 @@ export async function POST(req: NextRequest) {
         detail: err instanceof Error ? err.message : 'QuickBooks check failed',
       });
     }
+  }
+
+  // 4 · Lifecycle audiences (opt-in) — kick the approval-gated audience-sync workflow.
+  if (manifest.syncAudiences) {
+    receipts.push(await triggerWorkflow('audience-sync', manifest));
   }
 
   const record: DeployedAutomation = {
