@@ -7,6 +7,8 @@ file: pixel-pilot/executor.ts
 
 Part of [[📁 Codebase]] — live copy at `~/Pixel-Pilot/pixel-pilot/executor.ts`
 
+**Imports** [[Project Files/pixel-pilot/workflows.ts|workflows.ts]]
+
 ````ts
 // ─── PIXEL PILOT · EXECUTOR ──────────────────────────────────────────────────
 // The server-side runtime that actually *runs* a deployed automation. Two real

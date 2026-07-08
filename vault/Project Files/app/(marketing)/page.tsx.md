@@ -7,6 +7,8 @@ file: app/(marketing)/page.tsx
 
 Part of [[📁 Codebase]] — live copy at `~/Pixel-Pilot/app/(marketing)/page.tsx`
 
+**Imports** [[Project Files/components/pixel-pilot/connection-banner.tsx|connection-banner.tsx]] · [[Project Files/components/pixel-pilot/sections.tsx|sections.tsx]]
+
 ````tsx
 "use client";
 

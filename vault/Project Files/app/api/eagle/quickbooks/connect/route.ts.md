@@ -7,6 +7,8 @@ file: app/api/eagle/quickbooks/connect/route.ts
 
 Part of [[📁 Codebase]] — live copy at `~/Pixel-Pilot/app/api/eagle/quickbooks/connect/route.ts`
 
+**Imports** [[Project Files/eagle/quickbooks.ts|quickbooks.ts]]
+
 ````ts
 // ─── EAGLE · QUICKBOOKS OAUTH START ──────────────────────────────────────────
 // GET /api/eagle/quickbooks/connect

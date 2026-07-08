@@ -7,6 +7,8 @@ file: app/eagle/layout.tsx
 
 Part of [[📁 Codebase]] — live copy at `~/Pixel-Pilot/app/eagle/layout.tsx`
 
+**Imports** [[Project Files/eagle/index.ts|index.ts]]
+
 ````tsx
 import type { Metadata } from 'next';
 import Link from 'next/link';

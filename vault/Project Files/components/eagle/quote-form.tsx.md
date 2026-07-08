@@ -7,6 +7,8 @@ file: components/eagle/quote-form.tsx
 
 Part of [[📁 Codebase]] — live copy at `~/Pixel-Pilot/components/eagle/quote-form.tsx`
 
+**Imports** [[Project Files/eagle/index.ts|index.ts]]
+
 ````tsx
 "use client";
 

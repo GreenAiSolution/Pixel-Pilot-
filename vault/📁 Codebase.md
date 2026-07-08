@@ -7,15 +7,13 @@ tags: [pixel-pilot, source, moc]
 The complete Pixel Pilot repo, mirrored as notes under **Project Files/**. Back to [[🚀 Pixel Pilot — Home]].
 
 > [!info] Source of truth
-> Live repo `GreenAiSolution/Pixel-Pilot-` (local `~/Pixel-Pilot`). Snapshot — edit code in the repo, then run `node scripts/sync-vault.mjs` to refresh. `package-lock.json` and binaries omitted.
+> Live repo `GreenAiSolution/Pixel-Pilot-` (local `~/Pixel-Pilot`). Snapshot — edit code in the repo, then run `node scripts/sync-vault.mjs` to refresh. `package-lock.json` omitted; images/video are attached raw in the Obsidian copy.
 
 **104 files** mirrored.
 
 ## File tree
 
 ```
-"vault/\360\237\223\201 Codebase.md"
-"vault/\360\237\232\200 Pixel Pilot \342\200\224 Home.md"
 .claude/agents/backend-reviewer.md
 .claude/agents/backend-runner.md
 .claude/agents/eagle-billing.md
@@ -68,6 +66,7 @@ app/api/pixel-pilot/tools/employees/route.ts
 app/api/pixel-pilot/tools/funnel/route.ts
 app/api/pixel-pilot/tools/launch-plan/route.ts
 app/api/pixel-pilot/tools/pretest/route.ts
+app/api/pixel-pilot/tools/route.ts
 app/api/pixel-pilot/tools/website/route.ts
 app/api/pixel-pilot/workflows/[id]/route.ts
 app/api/pixel-pilot/zapier/route.ts
@@ -111,6 +110,7 @@ pixel-pilot/quickbooks.ts
 pixel-pilot/services.ts
 pixel-pilot/stack.ts
 pixel-pilot/store.ts
+pixel-pilot/tools.ts
 pixel-pilot/workflows.ts
 postcss.config.mjs
 sales/cold-call-script.md

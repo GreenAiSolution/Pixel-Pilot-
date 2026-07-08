@@ -7,6 +7,8 @@ file: app/(marketing)/stack/page.tsx
 
 Part of [[📁 Codebase]] — live copy at `~/Pixel-Pilot/app/(marketing)/stack/page.tsx`
 
+**Imports** [[Project Files/pixel-pilot/index.ts|index.ts]]
+
 ````tsx
 // ─── PIXEL PILOT · THE STACK ─────────────────────────────────────────────────
 // The "business brain" page — the full catalog of apps, connectors and tools,
@@ -14,6 +16,7 @@ Part of [[📁 Codebase]] — live copy at `~/Pixel-Pilot/app/(marketing)/stack/
 // Renders from pixel-pilot/stack.ts (single source of truth).
 
 import type { Metadata } from 'next';
+import Link from 'next/link';
 import { stackByCategory, stackStats, toolIsLive, type StackTool, type IntegrationVia } from '@/pixel-pilot';
 
 export const metadata: Metadata = {
@@ -54,8 +57,9 @@ function StatusBadge({ tool }: { tool: StackTool }) {
 }
 
 function ToolCard({ tool }: { tool: StackTool }) {
-  return (
-    <div className="group relative overflow-hidden rounded-xl border border-white/10 bg-white/[0.03] p-4 transition hover:-translate-y-0.5 hover:border-white/25">
+  const href = stackToolHref(tool);
+  const body = (
+    <>
       <span
         className="absolute inset-x-0 top-0 h-px opacity-60"
         style={{ background: `linear-gradient(90deg,transparent,${tool.hue},transparent)` }}
@@ -73,8 +77,36 @@ function ToolCard({ tool }: { tool: StackTool }) {
         <StatusBadge tool={tool} />
       </div>
       <p className="mt-2.5 text-[13px] leading-snug text-text-secondary">{tool.blurb}</p>
-    </div>
+      <div className="mt-3 text-[11px] font-medium" style={{ color: href ? tool.hue : undefined }}>
+        {href ? actionLabel(tool) : 'Roadmap item'}
+      </div>
+    </>
   );
+  const className = "group relative block overflow-hidden rounded-xl border border-white/10 bg-white/[0.03] p-4 transition hover:-translate-y-0.5 hover:border-white/25";
+  return href ? (
+    <Link href={href} className={className}>
+      {body}
+    </Link>
+  ) : (
+    <div className={className}>{body}</div>
+  );
+}
+
+function stackToolHref(tool: StackTool): string | null {
+  if (tool.id === 'meta_ads' || tool.id === 'google_ads' || tool.id === 'tiktok_ads' || tool.id === 'shopify') return `/api/pixel-pilot/connectors/${tool.id}`;
+  if (tool.id === 'quickbooks') return '/api/pixel-pilot/connectors/quickbooks';
+  if (tool.id === 'higgsfield' || tool.id === 'canva' || tool.id === 'figma') return '/forge';
+  if (tool.id === 'zapier' || tool.id === 'n8n' || tool.id === 'make') return '/automation';
+  if (tool.via === 'zapier') return '/automator';
+  if (tool.via === 'mcp') return '/agents';
+  return null;
+}
+
+function actionLabel(tool: StackTool): string {
+  if (tool.via === 'native') return toolIsLive(tool) ? 'Open connection →' : 'Connect or configure →';
+  if (tool.via === 'zapier') return 'Wire through Zapier →';
+  if (tool.via === 'mcp') return 'Run with an agent →';
+  return 'View path →';
 }
 
 export default function StackPage() {
@@ -155,7 +187,7 @@ export default function StackPage() {
             Connect the core in minutes; reach everything else through the Zapier bridge.
           </p>
           <a
-            href="/automator"
+            href="/automator?source=stack"
             className="mt-6 inline-block rounded-full px-7 py-3 text-sm font-semibold text-white transition hover:opacity-90"
             style={{ background: 'linear-gradient(90deg,#6C63FF,#FF2E9A)' }}
           >

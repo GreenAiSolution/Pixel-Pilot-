@@ -7,6 +7,8 @@ file: pixel-pilot/automations.ts
 
 Part of [[📁 Codebase]] — live copy at `~/Pixel-Pilot/pixel-pilot/automations.ts`
 
+**Imports** [[Project Files/pixel-pilot/connectors.ts|connectors.ts]] · [[Project Files/pixel-pilot/services.ts|services.ts]] · [[Project Files/pixel-pilot/workflows.ts|workflows.ts]]
+
 ````ts
 // ─── PIXEL PILOT · AUTOMATION DESIGNER ───────────────────────────────────────
 // The brain behind the post-sign-up Automator. Pure data + wiring, no React:

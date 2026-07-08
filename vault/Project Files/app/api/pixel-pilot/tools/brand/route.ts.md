@@ -7,6 +7,8 @@ file: app/api/pixel-pilot/tools/brand/route.ts
 
 Part of [[📁 Codebase]] — live copy at `~/Pixel-Pilot/app/api/pixel-pilot/tools/brand/route.ts`
 
+**Imports** [[Project Files/pixel-pilot/ai.ts|ai.ts]] · [[Project Files/pixel-pilot/store.ts|store.ts]]
+
 ````ts
 // ─── PIXEL PILOT · TOOL · BRAND IDENTITY KIT ─────────────────────────────────
 // POST /api/pixel-pilot/tools/brand

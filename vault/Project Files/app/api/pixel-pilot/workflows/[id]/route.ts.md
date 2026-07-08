@@ -7,6 +7,8 @@ file: app/api/pixel-pilot/workflows/[id]/route.ts
 
 Part of [[📁 Codebase]] — live copy at `~/Pixel-Pilot/app/api/pixel-pilot/workflows/[id]/route.ts`
 
+**Imports** [[Project Files/pixel-pilot/index.ts|index.ts]]
+
 ````ts
 // ─── PIXEL PILOT · n8n WORKFLOW TRIGGER ──────────────────────────────────────
 // POST /api/pixel-pilot/workflows/[id]

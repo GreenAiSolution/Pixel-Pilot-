@@ -7,6 +7,8 @@ file: app/eagle/ops/page.tsx
 
 Part of [[📁 Codebase]] — live copy at `~/Pixel-Pilot/app/eagle/ops/page.tsx`
 
+**Imports** [[Project Files/eagle/index.ts|index.ts]]
+
 ````tsx
 import Link from 'next/link';
 import { EAGLE, EAGLE_AGENTS, eagleWorkflowsForAgent, quickbooksConfigured, isConnected } from '@/eagle';

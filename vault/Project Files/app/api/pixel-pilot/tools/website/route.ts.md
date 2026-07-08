@@ -7,6 +7,8 @@ file: app/api/pixel-pilot/tools/website/route.ts
 
 Part of [[📁 Codebase]] — live copy at `~/Pixel-Pilot/app/api/pixel-pilot/tools/website/route.ts`
 
+**Imports** [[Project Files/pixel-pilot/ai.ts|ai.ts]] · [[Project Files/pixel-pilot/store.ts|store.ts]]
+
 ````ts
 // ─── PIXEL PILOT · TOOL · WEBSITE CREATION & DEVELOPMENT ─────────────────────
 // POST /api/pixel-pilot/tools/website
@@ -93,7 +95,7 @@ export async function GET() {
 }
 
 function previewSite(business: string): SiteResult {
-  const html = `<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>${business}</title><style>*{box-sizing:border-box;margin:0}body{font-family:system-ui,sans-serif;background:#05060f;color:#fff;line-height:1.6}.wrap{max-width:960px;margin:0 auto;padding:0 24px}.hero{min-height:70vh;display:flex;flex-direction:column;justify-content:center;text-align:center;gap:20px}h1{font-size:clamp(2rem,7vw,4rem);background:linear-gradient(90deg,#00D4FF,#6C63FF,#FF2E9A);-webkit-background-clip:text;background-clip:text;color:transparent}p{color:#8890A0;font-size:1.2rem;max-width:36rem;margin:0 auto}.cta{display:inline-block;margin-top:16px;padding:14px 28px;border-radius:999px;background:linear-gradient(90deg,#6C63FF,#FF2E9A);color:#fff;text-decoration:none;font-weight:600}section{padding:64px 0;border-top:1px solid rgba(255,255,255,.08)}</style></head><body><div class="wrap"><div class="hero"><h1>${business}</h1><p>The premium way to get results — built to convert, ready to launch.</p><a class="cta" href="#cta">Get started →</a></div><section id="features"><h2>Why choose us</h2><p>Fast, trustworthy, and designed to sell.</p></section><section id="cta"><h2>Ready to launch?</h2><p>Start today.</p><a class="cta" href="#">Book a call →</a></section></div></body></html>`;
+  const html = `<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>${business}</title><style>*{box-sizing:border-box;margin:0}body{font-family:system-ui,sans-serif;background:#05060f;color:#fff;line-height:1.6}.wrap{max-width:960px;margin:0 auto;padding:0 24px}.hero{min-height:70vh;display:flex;flex-direction:column;justify-content:center;text-align:center;gap:20px}h1{font-size:clamp(2rem,7vw,4rem);background:linear-gradient(90deg,#00D4FF,#6C63FF,#FF2E9A);-webkit-background-clip:text;background-clip:text;color:transparent}p{color:#8890A0;font-size:1.2rem;max-width:36rem;margin:0 auto}.cta{display:inline-block;margin-top:16px;padding:14px 28px;border-radius:999px;background:linear-gradient(90deg,#6C63FF,#FF2E9A);color:#fff;text-decoration:none;font-weight:600}section{padding:64px 0;border-top:1px solid rgba(255,255,255,.08)}</style></head><body><div class="wrap"><div class="hero"><h1>${business}</h1><p>The premium way to get results — built to convert, ready to launch.</p><a class="cta" href="#contact">Get started →</a></div><section id="features"><h2>Why choose us</h2><p>Fast, trustworthy, and designed to sell.</p></section><section id="contact"><h2>Ready to launch?</h2><p>Start today.</p><a class="cta" href="mailto:hello@example.com?subject=Book%20a%20call%20with%20${encodeURIComponent(business)}">Book a call →</a></section></div></body></html>`;
   return { sitemap: ['hero', 'features', 'cta'], headline: `${business} — built to convert`, html };
 }
 ````

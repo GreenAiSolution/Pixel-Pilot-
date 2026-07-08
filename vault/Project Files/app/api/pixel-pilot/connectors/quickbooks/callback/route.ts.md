@@ -7,6 +7,8 @@ file: app/api/pixel-pilot/connectors/quickbooks/callback/route.ts
 
 Part of [[📁 Codebase]] — live copy at `~/Pixel-Pilot/app/api/pixel-pilot/connectors/quickbooks/callback/route.ts`
 
+**Imports** [[Project Files/pixel-pilot/quickbooks.ts|quickbooks.ts]]
+
 ````ts
 // ─── PIXEL PILOT · QUICKBOOKS OAUTH CALLBACK ─────────────────────────────────
 // GET /api/pixel-pilot/connectors/quickbooks/callback?code=…&realmId=…&state=…

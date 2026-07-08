@@ -7,6 +7,8 @@ file: app/api/pixel-pilot/connectors/[provider]/route.ts
 
 Part of [[📁 Codebase]] — live copy at `~/Pixel-Pilot/app/api/pixel-pilot/connectors/[provider]/route.ts`
 
+**Imports** [[Project Files/pixel-pilot/index.ts|index.ts]]
+
 ````ts
 // ─── PIXEL PILOT · CONNECTOR OAUTH START ─────────────────────────────────────
 // GET /api/pixel-pilot/connectors/[provider]

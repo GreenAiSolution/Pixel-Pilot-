@@ -7,6 +7,8 @@ file: app/api/pixel-pilot/automations/route.ts
 
 Part of [[📁 Codebase]] — live copy at `~/Pixel-Pilot/app/api/pixel-pilot/automations/route.ts`
 
+**Imports** [[Project Files/pixel-pilot/executor.ts|executor.ts]] · [[Project Files/pixel-pilot/quickbooks.ts|quickbooks.ts]] · [[Project Files/pixel-pilot/store.ts|store.ts]]
+
 ````ts
 // ─── PIXEL PILOT · AUTOMATIONS (persist + execute) ───────────────────────────
 // POST /api/pixel-pilot/automations   → save a deployed automation and run it

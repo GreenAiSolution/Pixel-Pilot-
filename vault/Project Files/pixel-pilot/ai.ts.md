@@ -19,6 +19,8 @@ Part of [[📁 Codebase]] — live copy at `~/Pixel-Pilot/pixel-pilot/ai.ts`
 
 const API_URL = 'https://api.anthropic.com/v1/messages';
 const MODEL = 'claude-opus-4-8';
+const TOOL_SYSTEM =
+  'Pixel Pilot tool standard: return finished, usable work; be specific to the submitted business; avoid unsupported guarantees; include operational next steps; and keep outputs safe for paid-media/account use.';
 
 export class AINotConfiguredError extends Error {
   constructor() {
@@ -78,7 +80,7 @@ export async function askClaude({ system, prompt, maxTokens = 4096 }: AskOptions
  */
 export async function askClaudeJSON<T>({ system, prompt, maxTokens = 4096 }: AskOptions): Promise<T> {
   const raw = await askClaude({
-    system: `${system ?? ''}\n\nRespond with ONLY valid minified JSON — no prose, no markdown fences.`.trim(),
+    system: `${TOOL_SYSTEM}\n\n${system ?? ''}\n\nRespond with ONLY valid minified JSON — no prose, no markdown fences.`.trim(),
     prompt,
     maxTokens,
   });

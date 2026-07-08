@@ -7,6 +7,8 @@ file: app/(marketing)/layout.tsx
 
 Part of [[📁 Codebase]] — live copy at `~/Pixel-Pilot/app/(marketing)/layout.tsx`
 
+**Imports** [[Project Files/components/pixel-pilot/shell.tsx|shell.tsx]]
+
 ````tsx
 import { Shell } from '@/components/pixel-pilot/shell';
 

@@ -7,6 +7,8 @@ file: pixel-pilot/quickbooks.ts
 
 Part of [[📁 Codebase]] — live copy at `~/Pixel-Pilot/pixel-pilot/quickbooks.ts`
 
+**Imports** [[Project Files/pixel-pilot/store.ts|store.ts]]
+
 ````ts
 // ─── PIXEL PILOT · QUICKBOOKS ONLINE (native) ────────────────────────────────
 // A first-class QuickBooks Online integration — no Zapier in the path. Set Intuit

@@ -7,6 +7,8 @@ file: app/sites/[slug]/route.ts
 
 Part of [[📁 Codebase]] — live copy at `~/Pixel-Pilot/app/sites/[slug]/route.ts`
 
+**Imports** [[Project Files/app/api/pixel-pilot/tools/website/route.ts|route.ts]] · [[Project Files/pixel-pilot/store.ts|store.ts]]
+
 ````ts
 // ─── PIXEL PILOT · HOSTED SITES ──────────────────────────────────────────────
 // GET /sites/[slug]

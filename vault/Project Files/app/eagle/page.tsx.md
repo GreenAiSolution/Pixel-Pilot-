@@ -7,6 +7,8 @@ file: app/eagle/page.tsx
 
 Part of [[📁 Codebase]] — live copy at `~/Pixel-Pilot/app/eagle/page.tsx`
 
+**Imports** [[Project Files/components/eagle/quote-form.tsx|quote-form.tsx]] · [[Project Files/eagle/index.ts|index.ts]]
+
 ````tsx
 import Link from 'next/link';
 import { EAGLE, EAGLE_SERVICES, EAGLE_AGENTS } from '@/eagle';

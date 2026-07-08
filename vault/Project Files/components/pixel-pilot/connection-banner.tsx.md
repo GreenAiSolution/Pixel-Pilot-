@@ -7,6 +7,8 @@ file: components/pixel-pilot/connection-banner.tsx
 
 Part of [[📁 Codebase]] — live copy at `~/Pixel-Pilot/components/pixel-pilot/connection-banner.tsx`
 
+**Imports** [[Project Files/pixel-pilot/index.ts|index.ts]]
+
 ````tsx
 "use client";
 

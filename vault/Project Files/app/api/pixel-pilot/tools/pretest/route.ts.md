@@ -7,6 +7,8 @@ file: app/api/pixel-pilot/tools/pretest/route.ts
 
 Part of [[📁 Codebase]] — live copy at `~/Pixel-Pilot/app/api/pixel-pilot/tools/pretest/route.ts`
 
+**Imports** [[Project Files/pixel-pilot/ai.ts|ai.ts]] · [[Project Files/pixel-pilot/store.ts|store.ts]]
+
 ````ts
 // ─── PIXEL PILOT · TOOL · SYNTHETIC AD PRE-TESTING ───────────────────────────
 // POST /api/pixel-pilot/tools/pretest

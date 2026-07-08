@@ -7,6 +7,8 @@ file: app/(marketing)/studio/page.tsx
 
 Part of [[📁 Codebase]] — live copy at `~/Pixel-Pilot/app/(marketing)/studio/page.tsx`
 
+**Imports** [[Project Files/pixel-pilot/index.ts|index.ts]]
+
 ````tsx
 "use client";
 /* eslint-disable @typescript-eslint/no-explicit-any */
@@ -23,6 +25,8 @@ Part of [[📁 Codebase]] — live copy at `~/Pixel-Pilot/app/(marketing)/studio
 // each one hands its context forward to the next step in the flight plan.
 
 import { useCallback, useMemo, useState } from "react";
+import { useSearchParams } from "next/navigation";
+import { STUDIO_TOOL_FLOW, getStudioTool, type StudioToolDefinition, type StudioToolId } from "@/pixel-pilot";
 
 /* ── Field system ─────────────────────────────────────────────────────────── */
 type Field =
@@ -31,29 +35,15 @@ type Field =
   | { name: string; label: string; kind: "chips"; options: string[]; hint?: string };
 
 type Tool = {
-  id: string;
-  name: string;
-  category: string;
-  endpoint: string;
-  accent: string;
-  icon: string;
-  blurb: string;
-  cta: string;
+  readonly id: StudioToolId;
   fields: Field[];
   build?: (v: Record<string, string>) => Record<string, unknown>;
-};
+} & StudioToolDefinition;
 
 /* ── The roster ───────────────────────────────────────────────────────────── */
 const TOOLS: Tool[] = [
   {
-    id: "launch",
-    name: "Zero-to-Live Plan",
-    category: "Strategy",
-    endpoint: "/api/pixel-pilot/tools/launch-plan",
-    accent: "#00D4FF",
-    icon: "◎",
-    blurb: "A product or URL → a complete, profit-first launch plan.",
-    cta: "Build the launch plan",
+    ...getStudioTool("launch")!,
     fields: [
       { name: "url", label: "Product URL", placeholder: "https://…", hint: "Paste a store or product page — or describe it below." },
       { name: "product", label: "…or describe the product", kind: "area", placeholder: "What it is, who it's for, why it's different" },
@@ -63,14 +53,7 @@ const TOOLS: Tool[] = [
     build: (v) => ({ url: v.url, product: [v.product, v.market ? `Market: ${v.market}` : ""].filter(Boolean).join(". "), budget: v.budget }),
   },
   {
-    id: "brand",
-    name: "Brand Identity Kit",
-    category: "Strategy",
-    endpoint: "/api/pixel-pilot/tools/brand",
-    accent: "#C9A84C",
-    icon: "❖",
-    blurb: "Name, tagline, positioning, a real color system + voice.",
-    cta: "Design the brand",
+    ...getStudioTool("brand")!,
     fields: [
       { name: "business", label: "Business", placeholder: "e.g. an AI bookkeeping service for SMBs" },
       { name: "vibe", label: "Vibe", kind: "chips", options: ["Premium & sleek", "Playful & bold", "Trusted & clean", "Luxury", "Techy & futuristic", "Warm & human"] },
@@ -80,14 +63,7 @@ const TOOLS: Tool[] = [
     build: (v) => ({ business: v.business, vibe: v.vibe, audience: v.audience, name: v.name }),
   },
   {
-    id: "funnel",
-    name: "Offer & Funnel Architect",
-    category: "Strategy",
-    endpoint: "/api/pixel-pilot/tools/funnel",
-    accent: "#6C63FF",
-    icon: "⧉",
-    blurb: "An irresistible offer — value stack, tiers, guarantee, funnel.",
-    cta: "Architect the offer",
+    ...getStudioTool("funnel")!,
     fields: [
       { name: "product", label: "Product / service", placeholder: "what you're selling" },
       { name: "price", label: "Price point", kind: "select", options: ["Under $50", "$50–$200", "$200–$500", "$500–$2k", "$2k+", "Subscription"] },
@@ -97,14 +73,7 @@ const TOOLS: Tool[] = [
     build: (v) => ({ product: v.product, price: v.price, audience: v.audience, goal: v.goal }),
   },
   {
-    id: "website",
-    name: "Website Creation",
-    category: "Build",
-    endpoint: "/api/pixel-pilot/tools/website",
-    accent: "#00D4FF",
-    icon: "▤",
-    blurb: "A complete, responsive, deploy-ready landing page — live.",
-    cta: "Generate the site",
+    ...getStudioTool("website")!,
     fields: [
       { name: "business", label: "Business", placeholder: "e.g. an AI bookkeeping service for SMBs" },
       { name: "goal", label: "Primary goal", kind: "select", options: ["Book demos", "Sell a product", "Collect leads", "Launch a waitlist", "Drive app installs"] },
@@ -120,14 +89,7 @@ const TOOLS: Tool[] = [
     }),
   },
   {
-    id: "ads",
-    name: "Premium AI Ads",
-    category: "Build",
-    endpoint: "/api/pixel-pilot/tools/ads",
-    accent: "#FF2E9A",
-    icon: "✦",
-    blurb: "Ad copy + compliance + a visual brief, in one pass.",
-    cta: "Write the ad",
+    ...getStudioTool("ads")!,
     fields: [
       { name: "product", label: "Product", placeholder: "e.g. a clean pre-workout for busy founders" },
       { name: "audience", label: "Audience", placeholder: "DTC founders, 30–45" },
@@ -144,14 +106,7 @@ const TOOLS: Tool[] = [
     }),
   },
   {
-    id: "content",
-    name: "Content Engine",
-    category: "Build",
-    endpoint: "/api/pixel-pilot/tools/content",
-    accent: "#FF2E9A",
-    icon: "◈",
-    blurb: "A ready-to-post content calendar — hook, caption, CTA per day.",
-    cta: "Fill the calendar",
+    ...getStudioTool("content")!,
     fields: [
       { name: "business", label: "Business", placeholder: "what you post about" },
       { name: "platform", label: "Platform", kind: "select", options: ["Instagram", "TikTok", "LinkedIn", "X / Twitter", "Facebook", "YouTube Shorts"] },
@@ -168,14 +123,7 @@ const TOOLS: Tool[] = [
     }),
   },
   {
-    id: "pretest",
-    name: "Synthetic Pre-Testing",
-    category: "Optimize",
-    endpoint: "/api/pixel-pilot/tools/pretest",
-    accent: "#C9A84C",
-    icon: "◉",
-    blurb: "Score ad variants on synthetic buyers before you spend.",
-    cta: "Run the pre-test",
+    ...getStudioTool("pretest")!,
     fields: [
       { name: "product", label: "Product", placeholder: "the product" },
       { name: "audience", label: "Audience", placeholder: "the core buyer" },
@@ -184,14 +132,7 @@ const TOOLS: Tool[] = [
     build: (v) => ({ product: v.product, audience: v.audience, variants: (v.variants || "").split("\n").map((s) => s.trim()).filter(Boolean) }),
   },
   {
-    id: "employees",
-    name: "AI Employees",
-    category: "Optimize",
-    endpoint: "/api/pixel-pilot/tools/employees",
-    accent: "#6C63FF",
-    icon: "❈",
-    blurb: "Hire a crew of AI operators + a first-week deployment plan.",
-    cta: "Hire the crew",
+    ...getStudioTool("employees")!,
     fields: [
       { name: "business", label: "Business", placeholder: "e.g. a supplements brand doing $80k/mo" },
       { name: "goals", label: "Goals", kind: "area", placeholder: "grow profitably, cut wasted spend" },
@@ -204,15 +145,18 @@ const TOOLS: Tool[] = [
 const CATEGORIES = ["Strategy", "Build", "Optimize"] as const;
 
 /* The guided flight plan — the recommended end-to-end order. */
-const FLOW = ["launch", "brand", "funnel", "website", "ads", "content", "pretest", "employees"];
+const FLOW = STUDIO_TOOL_FLOW;
 
 const GRADIENT = "linear-gradient(90deg,#00D4FF,#6C63FF,#FF2E9A)";
-const byId = (id: string) => TOOLS.find((t) => t.id === id)!;
+const byId = (id: string) => TOOLS.find((t) => t.id === id) ?? TOOLS[0];
 
 /* ── Page ─────────────────────────────────────────────────────────────────── */
 export default function StudioPage() {
-  const [activeId, setActiveId] = useState<string>(FLOW[0]);
-  const [values, setValues] = useState<Record<string, string>>({});
+  const search = useSearchParams();
+  const initialTool = search.get("tool");
+  const initialId = FLOW.includes(initialTool as StudioToolId) ? (initialTool as StudioToolId) : FLOW[0];
+  const [activeId, setActiveId] = useState<StudioToolId>(initialId);
+  const [values, setValues] = useState<Record<string, string>>(() => seedFromSearch(initialId, search));
   const [busy, setBusy] = useState(false);
   const [err, setErr] = useState<string | null>(null);
   // One result kept per tool so the workflow can show progress + hand off.
@@ -231,9 +175,10 @@ export default function StudioPage() {
   /* Switch tools, optionally pre-filling from carried context. */
   const pick = useCallback(
     (id: string, prefill?: Record<string, string>) => {
-      setActiveId(id);
+      const nextId = FLOW.includes(id as StudioToolId) ? (id as StudioToolId) : FLOW[0];
+      setActiveId(nextId);
       setErr(null);
-      setValues((prev) => ({ ...seedFor(id, project), ...(results[id] ? prev : {}), ...(prefill || {}) }));
+      setValues((prev) => ({ ...seedFor(nextId, project), ...(results[nextId] ? prev : {}), ...(prefill || {}) }));
     },
     [project, results],
   );
@@ -896,5 +841,21 @@ function seedFor(id: string, p: Record<string, string>): Record<string, string> 
     default:
       return {};
   }
+}
+
+function seedFromSearch(id: string, search: { get(name: string): string | null }): Record<string, string> {
+  const seed = seedFor(id, {
+    business: search.get("business") || "",
+    product: search.get("product") || "",
+    audience: search.get("audience") || "",
+    colors: search.get("colors") || "",
+  });
+
+  for (const key of ["url", "budget", "market", "business", "product", "audience", "goal", "style", "platform", "angle", "tone", "format", "days"]) {
+    const value = search.get(key);
+    if (value) seed[key] = value;
+  }
+
+  return seed;
 }
 ````

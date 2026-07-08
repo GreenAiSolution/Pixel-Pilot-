@@ -7,6 +7,8 @@ file: components/pixel-pilot/flight-scene.tsx
 
 Part of [[📁 Codebase]] — live copy at `~/Pixel-Pilot/components/pixel-pilot/flight-scene.tsx`
 
+**Imports** [[Project Files/pixel-pilot/connectors.ts|connectors.ts]]
+
 ````tsx
 "use client";
 

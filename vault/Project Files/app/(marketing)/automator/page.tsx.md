@@ -7,6 +7,8 @@ file: app/(marketing)/automator/page.tsx
 
 Part of [[📁 Codebase]] — live copy at `~/Pixel-Pilot/app/(marketing)/automator/page.tsx`
 
+**Imports** [[Project Files/components/pixel-pilot/automation-graph.tsx|automation-graph.tsx]] · [[Project Files/pixel-pilot/index.ts|index.ts]]
+
 ````tsx
 "use client";
 

@@ -7,6 +7,8 @@ file: app/api/pixel-pilot/stack/route.ts
 
 Part of [[📁 Codebase]] — live copy at `~/Pixel-Pilot/app/api/pixel-pilot/stack/route.ts`
 
+**Imports** [[Project Files/pixel-pilot/index.ts|index.ts]]
+
 ````ts
 // ─── PIXEL PILOT · STACK API ─────────────────────────────────────────────────
 // GET /api/pixel-pilot/stack

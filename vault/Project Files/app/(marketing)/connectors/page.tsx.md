@@ -7,6 +7,8 @@ file: app/(marketing)/connectors/page.tsx
 
 Part of [[📁 Codebase]] — live copy at `~/Pixel-Pilot/app/(marketing)/connectors/page.tsx`
 
+**Imports** [[Project Files/components/pixel-pilot/sections.tsx|sections.tsx]]
+
 ````tsx
 import type { Metadata } from "next";
 import { Connectors, FinalCTA } from "@/components/pixel-pilot/sections";

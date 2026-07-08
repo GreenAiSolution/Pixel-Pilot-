@@ -7,6 +7,8 @@ file: app/api/eagle/lead/route.ts
 
 Part of [[📁 Codebase]] — live copy at `~/Pixel-Pilot/app/api/eagle/lead/route.ts`
 
+**Imports** [[Project Files/eagle/index.ts|index.ts]]
+
 ````ts
 // ─── EAGLE LANDSCAPING · LEAD INTAKE ─────────────────────────────────────────
 // POST /api/eagle/lead

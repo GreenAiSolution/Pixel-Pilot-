@@ -7,6 +7,8 @@ file: app/api/pixel-pilot/tools/employees/route.ts
 
 Part of [[📁 Codebase]] — live copy at `~/Pixel-Pilot/app/api/pixel-pilot/tools/employees/route.ts`
 
+**Imports** [[Project Files/pixel-pilot/agents.ts|agents.ts]] · [[Project Files/pixel-pilot/ai.ts|ai.ts]] · [[Project Files/pixel-pilot/store.ts|store.ts]]
+
 ````ts
 // ─── PIXEL PILOT · TOOL · AI EMPLOYEES ───────────────────────────────────────
 // GET  /api/pixel-pilot/tools/employees   → the roster you can hire
