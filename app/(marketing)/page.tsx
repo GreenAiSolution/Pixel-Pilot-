@@ -272,7 +272,7 @@ export default function PixelPilotPage() {
           <Reveal className="text-center max-w-3xl mx-auto space-y-4">
             <div className="text-xs uppercase tracking-[0.3em] text-[#FF2E9A]">── The Flight Deck</div>
             <h2 className="text-4xl md:text-6xl font-semibold tracking-tight">
-              Ten instruments.
+              Five services.
               <br />
               <span
                 className="bg-clip-text text-transparent"

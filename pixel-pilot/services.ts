@@ -1,7 +1,11 @@
 // ─── PIXEL PILOT · SERVICES ──────────────────────────────────────────────────
-// The full flight deck. Ten services, all pointed at one niche: autonomous paid
-// media buying. This is the single source of truth for the marketing surface,
-// the 3D orbit, and the pricing matrix — edit here, it propagates everywhere.
+// The flight deck. FIVE services, each a real tool we build and run — the single
+// source of truth for the marketing surface, the 3D orbit, the Automator and the
+// pricing matrix. Edit here, it propagates everywhere.
+//
+// Each service maps to a live tool under app/api/pixel-pilot/tools/* with a
+// complete workflow (pixel-pilot/tools.ts). Categories are drawn from the existing
+// ServiceCategory set so the automation planner (automations.ts) stays valid.
 
 export type ServiceCategory =
   | 'Autonomy'
@@ -12,7 +16,7 @@ export type ServiceCategory =
   | 'Trust';
 
 export interface Service {
-  /** Stable slug — used as anchor + orbit key. */
+  /** Stable slug — used as anchor, orbit key, and tool id. */
   readonly id: string;
   /** Two-digit flight number shown in the UI. */
   readonly no: string;
@@ -26,118 +30,70 @@ export interface Service {
   readonly metric: { value: string; label: string };
   /** Theme color for gradients/glow. */
   readonly accent: string;
+  /** The live tool endpoint that delivers this service. */
+  readonly tool: string;
 }
 
 export const SERVICES: Service[] = [
   {
-    id: 'autonomous-buyer',
+    id: 'premium-ai-ads',
     no: '01',
-    name: 'The Autonomous Media Buyer',
-    category: 'Autonomy',
-    headline: "You don't get a login. You get a media buyer.",
-    body: 'Pixel Pilot lives in your Slack, works 24/7, and executes decisions in-platform — reallocating budget, killing losers, scaling winners — without waiting on a human to click.',
-    edge: 'It owns the outcome, not a dashboard.',
-    metric: { value: '24/7', label: 'On the account' },
-    accent: '#6C63FF',
-  },
-  {
-    id: 'profit-optimized',
-    no: '02',
-    name: 'Profit-Optimized, Not ROAS-Optimized',
-    category: 'Economics',
-    headline: 'It bids to your bank account.',
-    body: 'Wired into Shopify for real COGS, returns and LTV, Pixel Pilot optimizes to actual profit per customer — the number the ad platforms will never show you because it is their revenue.',
-    edge: 'Meta will never optimize against its own revenue. We do.',
-    metric: { value: '+31%', label: 'Blended net margin' },
-    accent: '#95BF47',
-  },
-  {
-    id: 'cross-channel',
-    no: '03',
-    name: 'Cross-Channel Conductor',
-    category: 'Orchestration',
-    headline: 'One brain across Meta, Google & TikTok.',
-    body: 'Most tools optimize inside a single channel. The Conductor treats your entire media mix as one portfolio and moves the next dollar to wherever its marginal return is highest — in real time.',
-    edge: 'Portfolio-level allocation no single-platform tool can see.',
-    metric: { value: '3+', label: 'Channels, one budget' },
-    accent: '#00D4FF',
-  },
-  {
-    id: 'creative-genome',
-    no: '04',
-    name: 'Creative Genome Engine',
+    name: 'Premium AI Ads',
     category: 'Creative',
-    headline: 'Winning ads, decoded and recombined.',
-    body: 'The Genome decomposes thousands of proven ads into structural genes — hook, pacing, emotional arc, framing — then predictively recombines them. The dataset compounds; a prompt cannot clone it.',
-    edge: 'A proprietary creative dataset, not a random generator.',
-    metric: { value: '10k+', label: 'Ad genes mapped' },
+    headline: 'Scroll-stopping ads, written and rendered in minutes.',
+    body: 'Give Pixel Pilot a product and an angle. It writes platform-native ad copy — hooks, primary text, headlines, CTAs — screens it for policy compliance, and briefs an on-brand visual. A full ad, ready to ship.',
+    edge: 'Copy + compliance + creative in one pass — not a prompt box.',
+    metric: { value: '<5min', label: 'Brief → finished ad' },
     accent: '#FF2E9A',
+    tool: '/api/pixel-pilot/tools/ads',
   },
   {
-    id: 'synthetic-testing',
-    no: '05',
-    name: 'Synthetic Pre-Testing',
-    category: 'Intelligence',
-    headline: 'Test 500 ads before you spend $1.',
-    body: 'Simulate performance against LLM personas modeled on your real customers. Kill the losers in silico and launch only predicted winners — stop paying the platforms to A/B test for you.',
-    edge: 'Kill the dogs before they ever cost you a click.',
-    metric: { value: '500', label: 'Ads tested in silico' },
-    accent: '#C9A84C',
+    id: 'ai-employees',
+    no: '02',
+    name: 'AI Employees',
+    category: 'Autonomy',
+    headline: 'Hire a crew of AI operators that never sleep.',
+    body: 'Deploy specialized agents — media buyer, profit analyst, creative director, growth strategist — into your business. They live in your Slack, work 24/7, and report back. Onboarding is a conversation, not a contract.',
+    edge: 'A roster of specialists, deployed in minutes and working around the clock.',
+    metric: { value: '24/7', label: 'On the job' },
+    accent: '#6C63FF',
+    tool: '/api/pixel-pilot/tools/employees',
   },
   {
-    id: 'data-flywheel',
-    no: '06',
-    name: 'Self-Improving Data Flywheel',
-    category: 'Intelligence',
-    headline: 'Every dollar makes it smarter.',
-    body: 'Each spend trains a model private to your account. The longer Pixel Pilot flies, the sharper it gets and the more it compounds — a growing asset you own, and a moat that raises the cost of ever leaving.',
-    edge: 'A compounding, account-specific model — not a static tool.',
-    metric: { value: '∞', label: 'Compounding edge' },
-    accent: '#8B7FFF',
-  },
-  {
-    id: 'compliance-autopilot',
-    no: '07',
-    name: 'Compliance-Safe Autopilot',
-    category: 'Trust',
-    headline: 'Scale the niches that get accounts banned.',
-    body: 'Supplements, med-spa, finance, crypto, cannabis — verticals where accounts get nuked weekly. Pixel Pilot writes and optimizes within policy guardrails and actively manages account health.',
-    edge: 'Aggression inside the guardrails the big players avoid.',
-    metric: { value: '0', label: 'Surprise bans' },
-    accent: '#FF6B35',
-  },
-  {
-    id: 'attribution-truth',
-    no: '08',
-    name: 'Attribution Truth Engine',
-    category: 'Intelligence',
-    headline: 'Finally know what actually drove the sale.',
-    body: 'Blended media-mix modeling plus live incrementality testing cuts through the post-iOS fog, then feeds that truth straight back into the optimizer so it acts on reality, not platform-reported fiction.',
-    edge: 'Measurement is the hardest moat — and the biggest unsolved pain.',
-    metric: { value: '1st-party', label: 'Ground truth' },
+    id: 'website-dev',
+    no: '03',
+    name: 'Website Creation & Development',
+    category: 'Orchestration',
+    headline: 'From an idea to a live, on-brand website.',
+    body: 'Describe the business. Pixel Pilot plans the sitemap, writes the copy, and generates a complete, responsive landing page — deploy-ready HTML you own. Conversion-focused, fast, and built to sell.',
+    edge: 'A real, shippable site — sitemap, copy and code — not a template picker.',
+    metric: { value: '1', label: 'URL to launch' },
     accent: '#00D4FF',
+    tool: '/api/pixel-pilot/tools/website',
+  },
+  {
+    id: 'synthetic-pretest',
+    no: '04',
+    name: 'Synthetic Ad Pre-Testing',
+    category: 'Intelligence',
+    headline: 'Test your ads on 500 buyers before you spend $1.',
+    body: 'Pixel Pilot builds synthetic buyer personas from your customer profile, then scores every ad variant against them — predicting scroll-stop, clarity and click intent. Launch only the predicted winners.',
+    edge: 'Kill the losers in silico — stop paying the platforms to A/B test for you.',
+    metric: { value: '500', label: 'Buyers, before spend' },
+    accent: '#C9A84C',
+    tool: '/api/pixel-pilot/tools/pretest',
   },
   {
     id: 'zero-to-live',
-    no: '09',
-    name: 'Zero-to-Live in Under an Hour',
+    no: '05',
+    name: 'Zero-to-Live Launch',
     category: 'Autonomy',
-    headline: 'Point it at a URL. Walk away. Come back to live ads.',
-    body: 'Pixel Pilot researches the market, builds personas, writes the strategy, generates the creative, wires the tracking, and launches — autonomously. Onboarding is the product.',
-    edge: 'Market research to live campaign while you make coffee.',
-    metric: { value: '<60min', label: 'URL → live' },
-    accent: '#6C63FF',
-  },
-  {
-    id: 'impression-creative',
-    no: '10',
-    name: 'Impression-Level Generative Creative',
-    category: 'Creative',
-    headline: 'A different ad for every single viewer.',
-    body: 'Creative assembled per-impression from weather, time of day, browsing behavior and live inventory. True 1:1 personalization at the impression — not the audience — and defensible bleeding edge.',
-    edge: '1:1 at the impression, not the segment.',
-    metric: { value: '1:1', label: 'Per impression' },
-    accent: '#FF2E9A',
+    headline: 'Point it at a URL. Get a complete launch plan back.',
+    body: 'From one product URL: market research, synthetic personas, a channel + budget plan across Meta, Google & TikTok, first creative concepts, and a tracking checklist. The whole flight plan, autonomously assembled.',
+    edge: 'Market research to a ready-to-launch plan while your coffee brews.',
+    metric: { value: '<60min', label: 'URL → launch plan' },
+    accent: '#00D4FF',
+    tool: '/api/pixel-pilot/tools/launch-plan',
   },
 ];
 

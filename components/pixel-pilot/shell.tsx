@@ -17,6 +17,7 @@ const NAV = [
   { href: "/#forge", label: "Creative Forge" },
   { href: "/#automation", label: "Automation" },
   { href: "/stack", label: "Stack" },
+  { href: "/studio", label: "Studio" },
   { href: "/#pricing", label: "Pricing" },
   { href: "/automator", label: "Automator" },
 ];
