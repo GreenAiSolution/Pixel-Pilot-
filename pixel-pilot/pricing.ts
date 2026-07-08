@@ -75,3 +75,109 @@ export const TIERS: Tier[] = [
     apex: true,
   },
 ];
+
+// ─── À LA CARTE SERVICES ─────────────────────────────────────────────────────
+// Every Studio deliverable, priced on its own. Retainers above are for a fully-
+// managed account; these are for teams who want a specific product built fast.
+// Prices are the single source of truth — edit here, they propagate to the
+// Pricing page. (Adjust freely; these are set to premium, defensible anchors.)
+
+export interface ServicePrice {
+  readonly id: string;
+  readonly name: string;
+  readonly price: string; // display price, e.g. "$1,500"
+  readonly unit: string; // "one-time" | "/mo" | "/batch"
+  readonly from?: boolean; // show a "from" prefix
+  readonly tagline: string;
+  readonly includes: string[];
+  readonly accent: string;
+  readonly tool: string; // deep-link into the live Studio tool
+  readonly popular?: boolean;
+}
+
+export const SERVICE_PRICING: ServicePrice[] = [
+  {
+    id: 'launch',
+    name: 'Zero-to-Live Plan',
+    price: '$1,500',
+    unit: 'one-time',
+    tagline: 'A product or URL → a complete, profit-first launch plan.',
+    includes: ['Market + competitor research', 'Synthetic buyer personas', 'Channel & budget split', 'Creative concepts + tracking plan'],
+    accent: '#00D4FF',
+    tool: '/studio',
+  },
+  {
+    id: 'brand',
+    name: 'Brand Identity Kit',
+    price: '$1,200',
+    unit: 'one-time',
+    tagline: 'Name, tagline, positioning, a real color system + voice.',
+    includes: ['Name + tagline + positioning', 'Full color system (hex)', 'Type + voice principles', 'Do / don’t brand rules'],
+    accent: '#C9A84C',
+    tool: '/studio',
+  },
+  {
+    id: 'funnel',
+    name: 'Offer & Funnel Architect',
+    price: '$900',
+    unit: 'one-time',
+    tagline: 'An irresistible offer — value stack, tiers, guarantee, funnel.',
+    includes: ['Core promise + value stack', '3 pricing tiers', 'Risk-reversal guarantee', 'Full funnel + upsell map'],
+    accent: '#6C63FF',
+    tool: '/studio',
+  },
+  {
+    id: 'website',
+    name: 'Website Creation',
+    price: '$2,500',
+    unit: 'one-time',
+    from: true,
+    tagline: 'A complete, responsive, deploy-ready landing page — live.',
+    includes: ['Sitemap + conversion copy', 'Responsive, accessible build', 'Deployed to a live URL', 'You own the code'],
+    accent: '#00D4FF',
+    tool: '/studio',
+    popular: true,
+  },
+  {
+    id: 'ads',
+    name: 'Premium AI Ads',
+    price: '$1,500',
+    unit: '/mo',
+    from: true,
+    tagline: 'Scroll-stopping ad copy + compliance + a visual brief.',
+    includes: ['Platform-native copy sets', 'Policy compliance screen', 'On-brand visual briefs', 'Fresh creative on demand'],
+    accent: '#FF2E9A',
+    tool: '/studio',
+  },
+  {
+    id: 'content',
+    name: 'Content Engine',
+    price: '$1,200',
+    unit: '/mo',
+    tagline: 'A ready-to-post content calendar — hook, caption, CTA per day.',
+    includes: ['Up to 14-day calendars', 'Hook + caption + format', 'Platform-native voice', 'Hashtag sets'],
+    accent: '#FF2E9A',
+    tool: '/studio',
+  },
+  {
+    id: 'pretest',
+    name: 'Synthetic Pre-Testing',
+    price: '$400',
+    unit: '/batch',
+    tagline: 'Score ad variants on synthetic buyers before you spend.',
+    includes: ['Synthetic buyer personas', 'Scroll-stop + clarity scores', 'Launch / iterate / kill verdicts', 'Ranked best-first'],
+    accent: '#C9A84C',
+    tool: '/studio',
+  },
+  {
+    id: 'employees',
+    name: 'AI Employees',
+    price: '$2,000',
+    unit: '/mo',
+    from: true,
+    tagline: 'Hire a crew of AI operators + a first-week deployment plan.',
+    includes: ['Specialist agent crew', 'First-week deployment plan', 'Lives in your Slack', 'Works 24/7'],
+    accent: '#6C63FF',
+    tool: '/studio',
+  },
+];
