@@ -12,6 +12,7 @@ export * from './pricing';
 export * from './proof';
 export * from './automations';
 export * from './agents';
+export * from './tools';
 export * from './stack';
 
 /** Brand constants shared across the platform. */
