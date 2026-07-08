@@ -10,7 +10,10 @@ export type PixelAgentDomain =
   | 'Economics'
   | 'Trust'
   | 'Automation'
-  | 'Operations';
+  | 'Operations'
+  | 'Sales'
+  | 'Search'
+  | 'Reputation';
 
 export interface PixelAgent {
   readonly id: string;
@@ -277,6 +280,111 @@ export const PIXEL_AGENTS: PixelAgent[] = [
     guardrails: [
       'Do not redeploy, roll back or change production settings without explicit approval',
       'Prioritize customer-impacting failures over cosmetic issues',
+    ],
+  },
+  {
+    id: 'sales-closer',
+    name: 'Closer',
+    role: 'AI Sales Closer',
+    domain: 'Sales',
+    callsign: 'Approach',
+    command: 'pixel-sales-closer',
+    accent: '#10E5A0',
+    tagline: 'Works every lead until it turns into revenue.',
+    intelligence:
+      'Reads each inbound lead the second it lands, qualifies it against fit and intent, and runs a persistent, human-sounding follow-up cadence across email, SMS and DM until the deal is booked or dead — so no lead ever goes cold.',
+    responsibilities: [
+      'Respond to new leads within seconds, 24/7',
+      'Qualify by fit, budget and buying intent',
+      'Book meetings straight onto the calendar',
+      'Run multi-touch follow-up until won or lost',
+    ],
+    decisions: [
+      'Which leads are sales-ready vs. nurture',
+      'The next best touch, channel and timing per lead',
+      'When to escalate a hot deal to a human closer',
+    ],
+    workflows: ['pipeline-truth-sync'],
+    integrations: ['HubSpot', 'Gmail', 'Calendar', 'Slack'],
+    kpis: [
+      { label: 'Lead response', value: '<60s' },
+      { label: 'Follow-up', value: 'Relentless' },
+      { label: 'Speed-to-lead', value: 'Won' },
+    ],
+    cadence: 'Instant on new lead + hourly sweeps',
+    guardrails: [
+      'Never fabricate offers, discounts or availability',
+      'Hand off to a human the moment a buyer asks',
+    ],
+  },
+  {
+    id: 'seo-commander',
+    name: 'Herald',
+    role: 'SEO & Local Rank Commander',
+    domain: 'Search',
+    callsign: 'Top Slot',
+    command: 'pixel-seo-commander',
+    accent: '#FFB020',
+    tagline: 'Owns the first result before your rivals wake up.',
+    intelligence:
+      'Hunts the keywords your buyers actually search, ships the pages and Google Business updates to win them, and watches the map pack and rankings daily — pushing you toward the top slot where the clicks and calls actually are.',
+    responsibilities: [
+      'Find high-intent keywords and ranking gaps',
+      'Publish and optimize pages + Google Business posts',
+      'Build local citations and fix listing errors',
+      'Track rankings, map pack and organic traffic',
+    ],
+    decisions: [
+      'Which keywords are worth the fight this month',
+      'What to publish, refresh, or consolidate',
+      'When a ranking dip needs a content or technical fix',
+    ],
+    workflows: [],
+    integrations: ['Google Business', 'Google Analytics', 'Search Console', 'Slack'],
+    kpis: [
+      { label: 'Target', value: '#1' },
+      { label: 'Map pack', value: 'Top 3' },
+      { label: 'Traffic', value: 'Compounding' },
+    ],
+    cadence: 'Daily rank checks + weekly publishing',
+    guardrails: [
+      'White-hat only — no cloaking, spam or bought links',
+      'Never publish claims the business cannot back up',
+    ],
+  },
+  {
+    id: 'reputation-concierge',
+    name: 'Echo',
+    role: 'Reputation & Reviews Concierge',
+    domain: 'Reputation',
+    callsign: 'Five Star',
+    command: 'pixel-reputation',
+    accent: '#C06BFF',
+    tagline: 'Turns happy customers into a five-star wall.',
+    intelligence:
+      'Times the ask for the moment a customer is happiest, routes them to leave a public review, and catches the unhappy ones privately before they ever post — then answers every review in your voice so your reputation compounds instead of leaking.',
+    responsibilities: [
+      'Request reviews at the peak-happiness moment',
+      'Intercept unhappy customers before they go public',
+      'Reply to every review in the brand voice',
+      'Surface recurring complaints worth fixing',
+    ],
+    decisions: [
+      'Who to ask, when, and on which platform',
+      'Which detractors need a human save',
+      'Which themes to escalate to the owner',
+    ],
+    workflows: [],
+    integrations: ['Google Business', 'HubSpot', 'Gmail', 'Slack'],
+    kpis: [
+      { label: 'Rating', value: '5★' },
+      { label: 'Bad reviews', value: 'Caught early' },
+      { label: 'Response', value: '100%' },
+    ],
+    cadence: 'On every completed job + daily monitor',
+    guardrails: [
+      'Never incentivize, gate or fake reviews (policy-safe)',
+      'Escalate legal or health complaints to a human',
     ],
   },
 ];
