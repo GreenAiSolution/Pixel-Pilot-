@@ -17,9 +17,14 @@ export class AINotConfiguredError extends Error {
   }
 }
 
+/** Resolve the Anthropic key under any of the common env var names. */
+function anthropicKey(): string | undefined {
+  return process.env.ANTHROPIC_API_KEY || process.env.CLAUDE_API_KEY || process.env.claude || process.env.CLAUDE;
+}
+
 /** True when the Claude engine is wired and live. */
 export function aiConfigured(): boolean {
-  return Boolean(process.env.ANTHROPIC_API_KEY);
+  return Boolean(anthropicKey());
 }
 
 export interface AskOptions {
@@ -30,7 +35,7 @@ export interface AskOptions {
 
 /** One Claude call → text. Throws AINotConfiguredError when the key is absent. */
 export async function askClaude({ system, prompt, maxTokens = 4096 }: AskOptions): Promise<string> {
-  const key = process.env.ANTHROPIC_API_KEY;
+  const key = anthropicKey();
   if (!key) throw new AINotConfiguredError();
 
   const res = await fetch(API_URL, {
