@@ -10,6 +10,8 @@ import { PIXEL_AGENTS, getPixelAgent } from '@/pixel-pilot/agents';
 import { askClaudeJSON, aiConfigured, AINotConfiguredError } from '@/pixel-pilot/ai';
 import { pushToList } from '@/pixel-pilot/store';
 
+export const maxDuration = 60;
+
 interface HireInput {
   business?: string;
   goals?: string;

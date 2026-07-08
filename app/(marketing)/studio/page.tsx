@@ -99,19 +99,27 @@ export default function StudioPage() {
     setBusy(true);
     setErr(null);
     setResult(null);
+    const ctrl = new AbortController();
+    const timer = setTimeout(() => ctrl.abort(), 75000);
     try {
       const body = active.build ? active.build(values) : values;
       const res = await fetch(active.endpoint, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(body),
+        signal: ctrl.signal,
       });
       const data = await res.json();
       if (!data.ok) throw new Error(data.error || "Something went wrong");
       setResult(data);
     } catch (e) {
-      setErr(e instanceof Error ? e.message : "Failed");
+      if (e instanceof DOMException && e.name === "AbortError") {
+        setErr("That took too long. Try a shorter brief, or run it again.");
+      } else {
+        setErr(e instanceof Error ? e.message : "Failed");
+      }
     } finally {
+      clearTimeout(timer);
       setBusy(false);
     }
   }
@@ -183,6 +191,11 @@ export default function StudioPage() {
               >
                 {busy ? "Running…" : `Run ${active.name} →`}
               </button>
+              {busy && (
+                <p className="text-center text-xs text-text-tertiary">
+                  Generating with Claude — this can take up to a minute. Don&apos;t close the tab.
+                </p>
+              )}
             </div>
 
             {err && <div className="mt-4 rounded-lg border border-red-500/30 bg-red-500/10 px-4 py-3 text-sm text-red-300">{err}</div>}
@@ -195,22 +208,35 @@ export default function StudioPage() {
                   </div>
                 )}
                 {(() => {
+                  const html = (result as { result?: { html?: string } }).result?.html;
                   const url = (result as { deployed?: { url?: string } }).deployed?.url;
-                  return url ? (
-                    <a
-                      href={url}
-                      target="_blank"
-                      rel="noreferrer"
-                      className="mb-3 inline-flex items-center gap-2 rounded-lg px-5 py-3 text-sm font-semibold text-white transition hover:opacity-90"
-                      style={{ background: "linear-gradient(90deg,#00D4FF,#6C63FF)" }}
-                    >
-                      🌐 View your live site →
-                    </a>
-                  ) : null;
+                  if (html) {
+                    return (
+                      <div className="space-y-3">
+                        <div className="text-xs uppercase tracking-widest text-text-tertiary">Live preview</div>
+                        <div className="overflow-hidden rounded-xl border border-white/15 bg-white">
+                          <iframe title="Live preview" srcDoc={html} className="block w-full h-[620px]" sandbox="allow-scripts allow-same-origin" />
+                        </div>
+                        {url && (
+                          <a href={url} target="_blank" rel="noreferrer" className="inline-flex text-sm text-[#00D4FF] hover:underline">
+                            Open the full page in a new tab ↗
+                          </a>
+                        )}
+                        <details className="text-text-tertiary">
+                          <summary className="cursor-pointer text-xs uppercase tracking-widest">Details / raw HTML</summary>
+                          <pre className="mt-2 max-h-[300px] overflow-auto rounded-lg border border-white/10 bg-black/40 p-4 text-[12px] whitespace-pre-wrap break-words">
+                            {JSON.stringify((result as { result?: unknown }).result ?? result, null, 2)}
+                          </pre>
+                        </details>
+                      </div>
+                    );
+                  }
+                  return (
+                    <pre className="max-h-[520px] overflow-auto rounded-lg border border-white/10 bg-black/40 p-4 text-[12.5px] leading-relaxed text-text-secondary whitespace-pre-wrap break-words">
+                      {JSON.stringify((result as { result?: unknown }).result ?? result, null, 2)}
+                    </pre>
+                  );
                 })()}
-                <pre className="max-h-[520px] overflow-auto rounded-lg border border-white/10 bg-black/40 p-4 text-[12.5px] leading-relaxed text-text-secondary whitespace-pre-wrap break-words">
-                  {JSON.stringify((result as { result?: unknown }).result ?? result, null, 2)}
-                </pre>
               </div>
             )}
           </div>

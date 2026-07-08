@@ -11,6 +11,8 @@ import crypto from 'crypto';
 import { askClaudeJSON, aiConfigured, AINotConfiguredError } from '@/pixel-pilot/ai';
 import { pushToList, set, storeIsDurable } from '@/pixel-pilot/store';
 
+export const maxDuration = 60;
+
 interface SiteInput {
   business?: string;
   goal?: string;
@@ -54,7 +56,7 @@ export async function POST(req: NextRequest) {
   let result: SiteResult;
   let live = true;
   try {
-    result = await askClaudeJSON<SiteResult>({ system, prompt, maxTokens: 8000 });
+    result = await askClaudeJSON<SiteResult>({ system, prompt, maxTokens: 5000 });
   } catch (err) {
     if (!(err instanceof AINotConfiguredError)) {
       return NextResponse.json({ ok: false, error: err instanceof Error ? err.message : 'failed' }, { status: 502 });

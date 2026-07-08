@@ -8,6 +8,8 @@ import { NextRequest, NextResponse } from 'next/server';
 import { askClaudeJSON, aiConfigured, AINotConfiguredError } from '@/pixel-pilot/ai';
 import { pushToList } from '@/pixel-pilot/store';
 
+export const maxDuration = 60;
+
 interface PretestInput {
   product?: string;
   audience?: string;
