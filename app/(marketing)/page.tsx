@@ -241,7 +241,7 @@ export default function PixelPilotPage() {
             <div className="text-xs uppercase tracking-[0.3em] text-[#00D4FF]">── The Brand Film</div>
             <h2 className="text-4xl md:text-5xl font-semibold tracking-tight">Watch the pilot fly.</h2>
             <p className="text-text-secondary text-lg">
-              Wasted spend ignites into a profit curve — the autonomous media buyer takes the controls.
+              One pass from Pixel Pilot turns a struggling shop into a landmark — and the customers come running.
             </p>
           </Reveal>
           <Reveal>
