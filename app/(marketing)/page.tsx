@@ -234,6 +234,38 @@ export default function PixelPilotPage() {
         </div>
       </section>
 
+      {/* BRAND FILM */}
+      <section id="film" className="px-6 py-24">
+        <div className="container mx-auto max-w-5xl">
+          <Reveal className="text-center max-w-2xl mx-auto space-y-4 mb-10">
+            <div className="text-xs uppercase tracking-[0.3em] text-[#00D4FF]">── The Brand Film</div>
+            <h2 className="text-4xl md:text-5xl font-semibold tracking-tight">Watch the pilot fly.</h2>
+            <p className="text-text-secondary text-lg">
+              Pixel Pilot seeds an autonomous agent to every business — and each one lights up.
+            </p>
+          </Reveal>
+          <Reveal>
+            <div className="relative mx-auto">
+              <div
+                className="absolute -inset-2 rounded-[1.75rem] opacity-30 blur-2xl"
+                style={{ background: "linear-gradient(90deg,#00D4FF,#6C63FF,#FF2E9A)" }}
+                aria-hidden
+              />
+              <video
+                className="relative w-full aspect-video rounded-2xl border border-white/10 object-cover"
+                src="/brand-film.mp4"
+                poster="/brand-film-poster.jpg"
+                autoPlay
+                loop
+                muted
+                playsInline
+                preload="metadata"
+              />
+            </div>
+          </Reveal>
+        </div>
+      </section>
+
       {/* FLIGHT DECK — 10 SERVICES */}
       <section id="deck" className="px-6 py-24">
         <div className="container mx-auto max-w-6xl">
