@@ -194,6 +194,20 @@ export default function StudioPage() {
                     Preview mode — add <code>ANTHROPIC_API_KEY</code> in Vercel to run this live.
                   </div>
                 )}
+                {(() => {
+                  const url = (result as { deployed?: { url?: string } }).deployed?.url;
+                  return url ? (
+                    <a
+                      href={url}
+                      target="_blank"
+                      rel="noreferrer"
+                      className="mb-3 inline-flex items-center gap-2 rounded-lg px-5 py-3 text-sm font-semibold text-white transition hover:opacity-90"
+                      style={{ background: "linear-gradient(90deg,#00D4FF,#6C63FF)" }}
+                    >
+                      🌐 View your live site →
+                    </a>
+                  ) : null;
+                })()}
                 <pre className="max-h-[520px] overflow-auto rounded-lg border border-white/10 bg-black/40 p-4 text-[12.5px] leading-relaxed text-text-secondary whitespace-pre-wrap break-words">
                   {JSON.stringify((result as { result?: unknown }).result ?? result, null, 2)}
                 </pre>
