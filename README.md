@@ -33,12 +33,15 @@ app/
   api/pixel-pilot/
     connectors/[provider]/     GET → live OAuth consent URL (+ CSRF state cookie)
     higgsfield/                POST → fire a Creative Forge render
+    lead/                      POST → capture a lead (CRM + Slack + store)
     workflows/[id]/            POST → trigger an n8n workflow webhook
 
 components/pixel-pilot/
   shell.tsx                    nav + footer + scroll progress (client chrome)
+  page-transition.tsx          branded runway sweep between routes
   flight-scene.tsx             bespoke React Three Fiber scene
   creative-forge.tsx           live Higgsfield demo (client)
+  lead-form.tsx                the /book conversion flow (client)
 
 pixel-pilot/                   the engine — pure typed data + wiring (see its README)
   connectors.ts services.ts workflows.ts higgsfield.ts creative-apps.ts pricing.ts
@@ -61,6 +64,11 @@ Creative Genome Engine · Synthetic Pre-Testing · Self-Improving Data Flywheel 
 Compliance-Safe Autopilot · Attribution Truth Engine · Zero-to-Live in <60min ·
 Impression-Level Generative Creative.
 
+The five headline services and every plan are presented together on the
+**Services & Pricing** page (`/pricing`).
+
 ## Deployment
 
-Production is hosted on Vercel and deploys automatically from `main`.
+Production is hosted on Vercel and deploys automatically from `main`. Vercel
+requires verified commits, so production changes are committed through the
+GitHub API (which signs them) rather than plain pushes.
