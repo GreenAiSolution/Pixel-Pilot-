@@ -3,6 +3,7 @@
 import { ReactNode, useEffect, useState } from "react";
 import Link from "next/link";
 import dynamic from "next/dynamic";
+import { PageTransition } from "@/components/pixel-pilot/page-transition";
 
 const FlightScene = dynamic(
   () => import("@/components/pixel-pilot/flight-scene").then((m) => ({ default: m.FlightScene })),
@@ -11,13 +12,13 @@ const FlightScene = dynamic(
 
 const NAV = [
   { href: "/results", label: "Results" },
+  { href: "/growth", label: "Growth Calc" },
   { href: "/services", label: "Flight Deck" },
   { href: "/studio", label: "Studio" },
   { href: "/agents", label: "Agents" },
   { href: "/connectors", label: "Connectors" },
   { href: "/forge", label: "Creative Forge" },
   { href: "/automation", label: "Automation" },
-  { href: "/stack", label: "Stack" },
   { href: "/pricing", label: "Pricing" },
 ];
 
@@ -97,17 +98,19 @@ export function Shell({ children }: { children: ReactNode }) {
           </div>
 
           <Link
-            href="/automator"
+            href="/book"
             className="inline-flex items-center gap-1.5 rounded-full px-4 py-1.5 text-sm font-medium text-white transition hover:opacity-90"
             style={{ background: "linear-gradient(90deg,#6C63FF,#FF2E9A)" }}
           >
-            Launch Automator
+            Get more customers
             <span aria-hidden>→</span>
           </Link>
         </nav>
       </header>
 
-      <main className="flex-1 relative z-10">{children}</main>
+      <main className="flex-1 relative z-10">
+        <PageTransition>{children}</PageTransition>
+      </main>
 
       <footer className="relative z-10 border-t border-white/5 bg-[#05060f]/50 backdrop-blur-xl py-12 mt-32">
         <div className="container mx-auto px-6 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-6">

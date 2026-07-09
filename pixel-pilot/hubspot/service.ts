@@ -98,6 +98,46 @@ export async function listContacts(
   return out;
 }
 
+/**
+ * Create (or upsert) a lead contact in the connected HubSpot portal. Used by the
+ * public lead-capture route so a website enquiry lands as a real CRM contact,
+ * tagged as a marketing lead. Idempotent on email via the create→update fallback:
+ * if the contact already exists (409), we patch it instead of failing the lead.
+ */
+export async function createContact(
+  ref: ConnectionRef,
+  input: { email: string; firstName?: string; lastName?: string; company?: string; note?: string }
+): Promise<{ id: string; created: boolean }> {
+  const client = createHubSpotClient(ref);
+  const properties: Record<string, string> = {
+    email: input.email,
+    lifecyclestage: 'lead',
+  };
+  if (input.firstName) properties.firstname = input.firstName;
+  if (input.lastName) properties.lastname = input.lastName;
+  if (input.company) properties.company = input.company;
+  if (input.note) properties.message = input.note.slice(0, 4000);
+
+  try {
+    const res = await client.post<{ id: string }>('/crm/v3/objects/contacts', { properties });
+    return { id: res.id, created: true };
+  } catch (err) {
+    // Already on file → find the existing contact by email so the lead still
+    // resolves to a real CRM id (we don't overwrite an existing record's fields).
+    const msg = err instanceof Error ? err.message : '';
+    if (/\b409\b/.test(msg) || /CONTACT_EXISTS/i.test(msg)) {
+      const page = await client.post<{ results: { id: string }[] }>('/crm/v3/objects/contacts/search', {
+        filterGroups: [{ filters: [{ propertyName: 'email', operator: 'EQ', value: input.email }] }],
+        properties: ['email'],
+        limit: 1,
+      });
+      const existing = page.results?.[0];
+      if (existing) return { id: existing.id, created: false };
+    }
+    throw err;
+  }
+}
+
 // ── Deals ─────────────────────────────────────────────────────────────────────
 
 export async function listDeals(

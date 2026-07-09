@@ -6,13 +6,14 @@
 // (see components/pixel-pilot/sections.tsx + app/(marketing)/<name>/page.tsx).
 
 import { ConnectionBanner } from "@/components/pixel-pilot/connection-banner";
-import { Hero, HomeDirectory, FinalCTA } from "@/components/pixel-pilot/sections";
+import { Hero, GrowthEngine, HomeDirectory, FinalCTA } from "@/components/pixel-pilot/sections";
 
 export default function PixelPilotPage() {
   return (
     <div className="relative">
       <ConnectionBanner />
       <Hero />
+      <GrowthEngine />
       <HomeDirectory />
       <FinalCTA />
     </div>
