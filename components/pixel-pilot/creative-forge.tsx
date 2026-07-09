@@ -37,8 +37,15 @@ export function CreativeForge() {
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const timer = useRef<ReturnType<typeof setInterval> | null>(null);
+  const reveal = useRef<ReturnType<typeof setTimeout> | null>(null);
 
-  useEffect(() => () => { if (timer.current) clearInterval(timer.current); }, []);
+  useEffect(
+    () => () => {
+      if (timer.current) clearInterval(timer.current);
+      if (reveal.current) clearTimeout(reveal.current);
+    },
+    []
+  );
 
   async function forge() {
     if (!brand.trim() || busy) return;
@@ -59,13 +66,13 @@ export function CreativeForge() {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ brand, product, vibe, channel }),
       });
-      const data = await res.json();
+      const data = (await res.json()) as { job?: CreativeJob; live?: boolean; error?: string };
       if (!res.ok) throw new Error(data.error || "Render failed");
       // let the animation breathe a moment before revealing
-      setTimeout(() => {
+      reveal.current = setTimeout(() => {
         if (timer.current) clearInterval(timer.current);
         setStep(BUILD_STEPS.length - 1);
-        setJob(data.job as CreativeJob);
+        setJob(data.job ?? null);
         setLive(Boolean(data.live));
         setBusy(false);
       }, 900);

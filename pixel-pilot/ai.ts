@@ -1,16 +1,16 @@
 // ─── PIXEL PILOT · AI ENGINE ─────────────────────────────────────────────────
 // The shared Claude layer that powers the tools. Talks to the Anthropic Messages
 // API over fetch (no SDK dependency — matches the rest of the engine), using
-// claude-opus-4-8. Gated on ANTHROPIC_API_KEY: when it's absent, callers get a
-// typed AINotConfiguredError and fall back to a structured stub so no workflow
-// ever hard-fails.
+// claude-fable-5 (Claude 5 family, current flagship). Gated on ANTHROPIC_API_KEY:
+// when it's absent, callers get a typed AINotConfiguredError and fall back to a
+// structured stub so no workflow ever hard-fails.
 //
 // Env: ANTHROPIC_API_KEY  (get one at https://console.anthropic.com)
 
 import { fetchWithTimeout } from './http';
 
 const API_URL = 'https://api.anthropic.com/v1/messages';
-const MODEL = 'claude-opus-4-8';
+const MODEL = 'claude-fable-5';
 
 export class AINotConfiguredError extends Error {
   constructor() {

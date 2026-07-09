@@ -48,7 +48,7 @@ export const CONNECTORS: Record<ConnectorId, Connector> = {
     hue: '#1877F2',
     powers: [
       'Read spend, ROAS and delivery in real time',
-      'Push budget, bid and audience changes autonomously',
+      'Push budget, bid and audience changes autonomously — checked against real profit',
       'Publish Genome-built creative straight to ad sets',
     ],
     auth: {
@@ -92,7 +92,7 @@ export const CONNECTORS: Record<ConnectorId, Connector> = {
     hue: '#FF0050',
     powers: [
       'Detect creative fatigue hour by hour',
-      'Auto-ship Higgsfield reels as fresh variants',
+      'Auto-ship Creative Forge reels as fresh variants',
       'Scale winners before the trend cools',
     ],
     auth: {
@@ -110,7 +110,7 @@ export const CONNECTORS: Record<ConnectorId, Connector> = {
     id: 'shopify',
     name: 'Shopify',
     category: 'Commerce',
-    tagline: 'The truth source · real margin & LTV',
+    tagline: 'The ground truth · real margin & LTV',
     hue: '#95BF47',
     powers: [
       'Stream orders, COGS, returns and LTV',

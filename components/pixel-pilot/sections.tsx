@@ -92,7 +92,7 @@ export function Hero() {
           <span className="text-text-tertiary/40">·</span>
           <span>4 native channels</span>
           <span className="text-text-tertiary/40">·</span>
-          <span>Higgsfield creative</span>
+          <span>Creative Forge onboard</span>
           <span className="text-text-tertiary/40">·</span>
           <span>&lt;60min to live</span>
         </div>
@@ -192,7 +192,7 @@ export function AgentCrew() {
                 One autopilot.
               </h2>
               <p className="text-text-secondary text-lg max-w-md">
-                Pixel Pilot is not one giant prompt. It is a crew of specialized agents that plan, buy, forge creative, check profit, close sales, rank you #1, win five-star reviews, guard policy and run the flight deck — 24/7.
+                Pixel Pilot isn&apos;t one giant prompt. It&apos;s a crew of specialist agents that plan, buy, forge creative, check profit against your books, close sales, rank you first, win five-star reviews, guard policy and run the flight deck — around the clock.
               </p>
               <div className="grid grid-cols-3 gap-3 pt-3 max-w-md">
                 <div>
@@ -254,10 +254,10 @@ export function Forge() {
       <section id="forge" className="px-6 py-24">
         <div className="container mx-auto max-w-6xl">
           <Reveal className="text-center max-w-3xl mx-auto space-y-4 mb-12">
-            <div className="text-xs uppercase tracking-[0.3em] text-[#FF2E9A]">── Creative Forge · powered by Pixel Pilot</div>
+            <div className="text-xs uppercase tracking-[0.3em] text-[#FF2E9A]">── Creative Forge · the in-house render engine</div>
             <h2 className="text-4xl md:text-6xl font-semibold tracking-tight">Watch it make the ad.</h2>
             <p className="text-text-secondary text-lg">
-              This is the product automating itself, live. Drop a brand, pick a vibe, and Pixel Pilot forges a scroll-stopping reel — the same engine that refreshes fatigued creative on your account automatically.
+              This is the product automating itself, live. Drop a brand, pick a vibe, and Pixel Pilot forges a scroll-stopping reel — the same engine that catches creative fatigue on your account and ships the refresh before performance dips.
             </p>
           </Reveal>
           <Reveal className="mb-12">
@@ -268,7 +268,7 @@ export function Forge() {
                 <div className="text-2xl font-semibold tracking-[0.18em] uppercase bg-clip-text text-transparent inline-block" style={{ backgroundImage: GRADIENT }}>
                   Pixel<span className="text-white">/Pilot</span>
                 </div>
-                <div className="mt-1 text-xs uppercase tracking-[0.3em] text-text-tertiary">Your ad spend, on autopilot · brand film forged by Pixel Pilot</div>
+                <div className="mt-1 text-xs uppercase tracking-[0.3em] text-text-tertiary">Your ad spend, on autopilot · brand film from the Creative Forge</div>
               </div>
             </div>
           </Reveal>
@@ -276,7 +276,7 @@ export function Forge() {
             <CreativeForge />
           </Reveal>
           <Reveal className="mt-16">
-            <div className="text-xs uppercase tracking-[0.3em] text-text-tertiary text-center mb-6">── Forged by Pixel Pilot · real output</div>
+            <div className="text-xs uppercase tracking-[0.3em] text-text-tertiary text-center mb-6">── Straight off the Forge · real output</div>
             <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
               {VIBES.map((v) => {
                 const shot = SHOWCASE[v.id];
@@ -333,7 +333,7 @@ export function Forge() {
 const FLIGHT_PLAN: { mark: string; title: string; detail: string; accent: string }[] = [
   { mark: "T-0", title: "You paste one product URL", detail: "That's the entire brief. No kickoff call, no intake form, no sprint planning.", accent: "#00D4FF" },
   { mark: "T+8m", title: "Research + personas", detail: "It scrapes the market, reads your competitors, and builds synthetic buyer personas.", accent: "#00D4FF" },
-  { mark: "T+21m", title: "Strategy + first creative", detail: "Drafts the channel + budget plan across Meta, Google & TikTok, then forges the first ad batch with Higgsfield.", accent: "#6C63FF" },
+  { mark: "T+21m", title: "Strategy + first creative", detail: "Drafts the channel + budget plan across Meta, Google & TikTok, then the Creative Forge renders the first ad batch — pre-tested on synthetic buyers before a dollar moves.", accent: "#6C63FF" },
   { mark: "T+44m", title: "Tracking wired honest", detail: "Pixels and CAPI in place, Shopify margin plugged in as ground truth so every decision steers by real profit.", accent: "#FF2E9A" },
   { mark: "T+58m", title: "Campaign live", detail: "It goes live and pings your Slack war room: “It's flying.” Optimization starts today, not next month.", accent: "#C9A84C" },
 ];
@@ -346,7 +346,7 @@ export function Automation() {
           <Reveal className="text-center max-w-3xl mx-auto space-y-4 mb-12">
             <div className="text-xs uppercase tracking-[0.3em] text-secondary">── Automation spine · n8n</div>
             <h2 className="text-4xl md:text-6xl font-semibold tracking-tight">The loops that run while you sleep.</h2>
-            <p className="text-text-secondary text-lg">Every decision Pixel Pilot makes rides a real n8n workflow — importable, auditable, yours. Here are four of the brains on the wing.</p>
+            <p className="text-text-secondary text-lg">Every decision Pixel Pilot makes rides a real n8n workflow — importable, auditable, yours. These are the brains on the wing.</p>
           </Reveal>
           <div className="grid lg:grid-cols-2 gap-5">
             {WORKFLOWS.map((w) => (

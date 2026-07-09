@@ -1,6 +1,6 @@
 "use client";
 
-import { ReactNode, useEffect, useState } from "react";
+import { type ReactNode, useEffect, useState } from "react";
 import Link from "next/link";
 import dynamic from "next/dynamic";
 import { PageTransition } from "@/components/pixel-pilot/page-transition";

@@ -22,12 +22,6 @@ export interface HubSpotClient {
     path: string,
     opts?: { query?: Query; pageSize?: number; maxItems?: number }
   ): AsyncGenerator<T>;
-  /** /crm/v3/objects/{type}/batch/read — chunks ids into ≤100 and merges results. */
-  batchRead<T>(
-    objectType: 'contacts' | 'deals',
-    ids: string[],
-    properties: string[]
-  ): Promise<T[]>;
 }
 
 interface PagedResponse<T> {
@@ -116,18 +110,6 @@ export function createHubSpotClient(ref: ConnectionRef): HubSpotClient {
         }
         after = page.paging?.next?.after;
       } while (after);
-    },
-
-    async batchRead<T>(objectType: 'contacts' | 'deals', ids: string[], properties: string[]) {
-      const out: T[] = [];
-      for (let i = 0; i < ids.length; i += MAX_PAGE_SIZE) {
-        const chunk = ids.slice(i, i + MAX_PAGE_SIZE);
-        const page = await request<PagedResponse<T>>('POST', `/crm/v3/objects/${objectType}/batch/read`, {
-          body: { properties, inputs: chunk.map((id) => ({ id })) },
-        });
-        out.push(...(page.results ?? []));
-      }
-      return out;
     },
   };
 

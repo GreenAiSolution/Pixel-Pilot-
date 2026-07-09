@@ -47,8 +47,8 @@ export interface CategoryMeta {
 
 export const STACK_CATEGORIES: readonly CategoryMeta[] = [
   { id: 'Advertising', summary: 'The channels Pixel Pilot flies to profit.', hue: '#00D4FF' },
-  { id: 'Commerce', summary: 'The truth source — real orders, margin & LTV.', hue: '#95BF47' },
-  { id: 'Analytics & Attribution', summary: 'Honest signal after iOS — what really drove the sale.', hue: '#6C63FF' },
+  { id: 'Commerce', summary: 'The ground truth — real orders, margin & LTV.', hue: '#95BF47' },
+  { id: 'Analytics & Attribution', summary: 'Honest signal post-ATT — what really drove the sale.', hue: '#6C63FF' },
   { id: 'CRM & Sales', summary: 'Leads and pipeline, worked end to end.', hue: '#FF7A45' },
   { id: 'Email & SMS', summary: 'Owned lifecycle that compounds paid.', hue: '#FF2E9A' },
   { id: 'Payments & Finance', summary: 'Cash, revenue and margin ground truth.', hue: '#635BFF' },
@@ -68,7 +68,7 @@ export const STACK: readonly StackTool[] = [
   { id: 'amazon_ads', name: 'Amazon Ads', category: 'Advertising', blurb: 'Retail media + Sponsored Products.', via: 'planned', hue: '#FF9900' },
 
   // ── Commerce ───────────────────────────────────────────────────────────────
-  { id: 'shopify', name: 'Shopify', category: 'Commerce', blurb: 'Orders, COGS, LTV — real profit truth.', via: 'native', hue: '#95BF47', env: ['SHOPIFY_CLIENT_ID', 'SHOPIFY_CLIENT_SECRET'] },
+  { id: 'shopify', name: 'Shopify', category: 'Commerce', blurb: 'Orders, COGS, LTV — the profit the bids obey.', via: 'native', hue: '#95BF47', env: ['SHOPIFY_CLIENT_ID', 'SHOPIFY_CLIENT_SECRET'] },
   { id: 'woocommerce', name: 'WooCommerce', category: 'Commerce', blurb: 'WordPress storefront orders + margin.', via: 'zapier', hue: '#96588A' },
   { id: 'bigcommerce', name: 'BigCommerce', category: 'Commerce', blurb: 'Enterprise storefront data.', via: 'zapier', hue: '#121118' },
   { id: 'amazon_seller', name: 'Amazon Seller', category: 'Commerce', blurb: 'Marketplace sales + inventory.', via: 'planned', hue: '#FF9900' },
@@ -76,7 +76,7 @@ export const STACK: readonly StackTool[] = [
   // ── Analytics & Attribution ────────────────────────────────────────────────
   { id: 'ga4', name: 'Google Analytics 4', category: 'Analytics & Attribution', blurb: 'Site behavior + conversion signal.', via: 'zapier', hue: '#E37400' },
   { id: 'triple_whale', name: 'Triple Whale', category: 'Analytics & Attribution', blurb: 'DTC profit + attribution truth.', via: 'planned', hue: '#1A1A2E' },
-  { id: 'northbeam', name: 'Northbeam', category: 'Analytics & Attribution', blurb: 'Multi-touch + incrementality.', via: 'planned', hue: '#6C63FF' },
+  { id: 'northbeam', name: 'Northbeam', category: 'Analytics & Attribution', blurb: 'Multi-touch + incrementality truth.', via: 'planned', hue: '#6C63FF' },
   { id: 'segment', name: 'Segment', category: 'Analytics & Attribution', blurb: 'Customer data pipe (CDP).', via: 'planned', hue: '#52BD95' },
   { id: 'amplitude', name: 'Amplitude', category: 'Analytics & Attribution', blurb: 'Product + funnel analytics.', via: 'mcp', hue: '#1E61F0' },
 
@@ -94,7 +94,7 @@ export const STACK: readonly StackTool[] = [
   // ── Payments & Finance ─────────────────────────────────────────────────────
   { id: 'stripe', name: 'Stripe', category: 'Payments & Finance', blurb: 'Payments, revenue, MRR.', via: 'zapier', hue: '#635BFF' },
   { id: 'paypal', name: 'PayPal', category: 'Payments & Finance', blurb: 'Payments + payouts.', via: 'zapier', hue: '#003087' },
-  { id: 'quickbooks', name: 'QuickBooks', category: 'Payments & Finance', blurb: 'Accounting + margin ground truth.', via: 'native', hue: '#2CA01C', env: ['QUICKBOOKS_CLIENT_ID', 'QUICKBOOKS_CLIENT_SECRET'] },
+  { id: 'quickbooks', name: 'QuickBooks', category: 'Payments & Finance', blurb: 'Accounting truth the buyer bids against.', via: 'native', hue: '#2CA01C', env: ['QUICKBOOKS_CLIENT_ID', 'QUICKBOOKS_CLIENT_SECRET'] },
   { id: 'ramp', name: 'Ramp', category: 'Payments & Finance', blurb: 'Spend controls + card data.', via: 'planned', hue: '#E9FC87' },
 
   // ── Data & Warehouse ───────────────────────────────────────────────────────
@@ -111,7 +111,7 @@ export const STACK: readonly StackTool[] = [
   { id: 'linear', name: 'Linear', category: 'Comms & Ops', blurb: 'Issues + product roadmap.', via: 'mcp', hue: '#5E6AD2' },
 
   // ── Creative & Content ─────────────────────────────────────────────────────
-  { id: 'higgsfield', name: 'Higgsfield', category: 'Creative & Content', blurb: 'AI ad images, reels & video.', via: 'native', hue: '#FF4F9A', connected: true },
+  { id: 'higgsfield', name: 'Creative Forge', category: 'Creative & Content', blurb: 'Pixel Pilot’s render engine — ad stills, reels & video.', via: 'native', hue: '#FF4F9A', connected: true },
   { id: 'canva', name: 'Canva', category: 'Creative & Content', blurb: 'On-brand static creative.', via: 'zapier', hue: '#00C4CC' },
   { id: 'figma', name: 'Figma', category: 'Creative & Content', blurb: 'Design source + handoff.', via: 'mcp', hue: '#F24E1E' },
 

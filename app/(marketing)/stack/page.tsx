@@ -9,7 +9,7 @@ import { stackByCategory, stackStats, toolIsLive, type StackTool, type Integrati
 export const metadata: Metadata = {
   title: 'The Stack — Pixel Pilot',
   description:
-    'Pixel Pilot’s business brain: the curated apps, connectors and tools it flies with — advertising, commerce, analytics, CRM, finance, data and more.',
+    'Pixel Pilot’s business brain: every app, connector and tool it flies with — advertising, commerce, attribution, CRM, finance and data — with live status. Shopify and QuickBooks feed the profit ground truth; the ad platforms take the orders.',
 };
 
 const VIA_LABEL: Record<IntegrationVia, string> = {
@@ -89,7 +89,8 @@ export default function StackPage() {
           <p className="mt-4 max-w-2xl text-lg text-text-secondary">
             One command surface across every function — advertising, commerce, attribution, CRM,
             finance and data. Native OAuth for the core, the Zapier bridge to 9,000+ apps for the
-            rest, and an agent layer that ties it together.
+            rest, and an agent layer that ties it together. Shopify and QuickBooks feed the profit
+            ground truth; the ad platforms take the orders.
           </p>
 
           <div className="mt-8 grid grid-cols-2 sm:grid-cols-4 gap-3 max-w-2xl">
@@ -142,7 +143,8 @@ export default function StackPage() {
             Plug in your stack. Let Pixel Pilot fly it.
           </h2>
           <p className="mt-3 text-text-secondary">
-            Connect the core in minutes; reach everything else through the Zapier bridge.
+            Connect the core in minutes; reach everything else through the Zapier bridge. Then hand
+            over the wheel.
           </p>
           <a
             href="/automator"

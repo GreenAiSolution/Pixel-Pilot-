@@ -140,11 +140,12 @@ export type GuardResult =
  */
 export async function guard(req: NextRequest, opts: GuardOptions): Promise<GuardResult> {
   const rid = requestId();
+  const ip = clientIp(req);
 
   const rlOpts: RateLimitOptions = { limit: opts.limit, windowSec: opts.windowSec };
-  const rl = await rateLimit(opts.bucket, clientIp(req), rlOpts);
+  const rl = await rateLimit(opts.bucket, ip, rlOpts);
   if (!rl.ok) {
-    log('warn', opts.source, 'rate limited', { ip: clientIp(req), retryAfter: rl.retryAfter });
+    log('warn', opts.source, 'rate limited', { ip, retryAfter: rl.retryAfter });
     return {
       ok: false,
       response: fail(429, 'Too many requests — please slow down.', rid, { retryAfter: rl.retryAfter }),

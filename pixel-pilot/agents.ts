@@ -43,9 +43,9 @@ export const PIXEL_AGENTS: PixelAgent[] = [
     callsign: 'Flight Plan',
     command: 'pixel-growth-strategist',
     accent: '#00D4FF',
-    tagline: 'Turns one URL into a go-to-market map.',
+    tagline: 'Turns one URL into a complete flight plan.',
     intelligence:
-      'Researches the product, market, competitors, offers, personas, objections and channel fit before any dollar moves.',
+      'Researches the product, market, competitors, offers, personas, objections and channel fit before a single dollar leaves the runway.',
     responsibilities: [
       'Build launch plans from product URLs, briefs and store data',
       'Choose channel mix, budget split and first experiments',
@@ -78,9 +78,9 @@ export const PIXEL_AGENTS: PixelAgent[] = [
     callsign: 'Control Stick',
     command: 'pixel-media-buyer',
     accent: '#6C63FF',
-    tagline: 'Moves budget toward marginal profit.',
+    tagline: 'Moves every dollar toward marginal profit.',
     intelligence:
-      'Compares Meta, Google and TikTok as one portfolio, then shifts spend according to marginal return instead of platform vanity metrics. Runs lifecycle-aware: it suppresses existing customers and closed-won contacts from prospecting, retargets stalled/MQL deals, and seeds lookalikes from closed-won — synced from HubSpot as hashed custom audiences.',
+      'Every platform has AI buying media now — that is table stakes. Vector flies Meta, Google and TikTok as one portfolio and shifts spend by marginal return on your P&L, not the vanity metrics each platform reports about itself. Runs lifecycle-aware: it suppresses existing customers and closed-won contacts from prospecting, retargets stalled/MQL deals, and seeds lookalikes from closed-won — synced from HubSpot as hashed custom audiences.',
     responsibilities: [
       'Pull spend, delivery, conversions and blended revenue',
       'Detect winners, losers, learning-phase traps and fatigue',
@@ -115,9 +115,9 @@ export const PIXEL_AGENTS: PixelAgent[] = [
     callsign: 'Forge Lead',
     command: 'pixel-creative-director',
     accent: '#FF2E9A',
-    tagline: 'Refreshes the account before fatigue wins.',
+    tagline: 'Ships the next winner before fatigue lands.',
     intelligence:
-      'Breaks creative into hooks, frames, pacing, claims and emotional arcs, then recombines winning genes into Higgsfield-ready briefs.',
+      'Breaks creative into hooks, frames, pacing, claims and emotional arcs, then recombines the winning genes into render-ready briefs for the Creative Forge. Creative velocity is the moat — fatigue never gets a head start.',
     responsibilities: [
       'Diagnose creative fatigue and hook decay',
       'Write structured briefs for stills, reels and variants',
@@ -130,7 +130,7 @@ export const PIXEL_AGENTS: PixelAgent[] = [
       'Whether an asset is strong enough to enter pre-flight compliance',
     ],
     workflows: ['creative-refresh'],
-    integrations: ['Higgsfield', 'Meta Ads', 'TikTok Ads', 'Google Ads', 'Slack'],
+    integrations: ['Creative Forge', 'Meta Ads', 'TikTok Ads', 'Google Ads', 'Slack'],
     kpis: [
       { label: 'Fatigue response', value: '< 1h' },
       { label: 'Variants shipped', value: 'Auto' },
@@ -152,7 +152,7 @@ export const PIXEL_AGENTS: PixelAgent[] = [
     accent: '#95BF47',
     tagline: 'Optimizes to the money that actually lands.',
     intelligence:
-      'Reconciles platform data with Shopify, returns, COGS, LTV and QuickBooks signals so the buyer steers by contribution profit.',
+      'Post-ATT, platform-reported ROAS flatters itself. Ledger reconciles it against Shopify orders, returns, COGS, LTV and QuickBooks ground truth so the buyer steers by contribution profit — the number your bank account agrees with.',
     responsibilities: [
       'Normalize revenue, margin, refunds and customer value',
       'Calculate blended profit and attribution confidence',
@@ -187,7 +187,7 @@ export const PIXEL_AGENTS: PixelAgent[] = [
     accent: '#FF6B35',
     tagline: 'Keeps aggressive growth inside platform rules.',
     intelligence:
-      'Reviews copy, targeting, landing pages and creative against platform-sensitive categories before anything goes live.',
+      'Reviews copy, targeting, landing pages and creative against platform-sensitive categories before anything goes live — because one banned account costs more than a hundred blocked ads.',
     responsibilities: [
       'Classify product and claim risk by platform',
       'Rewrite risky copy into safer variants',
@@ -220,7 +220,7 @@ export const PIXEL_AGENTS: PixelAgent[] = [
     callsign: 'Wiring Bay',
     command: 'pixel-automation-engineer',
     accent: '#C9A84C',
-    tagline: 'Keeps n8n, Zapier and OAuth pipes firing.',
+    tagline: 'Keeps every pipe from decision to action firing.',
     intelligence:
       'Understands the app routes, connector registry, n8n webhooks and Zapier handoffs that turn agent decisions into external actions.',
     responsibilities: [
@@ -255,7 +255,7 @@ export const PIXEL_AGENTS: PixelAgent[] = [
     callsign: 'Mission Control',
     command: 'pixel-ops-commander',
     accent: '#8B7FFF',
-    tagline: 'Runs the product like a live control room.',
+    tagline: 'Runs the whole operation like a control tower.',
     intelligence:
       'Coordinates the specialist agents, checks builds and production health, and turns incidents into clear next actions.',
     responsibilities: [
@@ -290,9 +290,9 @@ export const PIXEL_AGENTS: PixelAgent[] = [
     callsign: 'Approach',
     command: 'pixel-sales-closer',
     accent: '#10E5A0',
-    tagline: 'Works every lead until it turns into revenue.',
+    tagline: 'Works every lead until it becomes revenue.',
     intelligence:
-      'Reads each inbound lead the second it lands, qualifies it against fit and intent, and runs a persistent, human-sounding follow-up cadence across email, SMS and DM until the deal is booked or dead — so no lead ever goes cold.',
+      'Reads each inbound lead the second it lands, qualifies it on fit and intent, and runs a persistent, human-sounding follow-up cadence across email, SMS and DM until the deal is booked or dead. The first responder usually wins the deal — Closer is always first.',
     responsibilities: [
       'Respond to new leads within seconds, 24/7',
       'Qualify by fit, budget and buying intent',
@@ -325,9 +325,9 @@ export const PIXEL_AGENTS: PixelAgent[] = [
     callsign: 'Top Slot',
     command: 'pixel-seo-commander',
     accent: '#FFB020',
-    tagline: 'Owns the first result before your rivals wake up.',
+    tagline: 'Claims the top result while rivals sleep.',
     intelligence:
-      'Hunts the keywords your buyers actually search, ships the pages and Google Business updates to win them, and watches the map pack and rankings daily — pushing you toward the top slot where the clicks and calls actually are.',
+      'Hunts the keywords your buyers actually type, ships the pages and Google Business updates that win them, and watches the map pack daily — because the top slot is where the clicks and calls live, and it compounds without ad spend.',
     responsibilities: [
       'Find high-intent keywords and ranking gaps',
       'Publish and optimize pages + Google Business posts',
@@ -362,7 +362,7 @@ export const PIXEL_AGENTS: PixelAgent[] = [
     accent: '#C06BFF',
     tagline: 'Turns happy customers into a five-star wall.',
     intelligence:
-      'Times the ask for the moment a customer is happiest, routes them to leave a public review, and catches the unhappy ones privately before they ever post — then answers every review in your voice so your reputation compounds instead of leaking.',
+      'Times the ask for the moment a customer is happiest, routes them to a public review, and catches the unhappy ones privately before they post — then answers every review in your voice. Your rating becomes an asset that compounds instead of a leak you patch.',
     responsibilities: [
       'Request reviews at the peak-happiness moment',
       'Intercept unhappy customers before they go public',
