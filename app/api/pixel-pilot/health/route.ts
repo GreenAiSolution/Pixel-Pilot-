@@ -9,6 +9,7 @@ import { NextResponse } from 'next/server';
 import { CONNECTOR_LIST, connectorIsLive, WORKFLOWS, PIXEL_AGENTS } from '@/pixel-pilot';
 import { storeIsDurable } from '@/pixel-pilot/store';
 import { aiConfigured } from '@/pixel-pilot/ai';
+import { emailConfigured } from '@/pixel-pilot/quote';
 import { quickbooksConfigured } from '@/pixel-pilot/quickbooks';
 import { hubspotConfigured } from '@/pixel-pilot/hubspot';
 import { tokenEncryptionConfigured } from '@/pixel-pilot/crypto';
@@ -25,6 +26,7 @@ export async function GET() {
     store: { durable: storeIsDurable() },
     integrations: {
       ai: aiConfigured(),
+      resend: emailConfigured(),
       hubspot: hubspotConfigured(),
       quickbooks: quickbooksConfigured(),
       higgsfield: Boolean(process.env.HIGGSFIELD_API_KEY),
