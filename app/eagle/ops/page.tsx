@@ -1,7 +1,8 @@
+import type { Metadata } from 'next';
 import Link from 'next/link';
 import { EAGLE, EAGLE_AGENTS, eagleWorkflowsForAgent, quickbooksConfigured, isConnected } from '@/eagle';
 
-export const metadata = {
+export const metadata: Metadata = {
   title: 'Eagle Ops — Mission Control',
   description: 'The 5 AI employees running Eagle Landscaping, live.',
 };

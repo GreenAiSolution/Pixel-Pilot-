@@ -5,9 +5,9 @@ const SITE_URL =
   process.env.NEXT_PUBLIC_SITE_URL ||
   (process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : 'http://localhost:3000');
 
-const TITLE = 'Pixel Pilot — the autonomous media buyer';
+const TITLE = 'Pixel Pilot — the autonomous media buyer that lands on profit';
 const DESCRIPTION =
-  'Pixel Pilot flies Meta, Google & TikTok to real profit — 24/7, hands off the wheel. An immersive 3D platform for the ads / media-buying niche.';
+  'AI media buying is table stakes. Pixel Pilot flies Meta, Google & TikTok to real profit — steering by your Shopify and QuickBooks ground truth, not platform-reported ROAS. Creative pre-tested before a dollar of spend. 24/7, hands off the wheel.';
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),

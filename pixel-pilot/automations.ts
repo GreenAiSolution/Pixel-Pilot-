@@ -38,16 +38,16 @@ export interface AutomationConfig {
 // ── Option catalogs (the UI reads these) ─────────────────────────────────────
 
 export const TRIGGERS: { id: TriggerKind; name: string; note: string }[] = [
-  { id: 'schedule', name: 'On a schedule', note: 'Runs on a fixed cadence, 24/7' },
+  { id: 'schedule', name: 'On a schedule', note: 'Runs on a fixed cadence, around the clock' },
   { id: 'event', name: 'On a signal', note: 'Fires the moment something changes' },
-  { id: 'webhook', name: 'On demand', note: 'Kicked off by a webhook or click' },
+  { id: 'webhook', name: 'On demand', note: 'Kicked off by a webhook or a click' },
 ];
 
 export const CADENCES = ['Every 5 min', 'Every 15 min', 'Hourly', 'Every 6 hours', 'Daily'];
 
 export const OBJECTIVES: { id: Objective; name: string; note: string; accent: string }[] = [
   { id: 'profit', name: 'Net profit', note: 'Bid to real margin — COGS, returns & LTV', accent: '#95BF47' },
-  { id: 'roas', name: 'ROAS', note: 'Return on ad spend', accent: '#00D4FF' },
+  { id: 'roas', name: 'ROAS', note: 'Platform-reported return on ad spend', accent: '#00D4FF' },
   { id: 'cpa', name: 'Cost / action', note: 'Cheapest qualified conversions', accent: '#6C63FF' },
   { id: 'volume', name: 'Max volume', note: 'Scale spend at a target efficiency', accent: '#FF2E9A' },
 ];
@@ -159,7 +159,7 @@ export function buildAutomationGraph(config: AutomationConfig): AutoGraph {
 
   // 4 · Creative forge (creative services only)
   if (plan.creative) {
-    stages.push([{ id: 'creative', label: 'Higgsfield render', kind: 'creative', note: 'Forge fresh variants' }]);
+    stages.push([{ id: 'creative', label: 'Creative Forge render', kind: 'creative', note: 'Forge fresh variants' }]);
   }
 
   // 5 · The decision

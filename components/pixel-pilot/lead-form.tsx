@@ -21,7 +21,7 @@ const GOALS = [
 
 const SPENDS = ["Under $2k/mo", "$2k–$10k/mo", "$10k–$50k/mo", "$50k–$200k/mo", "$200k+/mo"];
 
-type Routed = { routed?: string[]; hubspot?: { id: string } | null };
+type Routed = { ok?: boolean; error?: string; routed?: string[] };
 
 export function LeadForm() {
   const [step, setStep] = useState(0);
@@ -53,7 +53,7 @@ export function LeadForm() {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ ...form, goal, monthlySpend: spend }),
       });
-      const data = await res.json().catch(() => null);
+      const data = (await res.json().catch(() => null)) as Routed | null;
       if (!res.ok || !data?.ok) {
         setStatus("error");
         setError(data?.error ?? "Something went wrong — please try again.");

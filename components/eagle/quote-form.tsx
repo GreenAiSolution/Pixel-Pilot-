@@ -13,7 +13,7 @@ export function QuoteForm() {
   const [status, setStatus] = useState<"idle" | "sending" | "done" | "error">("idle");
   const [staged, setStaged] = useState<string[] | null>(null);
 
-  function set(k: string, v: string) {
+  function set<K extends keyof typeof form>(k: K, v: string) {
     setForm((f) => ({ ...f, [k]: v }));
   }
 
@@ -27,7 +27,7 @@ export function QuoteForm() {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(form),
       });
-      const data = await res.json().catch(() => null);
+      const data = (await res.json().catch(() => null)) as { routed?: string[] } | null;
       if (!res.ok) throw new Error();
       setStaged(Array.isArray(data?.routed) ? data.routed : []);
       setStatus("done");

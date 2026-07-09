@@ -54,7 +54,8 @@ export async function fetchWithTimeout(
     } catch (err) {
       lastErr = err;
       const timedOut = err instanceof Error && err.name === "AbortError" && !signal?.aborted;
-      if (attempt < retries) {
+      // Retry transient failures only — never a deliberate caller abort.
+      if (attempt < retries && !signal?.aborted) {
         await new Promise((r) => setTimeout(r, Math.min(4_000, backoffMs * 2 ** attempt) + Math.floor(Math.random() * 100)));
         continue;
       }

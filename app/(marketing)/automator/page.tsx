@@ -127,7 +127,7 @@ export default function AutomatorPage() {
             </span>
           </h1>
           <p className="mt-3 text-text-secondary text-lg max-w-2xl">
-            Choose any service, tune exactly how it flies, and watch the workflow build itself. Deploy when it looks right — you can change it anytime.
+            Pick a service, set exactly how it flies — triggers, channels, guardrails — and watch the workflow build itself. Deploy when it looks right; retune anytime.
           </p>
 
           {/* Stepper */}

@@ -17,8 +17,8 @@ export interface Outcome {
 /** The headline outcome band — the numbers a buyer scans first. */
 export const OUTCOMES: Outcome[] = [
   { value: '2.4x', label: 'Return on ad spend', note: 'Representative blended ROAS after the first optimization cycle.', accent: '#00D4FF' },
-  { value: '−38%', label: 'Cost per acquisition', note: 'Wasted spend cut as the buyer reallocates to profit, not vanity ROAS.', accent: '#6C63FF' },
-  { value: '+63%', label: 'New customers / mo', note: 'More first-time buyers from fresh creative + tighter targeting.', accent: '#FF2E9A' },
+  { value: '−38%', label: 'Cost per acquisition', note: 'Representative waste cut as the buyer reallocates to real profit, not platform-reported ROAS.', accent: '#6C63FF' },
+  { value: '+63%', label: 'New customers / mo', note: 'Representative lift from fresh creative shipped faster than fatigue.', accent: '#FF2E9A' },
   { value: '<60 min', label: 'Idea to live ads', note: 'A full launch flown while agencies are still scheduling the kickoff call.', accent: '#C9A84C' },
 ];
 
@@ -34,13 +34,13 @@ export const MONEY_MECHANISM: MoneyStep[] = [
   {
     no: '01',
     title: 'We stop the money leaks',
-    plain: 'Every decision steers by real Shopify profit, not the ad platform’s inflated ROAS — so we cut the losers fast and stop paying for clicks that never become customers.',
+    plain: 'Every decision steers by real Shopify and QuickBooks profit, not the ad platform grading its own homework — so the losers get cut fast and you stop paying for clicks that never become customers.',
     accent: '#00D4FF',
   },
   {
     no: '02',
     title: 'We put more winning ads in front of more buyers',
-    plain: 'The Creative Forge ships fresh, on-brand ads on demand and pre-tests them on synthetic buyers, so only the scroll-stoppers get spend — beating ad fatigue that quietly kills accounts.',
+    plain: 'The Creative Forge ships fresh, on-brand ads on demand and pre-tests them on synthetic buyers, so only the scroll-stoppers get spend — outrunning the ad fatigue that quietly bleeds most accounts.',
     accent: '#FF2E9A',
   },
   {
@@ -52,7 +52,7 @@ export const MONEY_MECHANISM: MoneyStep[] = [
   {
     no: '04',
     title: 'We do it 24/7, and it compounds',
-    plain: 'A crew of AI operators optimizes around the clock and reinvests into what’s working. More profit → more budget for winners → more customers. The flywheel spins while you sleep.',
+    plain: 'A crew of AI operators optimizes around the clock and reinvests in what’s working. More profit → more budget for winners → more customers. The flywheel spins while you sleep — on autopilot, with the logs to prove it.',
     accent: '#C9A84C',
   },
 ];
@@ -113,9 +113,9 @@ export const TESTIMONIALS: Testimonial[] = [
 
 /** The defensible reasons it works — no hype, all mechanism. */
 export const PROOF_POINTS: string[] = [
-  'Optimizes to real profit (Shopify/QuickBooks), not the ad platform’s self-reported ROAS.',
+  'Optimizes to real profit (Shopify/QuickBooks ground truth), not the ad platform’s self-reported ROAS.',
   'Pre-tests creative on synthetic buyers before a dollar is spent — fewer expensive misses.',
-  'Never sleeps: 24/7 optimization catches fatigue and waste the same day, not next month.',
+  'Measures what actually moved revenue — incrementality and MMM, not last-click folklore.',
   'You own everything it builds — the site, the copy, the creative, the workflows.',
 ];
 

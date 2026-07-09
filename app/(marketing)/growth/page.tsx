@@ -105,8 +105,8 @@ export default function GrowthPage() {
             </span>
           </h1>
           <p className="text-text-secondary text-lg">
-            Drag the levers. Watch the pilot project the new customers, leads and profit Pixel Pilot
-            can pull from the exact same budget.
+            Same budget, tighter flying. Drag the levers and watch the pilot project the new
+            customers, leads and profit Pixel Pilot can pull from the spend you already have.
           </p>
         </div>
       </section>
@@ -125,7 +125,7 @@ export default function GrowthPage() {
             <Slider label="Profit margin" value={margin} min={10} max={90} step={1} onChange={setMargin} format={(v) => `${v}%`} accent="#C9A84C" />
             <div className="rounded-2xl border border-white/10 bg-black/20 p-4 text-[11px] text-text-tertiary leading-relaxed">
               Model assumes ~{Math.round(CAC_IMPROVEMENT * 100)}% lower CAC and ~{Math.round(LEAD_LIFT * 100)}% more leads from
-              tighter targeting + fresh creative. Illustrative — not a guarantee. Your real numbers depend on offer, margin and market.
+              pre-tested creative + tighter targeting. Illustrative — not a guarantee. Your real numbers depend on offer, margin and market.
             </div>
           </div>
 
@@ -156,7 +156,7 @@ export default function GrowthPage() {
             <div className="rounded-3xl border border-white/10 bg-white/[0.03] backdrop-blur-md p-7 flex flex-col sm:flex-row items-center justify-between gap-5">
               <div>
                 <div className="text-lg font-semibold">Want these numbers on your account?</div>
-                <div className="text-sm text-text-secondary">Get a custom plan built for your niche — free.</div>
+                <div className="text-sm text-text-secondary">Get a custom flight plan built for your niche — free.</div>
               </div>
               <Link href="/book" className="shrink-0 rounded-full px-7 py-3 text-sm font-semibold text-white transition hover:opacity-90" style={{ background: "linear-gradient(90deg,#6C63FF,#FF2E9A)" }}>
                 Get my growth plan →

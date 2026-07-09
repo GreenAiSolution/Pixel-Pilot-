@@ -4,7 +4,7 @@ import { LeadForm } from "@/components/pixel-pilot/lead-form";
 export const metadata: Metadata = {
   title: "Get More Customers — Pixel Pilot",
   description:
-    "Book a flight with Pixel Pilot. Tell us your goal and we build a custom customer-acquisition plan — the autonomous media buyer that turns ad spend into new customers and leads.",
+    "Book a flight with Pixel Pilot. Tell us your goal and get a custom customer-acquisition plan from the autonomous media buyer that optimizes to real profit — your books, not platform ROAS.",
 };
 
 const GRADIENT = "linear-gradient(90deg,#00D4FF,#6C63FF,#FF2E9A)";
@@ -12,7 +12,7 @@ const GRADIENT = "linear-gradient(90deg,#00D4FF,#6C63FF,#FF2E9A)";
 const ASSURANCES = [
   { k: "1 business day", v: "to your custom plan" },
   { k: "< 60 min", v: "from URL to live ads" },
-  { k: "Profit-based", v: "reporting, not vanity metrics" },
+  { k: "Profit-based", v: "reporting from your books, not the platform's" },
 ];
 
 export default function BookPage() {
@@ -35,7 +35,8 @@ export default function BookPage() {
               </h1>
               <p className="text-lg text-text-secondary max-w-md leading-relaxed">
                 Tell the pilot your goal. We reverse-engineer the campaigns, creative and funnel
-                that bring you buyers — then fly them 24/7. This is where your growth plan starts.
+                that bring you buyers — then fly them 24/7, steering by real profit instead of
+                platform-reported ROAS. Your flight plan starts here.
               </p>
               <div className="grid grid-cols-3 gap-4 pt-2 max-w-md">
                 {ASSURANCES.map((a) => (
@@ -48,8 +49,8 @@ export default function BookPage() {
               <ul className="space-y-2 pt-2">
                 {[
                   "A custom customer-acquisition plan for your account",
-                  "Creative concepts forged for your niche",
-                  "Honest, profit-based projections — no hype",
+                  "Creative concepts forged for your niche — pre-tested before a dollar of spend",
+                  "Honest, profit-based projections — no hype, no guarantees we can't keep",
                 ].map((f) => (
                   <li key={f} className="flex items-start gap-3 text-sm text-text-secondary">
                     <span className="mt-0.5 text-[#10B981]">✓</span>
