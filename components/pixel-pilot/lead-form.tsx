@@ -89,8 +89,8 @@ export function LeadForm() {
           </div>
         ) : null}
         <div className="mt-8 flex flex-wrap justify-center gap-3">
-          <Link href="/studio" className="rounded-full px-6 py-2.5 text-sm font-semibold text-white transition hover:opacity-90" style={{ background: "linear-gradient(90deg,#6C63FF,#FF2E9A)" }}>
-            Start building in the Studio →
+          <Link href="/pricing" className="rounded-full px-6 py-2.5 text-sm font-semibold text-white transition hover:opacity-90" style={{ background: "linear-gradient(90deg,#6C63FF,#FF2E9A)" }}>
+            Explore services &amp; plans →
           </Link>
           <Link href="/growth" className="rounded-full border border-white/15 px-6 py-2.5 text-sm font-medium hover:bg-white/5 transition">
             See your projected numbers

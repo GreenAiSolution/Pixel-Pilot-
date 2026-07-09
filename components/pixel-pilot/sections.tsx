@@ -106,9 +106,7 @@ const DIRECTORY: { href: string; label: string; blurb: string; accent: string }[
   { href: "/book", label: "Get More Customers", blurb: "Start your growth plan — the fastest runway to new buyers.", accent: "#10B981" },
   { href: "/growth", label: "Growth Calculator", blurb: "See the new customers & leads your spend can buy.", accent: "#00D4FF" },
   { href: "/results", label: "Results", blurb: "More customers, more profit — how, and the proof.", accent: "#10B981" },
-  { href: "/services", label: "Flight Deck", blurb: "The five services, one autonomous buyer.", accent: "#FF2E9A" },
-  { href: "/studio", label: "Studio", blurb: "Eight live tools + a guided workflow.", accent: "#00D4FF" },
-  { href: "/pricing", label: "Pricing", blurb: "Every service priced, plus managed plans.", accent: "#C9A84C" },
+  { href: "/pricing", label: "Services & Pricing", blurb: "The five services and every plan, priced.", accent: "#C9A84C" },
   { href: "/agents", label: "Agents", blurb: "The crew of specialist operators.", accent: "#6C63FF" },
   { href: "/forge", label: "Creative Forge", blurb: "Watch it make the ad, live.", accent: "#FF2E9A" },
   { href: "/automation", label: "Automation", blurb: "The n8n loops + zero-to-live flight plan.", accent: "#00D4FF" },
@@ -121,7 +119,7 @@ export function HomeDirectory() {
     <section className="px-6 py-24">
       <div className="container mx-auto max-w-6xl">
         <Reveal className="text-center max-w-3xl mx-auto space-y-4 mb-14">
-          <div className="text-xs uppercase tracking-[0.3em] text-[#00D4FF]">── The Flight Deck</div>
+          <div className="text-xs uppercase tracking-[0.3em] text-[#00D4FF]">── The Platform</div>
           <h2 className="text-4xl md:text-6xl font-semibold tracking-tight">
             Explore the{" "}
             <span className="bg-clip-text text-transparent" style={{ backgroundImage: GRADIENT }}>
@@ -172,69 +170,6 @@ export function BrandFilm() {
               <div className="absolute -inset-2 rounded-[1.75rem] opacity-30 blur-2xl" style={{ background: GRADIENT }} aria-hidden />
               <video className="relative w-full aspect-video rounded-2xl border border-white/10 object-cover" src="/brand-film.mp4" poster="/brand-film-poster.jpg" autoPlay loop muted playsInline preload="metadata" />
             </div>
-          </Reveal>
-        </div>
-      </section>
-    </PageTop>
-  );
-}
-
-// ─── FLIGHT DECK — SERVICES ───────────────────────────────────────────────────
-export function FlightDeck() {
-  return (
-    <PageTop>
-      <section id="deck" className="px-6 py-24">
-        <div className="container mx-auto max-w-6xl">
-          <Reveal className="text-center max-w-3xl mx-auto space-y-4">
-            <div className="text-xs uppercase tracking-[0.3em] text-[#FF2E9A]">── The Flight Deck</div>
-            <h2 className="text-4xl md:text-6xl font-semibold tracking-tight">
-              Five services.
-              <br />
-              <span className="bg-clip-text text-transparent" style={{ backgroundImage: GRADIENT }}>
-                One autonomous buyer.
-              </span>
-            </h2>
-            <p className="text-text-secondary text-lg">Not another ad tool. The full media-buying department — every service pointed at one niche, and none of it basic.</p>
-          </Reveal>
-          <div className="grid md:grid-cols-2 gap-5 mt-14">
-            {SERVICES.map((s, i) => (
-              <Reveal key={s.id} id={s.id} className="[transition-delay:var(--d)]">
-                <div className="group relative h-full rounded-2xl border border-white/10 bg-white/[0.03] backdrop-blur-md p-7 overflow-hidden hover:border-white/20 transition" style={{ ["--d" as string]: `${(i % 2) * 80}ms` }}>
-                  <div className="absolute inset-x-0 top-0 h-px opacity-60" style={{ background: `linear-gradient(90deg,transparent,${s.accent},transparent)` }} />
-                  <div className="flex items-start justify-between gap-4">
-                    <div>
-                      <div className="flex items-center gap-3">
-                        <span className="text-xs font-mono tracking-widest" style={{ color: s.accent }}>
-                          {s.no}
-                        </span>
-                        <span className="text-[10px] uppercase tracking-[0.25em] text-text-tertiary rounded-full border border-white/10 px-2 py-0.5">{s.category}</span>
-                      </div>
-                      <h3 className="mt-3 text-2xl font-semibold leading-tight">{s.name}</h3>
-                    </div>
-                    <div className="text-right shrink-0">
-                      <div className="text-2xl font-semibold tabular-nums" style={{ color: s.accent }}>
-                        {s.metric.value}
-                      </div>
-                      <div className="text-[10px] uppercase tracking-widest text-text-tertiary">{s.metric.label}</div>
-                    </div>
-                  </div>
-                  <p className="mt-4 text-[15px] font-medium text-text-primary">{s.headline}</p>
-                  <p className="mt-2 text-sm text-text-secondary leading-relaxed">{s.body}</p>
-                  <div className="mt-4 flex items-center gap-2 text-xs" style={{ color: s.accent }}>
-                    <span aria-hidden>◆</span>
-                    <span className="text-text-secondary italic">{s.edge}</span>
-                  </div>
-                  <Link href="/studio" className="mt-5 inline-flex text-sm font-medium transition hover:opacity-90" style={{ color: s.accent }}>
-                    Run it in the Studio →
-                  </Link>
-                </div>
-              </Reveal>
-            ))}
-          </div>
-          <Reveal className="text-center mt-12">
-            <Link href="/pricing" className="inline-block rounded-full px-7 py-3 text-sm font-semibold text-white transition hover:opacity-90" style={{ background: "linear-gradient(90deg,#6C63FF,#FF2E9A)" }}>
-              See what each one costs →
-            </Link>
           </Reveal>
         </div>
       </section>
@@ -487,16 +422,64 @@ export function Pricing() {
       <section id="pricing" className="px-6 py-24">
         <div className="container mx-auto max-w-6xl">
           <Reveal className="text-center max-w-3xl mx-auto space-y-4 mb-14">
-            <div className="text-xs uppercase tracking-[0.3em] text-gold">── Pricing</div>
-            <h2 className="text-4xl md:text-6xl font-semibold tracking-tight">Every service, priced.</h2>
-            <p className="text-text-secondary text-lg">Buy a single deliverable à la carte, or hand us the whole account with a managed flight plan. No hidden fees — this is the whole menu.</p>
+            <div className="text-xs uppercase tracking-[0.3em] text-gold">── Services &amp; Pricing</div>
+            <h2 className="text-4xl md:text-6xl font-semibold tracking-tight">
+              Five services.
+              <br />
+              <span className="bg-clip-text text-transparent" style={{ backgroundImage: GRADIENT }}>
+                One autonomous buyer.
+              </span>
+            </h2>
+            <p className="text-text-secondary text-lg">
+              The full media-buying department — every service pointed at one niche. Buy a single deliverable
+              à la carte, or hand us the whole account with a managed flight plan. No hidden fees — this is the whole menu.
+            </p>
           </Reveal>
 
-          {/* À LA CARTE */}
+          {/* THE SERVICES (moved from the former Flight Deck page) */}
           <Reveal className="mb-6 flex items-center gap-3">
+            <span className="text-xs uppercase tracking-[0.3em] text-[#FF2E9A]">What we fly</span>
+            <span className="h-px flex-1 bg-white/10" />
+            <span className="text-xs text-text-tertiary">the department, in five services</span>
+          </Reveal>
+          <div className="grid md:grid-cols-2 gap-5">
+            {SERVICES.map((s, i) => (
+              <Reveal key={s.id} id={s.id} className="[transition-delay:var(--d)]">
+                <div className="group relative h-full rounded-2xl border border-white/10 bg-white/[0.03] backdrop-blur-md p-7 overflow-hidden hover:border-white/20 transition" style={{ ["--d" as string]: `${(i % 2) * 80}ms` }}>
+                  <div className="absolute inset-x-0 top-0 h-px opacity-60" style={{ background: `linear-gradient(90deg,transparent,${s.accent},transparent)` }} />
+                  <div className="flex items-start justify-between gap-4">
+                    <div>
+                      <div className="flex items-center gap-3">
+                        <span className="text-xs font-mono tracking-widest" style={{ color: s.accent }}>
+                          {s.no}
+                        </span>
+                        <span className="text-[10px] uppercase tracking-[0.25em] text-text-tertiary rounded-full border border-white/10 px-2 py-0.5">{s.category}</span>
+                      </div>
+                      <h3 className="mt-3 text-2xl font-semibold leading-tight">{s.name}</h3>
+                    </div>
+                    <div className="text-right shrink-0">
+                      <div className="text-2xl font-semibold tabular-nums" style={{ color: s.accent }}>
+                        {s.metric.value}
+                      </div>
+                      <div className="text-[10px] uppercase tracking-widest text-text-tertiary">{s.metric.label}</div>
+                    </div>
+                  </div>
+                  <p className="mt-4 text-[15px] font-medium text-text-primary">{s.headline}</p>
+                  <p className="mt-2 text-sm text-text-secondary leading-relaxed">{s.body}</p>
+                  <div className="mt-4 flex items-center gap-2 text-xs" style={{ color: s.accent }}>
+                    <span aria-hidden>◆</span>
+                    <span className="text-text-secondary italic">{s.edge}</span>
+                  </div>
+                </div>
+              </Reveal>
+            ))}
+          </div>
+
+          {/* À LA CARTE */}
+          <Reveal className="mb-6 mt-20 flex items-center gap-3">
             <span className="text-xs uppercase tracking-[0.3em] text-[#00D4FF]">Individual services</span>
             <span className="h-px flex-1 bg-white/10" />
-            <span className="text-xs text-text-tertiary">à la carte — built in the Studio</span>
+            <span className="text-xs text-text-tertiary">à la carte — done for you</span>
           </Reveal>
           <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
             {SERVICE_PRICING.map((s) => (
@@ -526,7 +509,7 @@ export function Pricing() {
                     ))}
                   </ul>
                   <Link href={s.tool} className="mt-5 w-full text-center rounded-lg border border-white/10 bg-white/[0.04] px-4 py-2.5 text-sm font-medium hover:border-white/25 transition">
-                    Build it in the Studio →
+                    Get started →
                   </Link>
                 </div>
               </Reveal>
