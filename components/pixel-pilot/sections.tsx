@@ -319,10 +319,10 @@ export function Forge() {
       <section id="forge" className="px-6 py-24">
         <div className="container mx-auto max-w-6xl">
           <Reveal className="text-center max-w-3xl mx-auto space-y-4 mb-12">
-            <div className="text-xs uppercase tracking-[0.3em] text-[#FF2E9A]">── Creative Forge · powered by Higgsfield</div>
+            <div className="text-xs uppercase tracking-[0.3em] text-[#FF2E9A]">── Creative Forge · powered by Pixel Pilot</div>
             <h2 className="text-4xl md:text-6xl font-semibold tracking-tight">Watch it make the ad.</h2>
             <p className="text-text-secondary text-lg">
-              This is the product automating itself, live. Drop a brand, pick a vibe, and Pixel Pilot fires Higgsfield to forge a scroll-stopping reel — the same engine that refreshes fatigued creative on your account automatically.
+              This is the product automating itself, live. Drop a brand, pick a vibe, and Pixel Pilot forges a scroll-stopping reel — the same engine that refreshes fatigued creative on your account automatically.
             </p>
           </Reveal>
           <Reveal className="mb-12">
@@ -333,7 +333,7 @@ export function Forge() {
                 <div className="text-2xl font-semibold tracking-[0.18em] uppercase bg-clip-text text-transparent inline-block" style={{ backgroundImage: GRADIENT }}>
                   Pixel<span className="text-white">/Pilot</span>
                 </div>
-                <div className="mt-1 text-xs uppercase tracking-[0.3em] text-text-tertiary">Your ad spend, on autopilot · brand film forged with Higgsfield</div>
+                <div className="mt-1 text-xs uppercase tracking-[0.3em] text-text-tertiary">Your ad spend, on autopilot · brand film forged by Pixel Pilot</div>
               </div>
             </div>
           </Reveal>
@@ -341,7 +341,7 @@ export function Forge() {
             <CreativeForge />
           </Reveal>
           <Reveal className="mt-16">
-            <div className="text-xs uppercase tracking-[0.3em] text-text-tertiary text-center mb-6">── Forged with Higgsfield · real output</div>
+            <div className="text-xs uppercase tracking-[0.3em] text-text-tertiary text-center mb-6">── Forged by Pixel Pilot · real output</div>
             <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
               {VIBES.map((v) => {
                 const shot = SHOWCASE[v.id];
@@ -351,7 +351,7 @@ export function Forge() {
                       <video src={shot.videoUrl} poster={shot.posterUrl} autoPlay loop muted playsInline className="h-full w-full object-cover transition duration-500 group-hover:scale-[1.04]" />
                     ) : (
                       // eslint-disable-next-line @next/next/no-img-element
-                      <img src={shot.posterUrl} alt={`${v.name} ad forged with Higgsfield`} className="h-full w-full object-cover transition duration-500 group-hover:scale-[1.04]" />
+                      <img src={shot.posterUrl} alt={`${v.name} ad forged by Pixel Pilot`} className="h-full w-full object-cover transition duration-500 group-hover:scale-[1.04]" />
                     )}
                     <figcaption className="pointer-events-none absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/80 via-black/30 to-transparent p-3">
                       <div className="flex items-center justify-between gap-2">

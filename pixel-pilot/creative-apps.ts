@@ -19,7 +19,7 @@ export const CREATIVE_APPS: CreativeApp[] = [
     name: 'Creative Forge',
     kind: 'App',
     blurb: 'Drop a product, get a cinematic ad reel in seconds. Motion-first, channel-native.',
-    poweredBy: 'Higgsfield',
+    poweredBy: 'Pixel Pilot',
     accent: '#FF2E9A',
     glyph: '✦',
   },

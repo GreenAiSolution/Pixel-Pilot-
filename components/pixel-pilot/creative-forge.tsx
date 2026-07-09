@@ -21,7 +21,7 @@ const BUILD_STEPS = [
   "Reading the brand",
   "Pulling winning genes",
   "Directing the shot",
-  "Higgsfield rendering",
+  "Rendering the reel",
   "Cutting the hook",
   "Reel ready",
 ];
@@ -177,11 +177,11 @@ export function CreativeForge() {
                 className="h-full w-full object-cover"
               />
               <div className="absolute bottom-1.5 left-1.5 rounded-full bg-black/60 px-2 py-0.5 text-[9px] uppercase tracking-widest text-white/90 backdrop-blur">
-                Higgsfield · real
+                Pixel Pilot · real
               </div>
             </div>
             <div className="text-text-secondary text-sm max-w-xs mx-auto text-center">
-              A real Higgsfield reel. Fill in a brand, pick a vibe, and forge your own.
+              A real Pixel Pilot reel. Fill in a brand, pick a vibe, and forge your own.
             </div>
           </div>
         )}
@@ -259,7 +259,7 @@ export function CreativeForge() {
               <Stat label="Aspect" value={job.aspect} />
               <Stat label="Duration" value={`${job.durationSec}s`} />
               <Stat label="Model" value={shot.model} />
-              <Stat label="Source" value={live ? "Higgsfield · live" : "Higgsfield · showcase"} />
+              <Stat label="Source" value={live ? "Pixel Pilot · live" : "Pixel Pilot · showcase"} />
             </div>
             <div className="text-center">
               <button
