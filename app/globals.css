@@ -81,10 +81,39 @@ body {
 ::-webkit-scrollbar-track { background: var(--bg-primary); }
 ::-webkit-scrollbar-thumb { background: var(--border-light); border-radius: 4px; }
 
+/* ─── Page transitions (see components/pixel-pilot/page-transition.tsx) ─────── */
+@keyframes pp-sweep {
+  0%   { transform: translateX(-120%) skewX(-8deg); }
+  45%  { transform: translateX(0%)    skewX(-8deg); }
+  100% { transform: translateX(120%)  skewX(-8deg); }
+}
+.pp-sweep {
+  animation: pp-sweep 0.72s cubic-bezier(0.7, 0, 0.2, 1) forwards;
+  box-shadow: 0 0 120px 20px rgba(108, 99, 255, 0.55);
+}
+@keyframes pp-sweep-mark {
+  0%, 100% { opacity: 0; }
+  40%, 60% { opacity: 1; }
+}
+.pp-sweep-mark { animation: pp-sweep-mark 0.72s ease-in-out forwards; }
+@keyframes pp-page-in {
+  from { opacity: 0; transform: translateY(18px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.pp-page-in { animation: pp-page-in 0.55s cubic-bezier(0.22, 1, 0.36, 1) both; }
+
+/* Slow float for the lead-gen orbit / growth visuals */
+@keyframes pp-float {
+  0%, 100% { transform: translateY(0); }
+  50%      { transform: translateY(-10px); }
+}
+.pp-float { animation: pp-float 6s ease-in-out infinite; }
+
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after {
     animation-duration: 0.01ms !important;
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
   }
+  .pp-sweep, .pp-sweep-mark, .pp-page-in, .pp-float { animation: none !important; }
 }

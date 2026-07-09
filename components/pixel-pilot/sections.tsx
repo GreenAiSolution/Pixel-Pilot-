@@ -128,11 +128,11 @@ export function Hero() {
           <span className="text-text-primary">real profit</span> — 24/7, hands off the wheel.
         </p>
         <div className="flex flex-wrap items-center justify-center gap-4 pt-2">
-          <Link href="/pricing" className="rounded-full px-7 py-3 text-sm font-semibold text-white transition hover:opacity-90" style={{ background: "linear-gradient(90deg,#6C63FF,#FF2E9A)" }}>
-            Book a flight →
+          <Link href="/book" className="rounded-full px-7 py-3 text-sm font-semibold text-white transition hover:opacity-90" style={{ background: "linear-gradient(90deg,#6C63FF,#FF2E9A)" }}>
+            Get more customers →
           </Link>
-          <Link href="/studio" className="rounded-full border border-white/15 px-7 py-3 text-sm font-medium text-text-primary hover:bg-white/5 transition">
-            Open the Studio
+          <Link href="/growth" className="rounded-full border border-white/15 px-7 py-3 text-sm font-medium text-text-primary hover:bg-white/5 transition">
+            Calculate my growth
           </Link>
         </div>
         <div className="mt-8 flex flex-wrap items-center justify-center gap-x-8 gap-y-3 text-xs uppercase tracking-[0.25em] text-text-tertiary">
@@ -151,6 +151,8 @@ export function Hero() {
 
 // ─── HOME DIRECTORY — links out to every page ─────────────────────────────────
 const DIRECTORY: { href: string; label: string; blurb: string; accent: string }[] = [
+  { href: "/book", label: "Get More Customers", blurb: "Start your growth plan — the fastest runway to new buyers.", accent: "#10B981" },
+  { href: "/growth", label: "Growth Calculator", blurb: "See the new customers & leads your spend can buy.", accent: "#00D4FF" },
   { href: "/results", label: "Results", blurb: "More customers, more profit — how, and the proof.", accent: "#10B981" },
   { href: "/services", label: "Flight Deck", blurb: "The five services, one autonomous buyer.", accent: "#FF2E9A" },
   { href: "/studio", label: "Studio", blurb: "Eight live tools + a guided workflow.", accent: "#00D4FF" },
@@ -551,7 +553,7 @@ export function Automation() {
             ))}
           </ol>
           <Reveal className="text-center mt-4">
-            <Link href="/pricing" className="inline-block rounded-full px-7 py-3 text-sm font-semibold text-white transition hover:opacity-90" style={{ background: "linear-gradient(90deg,#6C63FF,#FF2E9A)" }}>
+            <Link href="/book" className="inline-block rounded-full px-7 py-3 text-sm font-semibold text-white transition hover:opacity-90" style={{ background: "linear-gradient(90deg,#6C63FF,#FF2E9A)" }}>
               Book your zero-to-live launch →
             </Link>
           </Reveal>
@@ -800,14 +802,68 @@ export function Results() {
             </Reveal>
           </div>
 
-          <Reveal className="text-center mt-16">
-            <Link href="/pricing" className="inline-block rounded-full px-7 py-3 text-sm font-semibold text-white transition hover:opacity-90" style={{ background: "linear-gradient(90deg,#6C63FF,#FF2E9A)" }}>
-              See pricing &amp; book a flight →
+          <Reveal className="text-center mt-16 flex flex-wrap justify-center gap-4">
+            <Link href="/book" className="inline-block rounded-full px-7 py-3 text-sm font-semibold text-white transition hover:opacity-90" style={{ background: "linear-gradient(90deg,#6C63FF,#FF2E9A)" }}>
+              Get more customers →
+            </Link>
+            <Link href="/growth" className="inline-block rounded-full border border-white/15 px-7 py-3 text-sm font-medium text-text-primary hover:bg-white/5 transition">
+              Calculate my growth
             </Link>
           </Reveal>
         </div>
       </section>
     </PageTop>
+  );
+}
+
+// ─── GROWTH ENGINE — the customer-acquisition promise ─────────────────────────
+const GROWTH_PILLARS: { metric: string; label: string; blurb: string; accent: string }[] = [
+  { metric: "More", label: "Customers", blurb: "Every campaign is reverse-engineered from one goal: bring you buyers who pay.", accent: "#10B981" },
+  { metric: "More", label: "Leads", blurb: "Fresh, native creative and tight targeting fill the top of your funnel — daily.", accent: "#00D4FF" },
+  { metric: "Lower", label: "CAC", blurb: "The pilot cuts losers and scales winners by real profit, so each customer costs less.", accent: "#FF2E9A" },
+];
+
+export function GrowthEngine() {
+  return (
+    <section className="px-6 py-24">
+      <div className="container mx-auto max-w-6xl">
+        <Reveal className="text-center max-w-3xl mx-auto space-y-4 mb-14">
+          <div className="text-xs uppercase tracking-[0.3em] text-[#10B981]">── The Growth Engine</div>
+          <h2 className="text-4xl md:text-6xl font-semibold tracking-tight">
+            Built to bring you{" "}
+            <span className="bg-clip-text text-transparent" style={{ backgroundImage: GRADIENT }}>
+              new customers.
+            </span>
+          </h2>
+          <p className="text-text-secondary text-lg">
+            Pixel Pilot isn&apos;t here to make dashboards pretty. It exists to grow one number — the count of
+            customers and leads flowing into your business.
+          </p>
+        </Reveal>
+        <div className="grid md:grid-cols-3 gap-5">
+          {GROWTH_PILLARS.map((p, i) => (
+            <Reveal key={p.label} className="[transition-delay:var(--d)]">
+              <div className="group relative h-full rounded-2xl border border-white/10 bg-white/[0.03] backdrop-blur-md p-7 overflow-hidden hover:-translate-y-1 transition" style={{ ["--d" as string]: `${i * 80}ms` }}>
+                <div className="absolute inset-x-0 top-0 h-px opacity-60" style={{ background: `linear-gradient(90deg,transparent,${p.accent},transparent)` }} />
+                <div className="text-xs uppercase tracking-[0.25em] text-text-tertiary">{p.metric}</div>
+                <div className="mt-1 text-3xl font-semibold" style={{ color: p.accent }}>
+                  {p.label}
+                </div>
+                <p className="mt-3 text-sm text-text-secondary leading-relaxed">{p.blurb}</p>
+              </div>
+            </Reveal>
+          ))}
+        </div>
+        <Reveal className="mt-12 flex flex-wrap justify-center gap-4">
+          <Link href="/book" className="rounded-full px-7 py-3 text-sm font-semibold text-white transition hover:opacity-90" style={{ background: "linear-gradient(90deg,#6C63FF,#FF2E9A)" }}>
+            Get more customers →
+          </Link>
+          <Link href="/growth" className="rounded-full border border-white/15 px-7 py-3 text-sm font-medium text-text-primary hover:bg-white/5 transition">
+            See your projected numbers
+          </Link>
+        </Reveal>
+      </div>
+    </section>
   );
 }
 
@@ -824,9 +880,12 @@ export function FinalCTA() {
           </span>
         </h2>
         <p className="text-text-secondary text-lg md:text-xl">Your competitors are still clicking. Put a pilot in the seat and let your spend climb to profit on its own.</p>
-        <div className="flex justify-center pt-2">
-          <Link href="/pricing" className="rounded-full px-8 py-3.5 text-sm font-semibold text-white transition hover:opacity-90" style={{ background: "linear-gradient(90deg,#6C63FF,#FF2E9A)" }}>
-            Book a flight →
+        <div className="flex flex-wrap justify-center gap-4 pt-2">
+          <Link href="/book" className="rounded-full px-8 py-3.5 text-sm font-semibold text-white transition hover:opacity-90" style={{ background: "linear-gradient(90deg,#6C63FF,#FF2E9A)" }}>
+            Get more customers →
+          </Link>
+          <Link href="/pricing" className="rounded-full border border-white/15 px-8 py-3.5 text-sm font-medium text-text-primary hover:bg-white/5 transition">
+            See pricing
           </Link>
         </div>
       </Reveal>
