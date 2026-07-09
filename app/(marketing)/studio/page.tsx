@@ -191,8 +191,6 @@ const TOOLS: Tool[] = [
   },
 ];
 
-const CATEGORIES = ["Strategy", "Build", "Optimize"] as const;
-
 /* The guided flight plan — the recommended end-to-end order. */
 const FLOW = ["launch", "brand", "funnel", "website", "ads", "content", "pretest", "employees"];
 
@@ -258,7 +256,16 @@ export default function StudioPage() {
 
   return (
     <main className="relative px-5 pt-28 pb-28 sm:px-6">
-      <div className="container mx-auto max-w-6xl">
+      {/* Ambient accent glow — re-tints to the active tool for a living deck */}
+      <div aria-hidden className="pointer-events-none absolute inset-0 overflow-hidden">
+        <div
+          className="absolute left-1/3 top-8 h-[440px] w-[560px] -translate-x-1/2 rounded-full blur-[130px] transition-[background] duration-700"
+          style={{ background: `${active.accent}16` }}
+        />
+        <div className="absolute right-0 top-52 h-[360px] w-[440px] rounded-full blur-[130px]" style={{ background: "#6C63FF10" }} />
+      </div>
+
+      <div className="container relative z-10 mx-auto max-w-6xl">
         {/* Header */}
         <div className="text-xs uppercase tracking-[0.3em] text-[#00D4FF]">── The Studio</div>
         <h1 className="mt-4 text-4xl font-semibold leading-[0.98] tracking-tight md:text-6xl">
@@ -269,19 +276,36 @@ export default function StudioPage() {
           .
         </h1>
         <p className="mt-4 max-w-2xl text-lg text-text-secondary">
-          Eight deluxe tools, each with a detailed brief so nothing comes back generic. Run them one at a time — or follow the
+          {TOOLS.length} deluxe tools, each with a detailed brief so nothing comes back generic. Run them one at a time — or follow the
           Flight Plan and let each step hand its work to the next. Everything ships from inside this page.
         </p>
+
+        {/* Stat strip */}
+        <div className="mt-6 flex flex-wrap items-center gap-2.5 text-[13px] text-text-tertiary">
+          <span className="rounded-full border border-white/10 bg-white/[0.03] px-3 py-1">
+            <span className="font-semibold text-text-primary">{TOOLS.length}</span> deluxe tools
+          </span>
+          <span className="rounded-full border border-white/10 bg-white/[0.03] px-3 py-1">Claude-powered</span>
+          <span className="rounded-full border border-white/10 bg-white/[0.03] px-3 py-1">One-click hand-offs</span>
+          <span className="rounded-full border border-white/10 bg-white/[0.03] px-3 py-1">Ships live from this page</span>
+        </div>
 
         {/* Flight Plan — the guided workflow rail */}
         <div className="mt-8 rounded-2xl border border-white/10 bg-white/[0.03] p-4">
           <div className="flex items-center justify-between gap-3">
             <div className="text-xs uppercase tracking-[0.25em] text-[#C9A84C]">✦ Flight Plan — end-to-end workflow</div>
             <div className="text-xs text-text-tertiary">
-              {done}/{FLOW.length} complete
+              <span className="font-semibold" style={{ color: "#C9A84C" }}>{done}</span>/{FLOW.length} complete
             </div>
           </div>
-          <div className="mt-3 flex flex-wrap gap-2">
+          {/* Progress track */}
+          <div className="mt-3 h-1.5 w-full overflow-hidden rounded-full bg-white/5">
+            <div
+              className="h-full rounded-full transition-[width] duration-500 ease-out"
+              style={{ width: `${(done / FLOW.length) * 100}%`, background: GRADIENT }}
+            />
+          </div>
+          <div className="mt-4 flex flex-wrap gap-2">
             {FLOW.map((id, i) => {
               const t = byId(id);
               const isDone = Boolean(results[id]);
@@ -307,54 +331,91 @@ export default function StudioPage() {
           </div>
         </div>
 
-        {/* Body: tool rail + runner */}
-        <div className="mt-6 grid items-start gap-6 lg:grid-cols-[320px_1fr]">
-          {/* Tool rail, grouped by category */}
-          <div className="space-y-5">
-            {CATEGORIES.map((cat) => (
-              <div key={cat}>
-                <div className="mb-2 px-1 text-[11px] uppercase tracking-[0.25em] text-text-tertiary">{cat}</div>
-                <div className="space-y-2">
-                  {TOOLS.filter((t) => t.category === cat).map((t) => (
-                    <button
-                      key={t.id}
-                      onClick={() => pick(t.id)}
-                      className={`w-full rounded-xl border p-3.5 text-left transition ${
-                        active.id === t.id ? "border-white/25 bg-white/[0.06]" : "border-white/10 hover:border-white/20"
-                      }`}
+        {/* Body: tool gallery, then the runner */}
+        <div className="mt-8 space-y-8">
+          {/* Tool gallery — pick your instrument */}
+          <div>
+            <div className="mb-3 flex items-center gap-3">
+              <div className="text-[11px] uppercase tracking-[0.28em] text-text-tertiary">Choose a tool</div>
+              <div className="h-px flex-1 bg-white/10" />
+            </div>
+            <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
+              {TOOLS.map((t) => {
+                const isActive = active.id === t.id;
+                const ready = Boolean(results[t.id]);
+                return (
+                  <button
+                    key={t.id}
+                    onClick={() => pick(t.id)}
+                    className="group relative overflow-hidden rounded-2xl border p-4 text-left transition duration-200 hover:-translate-y-1"
+                    style={{
+                      borderColor: isActive ? `${t.accent}99` : "rgba(255,255,255,0.10)",
+                      background: isActive ? `${t.accent}14` : "rgba(255,255,255,0.03)",
+                    }}
+                  >
+                    <div
+                      className="pointer-events-none absolute -inset-px opacity-0 transition group-hover:opacity-100"
+                      style={{ background: `radial-gradient(150px 90px at 30% 0%, ${t.accent}26, transparent 70%)` }}
+                    />
+                    <div
+                      className="pointer-events-none absolute inset-x-0 top-0 h-px transition"
+                      style={{ background: `linear-gradient(90deg,transparent,${t.accent},transparent)`, opacity: isActive ? 1 : 0 }}
+                    />
+                    <div className="relative flex items-start justify-between">
+                      <span
+                        className="flex h-11 w-11 items-center justify-center rounded-xl text-xl transition"
+                        style={{
+                          background: `${t.accent}1f`,
+                          color: t.accent,
+                          boxShadow: isActive ? `0 0 22px ${t.accent}66` : "none",
+                        }}
+                      >
+                        {t.icon}
+                      </span>
+                      {ready ? (
+                        <span className="rounded-full border border-[#10B981]/40 bg-[#10B981]/10 px-2 py-0.5 text-[10px] text-[#10B981]">ready ✓</span>
+                      ) : (
+                        <span className="text-[10px] uppercase tracking-[0.2em] text-text-tertiary">{t.category}</span>
+                      )}
+                    </div>
+                    <div className="relative mt-3 text-[15px] font-semibold leading-tight">{t.name}</div>
+                    <p className="relative mt-1.5 text-[12.5px] leading-snug text-text-tertiary">{t.blurb}</p>
+                    <div
+                      className="relative mt-3 text-[11px] font-semibold uppercase tracking-widest opacity-0 transition group-hover:opacity-100"
+                      style={{ color: t.accent }}
                     >
-                      <div className="flex items-center gap-2.5">
-                        <span
-                          className="flex h-7 w-7 shrink-0 items-center justify-center rounded-lg text-sm"
-                          style={{ background: `${t.accent}22`, color: t.accent }}
-                        >
-                          {t.icon}
-                        </span>
-                        <span className="text-sm font-semibold">{t.name}</span>
-                        {results[t.id] && <span className="ml-auto text-[11px] text-[#10B981]">ready ✓</span>}
-                      </div>
-                      <p className="mt-1.5 text-[12.5px] leading-snug text-text-tertiary">{t.blurb}</p>
-                    </button>
-                  ))}
-                </div>
-              </div>
-            ))}
+                      {isActive ? "● Selected" : "Open →"}
+                    </div>
+                  </button>
+                );
+              })}
+            </div>
           </div>
 
           {/* Runner */}
-          <div className="rounded-2xl border border-white/10 bg-white/[0.03] p-6">
-            <div className="mb-5 flex items-start gap-3 border-b border-white/10 pb-5">
-              <span className="flex h-10 w-10 items-center justify-center rounded-xl text-lg" style={{ background: `${active.accent}22`, color: active.accent }}>
+          <div className="relative overflow-hidden rounded-3xl border border-white/10 bg-white/[0.03] p-6 sm:p-8">
+            <div
+              className="pointer-events-none absolute -left-10 -top-10 h-48 w-48 rounded-full blur-3xl transition-[background] duration-700"
+              style={{ background: `${active.accent}22` }}
+            />
+            <div className="relative mb-6 flex items-start gap-4 border-b border-white/10 pb-6">
+              <span
+                className="flex h-14 w-14 shrink-0 items-center justify-center rounded-2xl text-2xl"
+                style={{ background: `${active.accent}1f`, color: active.accent, boxShadow: `0 0 26px ${active.accent}44` }}
+              >
                 {active.icon}
               </span>
               <div>
-                <div className="text-lg font-semibold">{active.name}</div>
-                <div className="text-[13px] text-text-tertiary">{active.blurb}</div>
+                <div className="text-[11px] uppercase tracking-[0.28em]" style={{ color: active.accent }}>
+                  {active.category} · workspace
+                </div>
+                <div className="mt-1 text-2xl font-semibold leading-tight">{active.name}</div>
+                <div className="mt-1 text-[13px] text-text-secondary">{active.blurb}</div>
               </div>
             </div>
 
             {/* Brief */}
-            <div className="space-y-4">
+            <div className="max-w-2xl space-y-4">
               {active.fields.map((f) => (
                 <FieldInput key={f.name} field={f} value={values[f.name] || ""} accent={active.accent} onChange={(val) => set(f.name, val)} />
               ))}
