@@ -3,8 +3,10 @@
 // The live front door for new customers. Captures a "get more customers" request
 // from the /book flow and fans it out, every hop optional and non-blocking:
 //   1 · HubSpot   — create/find the contact as a marketing `lead` (native OAuth)
-//   2 · Zapier    — POST to PIXEL_PILOT_LEAD_HOOK_URL (Slack #leads, Gmail, Sheets…)
-//   3 · Store     — always append to the durable/in-memory lead list
+//   2 · Quote     — Claude drafts a personalized reply with a real price from the
+//                   catalog; Resend delivers it to the lead + alerts the owner
+//   3 · Zapier    — POST to PIXEL_PILOT_LEAD_HOOK_URL (Slack #leads, Gmail, Sheets…)
+//   4 · Store     — always append to the durable/in-memory lead list
 // Degrades gracefully: with nothing configured it still captures the lead and
 // reports what *would* route, so the site never drops a customer.
 
@@ -13,8 +15,10 @@ import { guard, ok, fail, log } from '@/pixel-pilot/api';
 import { pushToList } from '@/pixel-pilot/store';
 import { fetchWithTimeout } from '@/pixel-pilot/http';
 import { hubspotConfigured, getConnection, createContact } from '@/pixel-pilot/hubspot';
+import { draftQuote, sendQuoteEmail, sendOwnerAlert, emailConfigured } from '@/pixel-pilot/quote';
 
-export const maxDuration = 20;
+// Drafting the quote is one Claude call (~5-20s); leave headroom on top of it.
+export const maxDuration = 60;
 
 function splitName(full: string): { firstName?: string; lastName?: string } {
   const parts = full.trim().split(/\s+/);
@@ -94,7 +98,22 @@ export async function POST(req: NextRequest) {
     }
   }
 
-  // 2 · Zapier Catch Hook — optional fan-out to Slack / Gmail / Sheets.
+  // 2 · Personalized quote — draft with the real catalog, deliver via Resend.
+  // Failures are logged, never surfaced: the lead is already captured above.
+  let quoted: { plan: string; price: string; messageId: string } | null = null;
+  if (emailConfigured()) {
+    try {
+      const quote = await draftQuote(lead);
+      const messageId = await sendQuoteEmail(lead, quote);
+      quoted = { plan: quote.recommendedPlan.name, price: quote.recommendedPlan.price, messageId };
+      routed.push(`Personalized quote emailed (${quote.recommendedPlan.name})`);
+      await sendOwnerAlert(lead, quote).catch(() => null);
+    } catch (err) {
+      log('warn', 'pixel-pilot/lead', 'quote email failed', { err: err instanceof Error ? err.message : String(err) });
+    }
+  }
+
+  // 3 · Zapier Catch Hook — optional fan-out to Slack / Gmail / Sheets.
   const hook = process.env.PIXEL_PILOT_LEAD_HOOK_URL;
   if (hook) {
     routed.push('Slack #leads', 'Auto-reply');
@@ -106,7 +125,7 @@ export async function POST(req: NextRequest) {
         body: JSON.stringify(lead),
       });
       return ok(
-        { configured: true, delivered: res.ok, status: res.status, hubspot, routed, lead },
+        { configured: true, delivered: res.ok, status: res.status, hubspot, quoted, routed, lead },
         g.rid
       );
     } catch (err) {
@@ -117,6 +136,7 @@ export async function POST(req: NextRequest) {
           delivered: false,
           note: err instanceof Error ? err.message : 'hook failed; lead captured',
           hubspot,
+          quoted,
           routed,
           lead,
         },
@@ -125,7 +145,7 @@ export async function POST(req: NextRequest) {
     }
   }
 
-  return ok({ configured: Boolean(hubspot), hubspot, routed, lead }, g.rid);
+  return ok({ configured: Boolean(hubspot) || Boolean(quoted), hubspot, quoted, routed, lead }, g.rid);
 }
 
 export async function GET() {
@@ -136,6 +156,7 @@ export async function GET() {
       body: ['name', 'email', 'company?', 'website?', 'goal?', 'monthlySpend?', 'details?'],
       routes: {
         hubspot: hubspotConfigured() ? 'configured' : 'set HUBSPOT_CLIENT_ID/SECRET + HUBSPOT_DEFAULT_PORTAL_ID',
+        quote: emailConfigured() ? 'configured' : 'set RESEND_API_KEY (+ PIXEL_PILOT_FROM_EMAIL, PIXEL_PILOT_OWNER_EMAIL)',
         zapier: process.env.PIXEL_PILOT_LEAD_HOOK_URL ? 'configured' : 'set PIXEL_PILOT_LEAD_HOOK_URL',
       },
     },
