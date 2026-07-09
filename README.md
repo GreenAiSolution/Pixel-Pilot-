@@ -60,3 +60,7 @@ Autonomous Media Buyer · Profit-Optimized (not ROAS) · Cross-Channel Conductor
 Creative Genome Engine · Synthetic Pre-Testing · Self-Improving Data Flywheel ·
 Compliance-Safe Autopilot · Attribution Truth Engine · Zero-to-Live in <60min ·
 Impression-Level Generative Creative.
+
+## Deployment
+
+Production is hosted on Vercel and deploys automatically from `main`.
