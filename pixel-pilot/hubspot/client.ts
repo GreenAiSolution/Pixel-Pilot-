@@ -4,6 +4,7 @@
 // honoring Retry-After) and cursor pagination — so service.ts stays declarative.
 
 import { getAccessToken } from './oauth';
+import { fetchWithTimeout } from '../http';
 import type { ConnectionRef } from './types';
 
 const API_BASE = 'https://api.hubapi.com';
@@ -65,7 +66,8 @@ export function createHubSpotClient(ref: ConnectionRef): HubSpotClient {
 
     for (let attempt = 0; attempt <= MAX_RETRIES; attempt++) {
       const accessToken = await getAccessToken(ref);
-      const res = await fetch(buildUrl(path, opts?.query), {
+      const res = await fetchWithTimeout(buildUrl(path, opts?.query), {
+        timeoutMs: 15_000, // per-attempt deadline; the loop below owns the retries
         method,
         headers: {
           Authorization: `Bearer ${accessToken}`,

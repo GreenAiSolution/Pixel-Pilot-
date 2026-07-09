@@ -9,6 +9,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import crypto from 'crypto';
 import { askClaudeJSON, aiConfigured, AINotConfiguredError } from '@/pixel-pilot/ai';
+import { guard } from '@/pixel-pilot/api';
 import { pushToList, set, storeIsDurable } from '@/pixel-pilot/store';
 
 export const maxDuration = 60;
@@ -41,7 +42,12 @@ async function deploy(req: NextRequest, html: string, business: string): Promise
 }
 
 export async function POST(req: NextRequest) {
-  const input = (await req.json().catch(() => ({}))) as SiteInput;
+  const g = await guard(req, {
+    source: 'tools/website', bucket: 'tools', limit: 20, windowSec: 60,
+    schema: { business: { type: 'string', required: true, maxLen: 400 }, goal: { type: 'string', maxLen: 200 }, style: { type: 'string', maxLen: 120 }, sections: { type: 'array', maxLen: 40 } },
+  });
+  if (!g.ok) return g.response;
+  const input = g.body as SiteInput;
   const business = input.business?.trim() || 'a modern business';
 
   const system =

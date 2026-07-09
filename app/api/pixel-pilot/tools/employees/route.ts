@@ -8,6 +8,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { PIXEL_AGENTS, getPixelAgent } from '@/pixel-pilot/agents';
 import { askClaudeJSON, aiConfigured, AINotConfiguredError } from '@/pixel-pilot/ai';
+import { guard } from '@/pixel-pilot/api';
 import { pushToList } from '@/pixel-pilot/store';
 
 export const maxDuration = 60;
@@ -32,7 +33,12 @@ export async function GET() {
 }
 
 export async function POST(req: NextRequest) {
-  const input = (await req.json().catch(() => ({}))) as HireInput;
+  const g = await guard(req, {
+    source: 'tools/employees', bucket: 'tools', limit: 20, windowSec: 60,
+    schema: { business: { type: 'string', required: true, maxLen: 400 }, goals: { type: 'string', maxLen: 600 }, roster: { type: 'array', maxLen: 20 } },
+  });
+  if (!g.ok) return g.response;
+  const input = g.body as HireInput;
   const business = input.business?.trim() || 'your business';
   const ids = input.roster?.length ? input.roster : PIXEL_AGENTS.map((a) => a.id);
   const hired = ids.map((id) => getPixelAgent(id)).filter(Boolean);

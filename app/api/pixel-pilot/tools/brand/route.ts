@@ -6,6 +6,7 @@
 
 import { NextRequest, NextResponse } from 'next/server';
 import { askClaudeJSON, aiConfigured, AINotConfiguredError } from '@/pixel-pilot/ai';
+import { guard } from '@/pixel-pilot/api';
 import { pushToList } from '@/pixel-pilot/store';
 
 export const maxDuration = 60;
@@ -34,7 +35,12 @@ interface BrandResult {
 }
 
 export async function POST(req: NextRequest) {
-  const input = (await req.json().catch(() => ({}))) as BrandInput;
+  const g = await guard(req, {
+    source: 'tools/brand', bucket: 'tools', limit: 20, windowSec: 60,
+    schema: { business: { type: 'string', required: true, maxLen: 400 }, vibe: { type: 'string', maxLen: 120 }, audience: { type: 'string', maxLen: 400 }, name: { type: 'string', maxLen: 120 } },
+  });
+  if (!g.ok) return g.response;
+  const input = g.body as BrandInput;
   const business = input.business?.trim() || 'a modern business';
 
   const system =

@@ -14,6 +14,8 @@ import { NextRequest, NextResponse } from 'next/server';
 import { computeAudienceSpec, commitAudienceRun, rejectAudienceRun } from '@/pixel-pilot/audiences';
 import { getConnection, hubspotConfigured } from '@/pixel-pilot/hubspot';
 
+export const maxDuration = 60;
+
 function authorized(req: NextRequest): boolean {
   const secret = process.env.N8N_WEBHOOK_SECRET;
   if (!secret) return true; // open in local/dev when no secret is configured

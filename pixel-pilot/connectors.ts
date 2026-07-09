@@ -9,6 +9,8 @@
 // "live" only when both its client id + secret are present; otherwise the UI
 // shows it as "available" and the OAuth route returns a 503 with a clear reason.
 
+import { fetchWithTimeout } from './http';
+
 export type ConnectorId = 'meta_ads' | 'google_ads' | 'tiktok_ads' | 'shopify';
 
 export interface ConnectorScope {
@@ -249,7 +251,7 @@ export async function exchangeCode(
     };
   }
 
-  const res = await fetch(tokenUrl, init);
+  const res = await fetchWithTimeout(tokenUrl, { ...init, timeoutMs: 12_000 });
   if (!res.ok) {
     throw new Error(`${connector.name} token exchange failed (${res.status})`);
   }

@@ -10,6 +10,9 @@
 // Automator degrades gracefully instead of erroring.
 
 import { NextRequest, NextResponse } from 'next/server';
+import { fetchWithTimeout } from '@/pixel-pilot/http';
+
+export const maxDuration = 15;
 
 export async function POST(req: NextRequest) {
   let body: Record<string, unknown> = {};
@@ -25,7 +28,8 @@ export async function POST(req: NextRequest) {
   }
 
   try {
-    const res = await fetch(hook, {
+    const res = await fetchWithTimeout(hook, {
+      timeoutMs: 10_000,
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({

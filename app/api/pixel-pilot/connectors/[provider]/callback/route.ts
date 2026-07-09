@@ -12,6 +12,8 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { CONNECTORS, isConnectorId, connectorIsLive, exchangeCode } from '@/pixel-pilot';
 
+export const maxDuration = 15;
+
 function backHome(req: NextRequest, params: Record<string, string>) {
   const url = new URL('/', process.env.NEXT_PUBLIC_APP_URL || req.nextUrl.origin);
   for (const [k, v] of Object.entries(params)) url.searchParams.set(k, v);

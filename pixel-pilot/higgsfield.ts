@@ -8,6 +8,8 @@
 // present it returns a deterministic simulated job so the on-site demo always
 // renders something believable instead of erroring — real key, real render.
 
+import { fetchWithTimeout } from './http';
+
 export interface CreativeRequest {
   /** Brand or product name. */
   readonly brand: string;
@@ -159,7 +161,8 @@ export async function generateCreative(req: CreativeRequest): Promise<CreativeJo
 
   try {
     const apiUrl = process.env.HIGGSFIELD_API_URL || 'https://api.higgsfield.ai/v1';
-    const res = await fetch(`${apiUrl}/generations`, {
+    const res = await fetchWithTimeout(`${apiUrl}/generations`, {
+      timeoutMs: 30_000,
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',

@@ -6,6 +6,7 @@
 
 import { NextRequest, NextResponse } from 'next/server';
 import { askClaudeJSON, aiConfigured, AINotConfiguredError } from '@/pixel-pilot/ai';
+import { guard } from '@/pixel-pilot/api';
 import { pushToList } from '@/pixel-pilot/store';
 
 export const maxDuration = 60;
@@ -29,7 +30,12 @@ interface LaunchPlan {
 }
 
 export async function POST(req: NextRequest) {
-  const input = (await req.json().catch(() => ({}))) as PlanInput;
+  const g = await guard(req, {
+    source: 'tools/launch-plan', bucket: 'tools', limit: 20, windowSec: 60,
+    schema: { url: { type: 'string', maxLen: 500 }, product: { type: 'string', maxLen: 400 }, budget: { type: 'string', maxLen: 80 } },
+  });
+  if (!g.ok) return g.response;
+  const input = g.body as PlanInput;
   const subject = input.url?.trim() || input.product?.trim() || 'the product';
   const budget = input.budget?.trim() || '$10k/mo';
 

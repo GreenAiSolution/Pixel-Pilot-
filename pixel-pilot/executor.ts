@@ -12,6 +12,7 @@
 // deploy should still succeed and record "not configured".
 
 import { getWorkflow } from './workflows';
+import { fetchWithTimeout } from './http';
 
 export interface Receipt {
   readonly target: 'n8n' | 'zapier' | 'quickbooks';
@@ -35,7 +36,8 @@ export async function triggerWorkflow(workflowId: string, payload: unknown): Pro
   }
 
   try {
-    const res = await fetch(`${base}${workflow.webhookPath}`, {
+    const res = await fetchWithTimeout(`${base}${workflow.webhookPath}`, {
+      timeoutMs: 10_000,
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -56,7 +58,8 @@ export async function fireZapier(event: string, payload: Record<string, unknown>
     return { target: 'zapier', configured: false, ok: false, detail: 'ZAPIER_HOOK_URL not set' };
   }
   try {
-    const res = await fetch(hook, {
+    const res = await fetchWithTimeout(hook, {
+      timeoutMs: 10_000,
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ source: 'pixel-pilot', event, sentAt: new Date().toISOString(), ...payload }),
