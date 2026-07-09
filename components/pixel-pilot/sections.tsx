@@ -306,9 +306,6 @@ export function AgentCrew() {
               <p className="text-text-secondary text-lg max-w-md">
                 Pixel Pilot is not one giant prompt. It is a crew of specialized agents that plan, buy, forge creative, check profit, close sales, rank you #1, win five-star reviews, guard policy and run the flight deck — 24/7.
               </p>
-              <p className="text-sm text-text-tertiary max-w-md">
-                Tap any operator to open its live 3D flight chart.
-              </p>
               <div className="grid grid-cols-3 gap-3 pt-3 max-w-md">
                 <div>
                   <div className="text-2xl font-semibold text-text-primary">{PIXEL_AGENTS.length}</div>
@@ -326,7 +323,7 @@ export function AgentCrew() {
             </div>
             <div className="grid sm:grid-cols-2 gap-4">
               {PIXEL_AGENTS.map((agent) => (
-                <Link key={agent.id} href={`/agents/${agent.id}`} className="group relative block rounded-2xl border border-white/10 bg-white/[0.03] backdrop-blur-md p-5 overflow-hidden hover:border-white/20 hover:-translate-y-1 transition">
+                <div key={agent.id} className="group relative rounded-2xl border border-white/10 bg-white/[0.03] backdrop-blur-md p-5 overflow-hidden hover:border-white/20 transition">
                   <div className="absolute inset-x-0 top-0 h-px opacity-70" style={{ background: `linear-gradient(90deg,transparent,${agent.accent},transparent)` }} />
                   <div className="flex items-start justify-between gap-4">
                     <div>
@@ -349,13 +346,10 @@ export function AgentCrew() {
                       </span>
                     ))}
                   </div>
-                  <div className="mt-4 flex items-center justify-between border-t border-white/10 pt-3 text-[11px] text-text-tertiary">
-                    <span>Invoke <code className="text-text-secondary">@{agent.command}</code></span>
-                    <span className="opacity-0 translate-x-[-4px] group-hover:opacity-100 group-hover:translate-x-0 transition" style={{ color: agent.accent }}>
-                      View flight chart →
-                    </span>
+                  <div className="mt-4 border-t border-white/10 pt-3 text-[11px] text-text-tertiary">
+                    Invoke <code className="text-text-secondary">@{agent.command}</code>
                   </div>
-                </Link>
+                </div>
               ))}
             </div>
           </Reveal>
