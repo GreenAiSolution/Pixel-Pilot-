@@ -6,6 +6,7 @@
 
 import { NextRequest, NextResponse } from 'next/server';
 import { askClaudeJSON, aiConfigured, AINotConfiguredError } from '@/pixel-pilot/ai';
+import { guard } from '@/pixel-pilot/api';
 import { pushToList } from '@/pixel-pilot/store';
 
 export const maxDuration = 60;
@@ -30,7 +31,12 @@ interface PretestResult {
 }
 
 export async function POST(req: NextRequest) {
-  const input = (await req.json().catch(() => ({}))) as PretestInput;
+  const g = await guard(req, {
+    source: 'tools/pretest', bucket: 'tools', limit: 20, windowSec: 60,
+    schema: { product: { type: 'string', required: true, maxLen: 400 }, audience: { type: 'string', maxLen: 400 }, variants: { type: 'array', maxLen: 20 } },
+  });
+  if (!g.ok) return g.response;
+  const input = g.body as PretestInput;
   const variants = (input.variants || []).map((v) => v.trim()).filter(Boolean);
   if (!variants.length) {
     return NextResponse.json({ ok: false, error: 'Provide at least one ad variant to test.' }, { status: 400 });

@@ -15,6 +15,12 @@
 // in a shared store in production — connector tokens go through here only because
 // the KV instance is private to the deployment.
 
+import { fetchWithTimeout } from './http';
+
+// KV is on the hot path for almost every request, so keep its deadline short —
+// a hiccup should fall back to the in-memory map fast, not hang the function.
+const KV_TIMEOUT_MS = 4_000;
+
 const memKV = new Map<string, string>();
 const memLists = new Map<string, string[]>();
 
@@ -51,7 +57,8 @@ export async function set<T>(key: string, value: T): Promise<void> {
   memKV.set(key, json);
   const kv = kvEnv();
   if (!kv) return;
-  await fetch(`${kv.url}/set/${encodeURIComponent(key)}`, {
+  await fetchWithTimeout(`${kv.url}/set/${encodeURIComponent(key)}`, {
+    timeoutMs: KV_TIMEOUT_MS,
     method: 'POST',
     headers: { Authorization: `Bearer ${kv.token}`, 'Content-Type': 'application/json' },
     body: json,
@@ -62,7 +69,8 @@ export async function get<T>(key: string): Promise<T | null> {
   const kv = kvEnv();
   if (kv) {
     try {
-      const res = await fetch(`${kv.url}/get/${encodeURIComponent(key)}`, {
+      const res = await fetchWithTimeout(`${kv.url}/get/${encodeURIComponent(key)}`, {
+        timeoutMs: KV_TIMEOUT_MS,
         headers: { Authorization: `Bearer ${kv.token}` },
       });
       if (res.ok) {
@@ -82,7 +90,8 @@ export async function del(key: string): Promise<void> {
   memKV.delete(key);
   const kv = kvEnv();
   if (!kv) return;
-  await fetch(`${kv.url}/del/${encodeURIComponent(key)}`, {
+  await fetchWithTimeout(`${kv.url}/del/${encodeURIComponent(key)}`, {
+    timeoutMs: KV_TIMEOUT_MS,
     method: 'POST',
     headers: { Authorization: `Bearer ${kv.token}` },
   }).catch(() => {});
@@ -102,4 +111,43 @@ export async function getList<T>(key: string): Promise<T[]> {
   if (viaKV) return viaKV;
   const local = memLists.get(key);
   return local ? local.map((x) => JSON.parse(x) as T) : [];
+}
+
+// Per-window counters for rate limiting. In-memory is per-instance (weaker) but
+// fine as a fallback; KV (Upstash INCR + EXPIRE) counts across the whole fleet.
+const memCounters = new Map<string, { n: number; exp: number }>();
+
+/** Atomically increment `key`, setting a TTL on first touch. Returns the count. */
+export async function incr(key: string, ttlSeconds: number): Promise<number> {
+  const kv = kvEnv();
+  if (kv) {
+    try {
+      const res = await fetchWithTimeout(`${kv.url}/incr/${encodeURIComponent(key)}`, {
+        timeoutMs: KV_TIMEOUT_MS,
+        headers: { Authorization: `Bearer ${kv.token}` },
+      });
+      if (res.ok) {
+        const data = (await res.json()) as { result?: number };
+        const n = typeof data.result === 'number' ? data.result : 1;
+        if (n === 1) {
+          // First hit in this window → arm the expiry so the counter resets.
+          await fetchWithTimeout(`${kv.url}/expire/${encodeURIComponent(key)}/${ttlSeconds}`, {
+            timeoutMs: KV_TIMEOUT_MS,
+            headers: { Authorization: `Bearer ${kv.token}` },
+          }).catch(() => {});
+        }
+        return n;
+      }
+    } catch {
+      // fall through to in-memory
+    }
+  }
+  const now = Date.now();
+  const cur = memCounters.get(key);
+  if (!cur || cur.exp < now) {
+    memCounters.set(key, { n: 1, exp: now + ttlSeconds * 1000 });
+    return 1;
+  }
+  cur.n += 1;
+  return cur.n;
 }

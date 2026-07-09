@@ -12,6 +12,7 @@
 //   token survives restarts.
 
 import { get as kvGet, set as kvSet } from './store';
+import { fetchWithTimeout } from './http';
 
 const AUTH_URL = 'https://appcenter.intuit.com/connect/oauth2';
 const TOKEN_URL = 'https://oauth.platform.intuit.com/oauth2/v1/tokens/bearer';
@@ -58,7 +59,8 @@ function basicAuth(): string {
 
 /** Exchange the OAuth code (from the callback) for tokens and persist them. */
 export async function exchangeCode(code: string, realmId: string): Promise<void> {
-  const res = await fetch(TOKEN_URL, {
+  const res = await fetchWithTimeout(TOKEN_URL, {
+    timeoutMs: 12_000,
     method: 'POST',
     headers: {
       Authorization: `Basic ${basicAuth()}`,
@@ -78,7 +80,8 @@ export async function exchangeCode(code: string, realmId: string): Promise<void>
 }
 
 async function refresh(t: Tokens): Promise<Tokens> {
-  const res = await fetch(TOKEN_URL, {
+  const res = await fetchWithTimeout(TOKEN_URL, {
+    timeoutMs: 12_000,
     method: 'POST',
     headers: {
       Authorization: `Basic ${basicAuth()}`,
@@ -114,9 +117,9 @@ async function validToken(): Promise<Tokens | null> {
 export async function companyInfo(): Promise<{ name: string; realmId: string } | null> {
   const t = await validToken();
   if (!t) return null;
-  const res = await fetch(
+  const res = await fetchWithTimeout(
     `${apiBase()}/v3/company/${t.realm_id}/companyinfo/${t.realm_id}?minorversion=73`,
-    { headers: { Authorization: `Bearer ${t.access_token}`, Accept: 'application/json' } }
+    { timeoutMs: 12_000, headers: { Authorization: `Bearer ${t.access_token}`, Accept: 'application/json' } }
   );
   if (!res.ok) throw new Error(`QuickBooks companyInfo failed (${res.status})`);
   const d = (await res.json()) as { CompanyInfo?: { CompanyName: string } };
@@ -140,7 +143,8 @@ export async function createCustomer(lead: {
   if (lead.phone) body.PrimaryPhone = { FreeFormNumber: lead.phone };
   if (lead.notes) body.Notes = lead.notes;
 
-  const res = await fetch(`${apiBase()}/v3/company/${t.realm_id}/customer?minorversion=73`, {
+  const res = await fetchWithTimeout(`${apiBase()}/v3/company/${t.realm_id}/customer?minorversion=73`, {
+    timeoutMs: 12_000,
     method: 'POST',
     headers: {
       Authorization: `Bearer ${t.access_token}`,

@@ -8,14 +8,15 @@
 
 import { NextRequest, NextResponse } from 'next/server';
 import { getEagleService, createCustomer, quickbooksConfigured } from '@/eagle';
+import { fetchWithTimeout } from '@/pixel-pilot/http';
+import { guard } from '@/pixel-pilot/api';
+
+export const maxDuration = 15;
 
 export async function POST(req: NextRequest) {
-  let body: Record<string, string> = {};
-  try {
-    body = await req.json();
-  } catch {
-    return NextResponse.json({ error: 'Invalid body' }, { status: 400 });
-  }
+  const g = await guard(req, { source: 'eagle/lead', bucket: 'lead', limit: 10, windowSec: 60 });
+  if (!g.ok) return g.response;
+  const body = g.body as Record<string, string>;
 
   const name = (body.name ?? '').toString().trim().slice(0, 120);
   const phone = (body.phone ?? '').toString().trim().slice(0, 40);
@@ -62,7 +63,8 @@ export async function POST(req: NextRequest) {
   routed.push('Slack #leads', 'Gmail auto-reply');
 
   try {
-    const res = await fetch(hook, {
+    const res = await fetchWithTimeout(hook, {
+      timeoutMs: 10_000,
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(lead),

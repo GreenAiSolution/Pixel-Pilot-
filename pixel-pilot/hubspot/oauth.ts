@@ -11,6 +11,7 @@
 
 import { get as kvGet, set as kvSet, del as kvDel } from '../store';
 import { encryptSecret, decryptSecret, tokenEncryptionConfigured } from '../crypto';
+import { fetchWithTimeout } from '../http';
 import {
   HUBSPOT_SCOPES,
   type ConnectionRef,
@@ -91,7 +92,8 @@ interface HubSpotTokenResponse {
 }
 
 async function postToken(form: URLSearchParams): Promise<HubSpotTokenResponse> {
-  const res = await fetch(TOKEN_URL, {
+  const res = await fetchWithTimeout(TOKEN_URL, {
+    timeoutMs: 12_000,
     method: 'POST',
     headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
     body: form,
@@ -105,7 +107,7 @@ async function postToken(form: URLSearchParams): Promise<HubSpotTokenResponse> {
 // The portal id + granted scopes live on the token-info endpoint, not the token
 // response — so we look them up once right after exchange.
 async function fetchTokenInfo(accessToken: string): Promise<{ portalId: string; scopes: string[] }> {
-  const res = await fetch(`${TOKEN_INFO_URL}${accessToken}`);
+  const res = await fetchWithTimeout(`${TOKEN_INFO_URL}${accessToken}`, { timeoutMs: 12_000 });
   if (!res.ok) throw new Error(`HubSpot token info failed (${res.status})`);
   const data = (await res.json()) as { hub_id: number; scopes?: string[] };
   return { portalId: String(data.hub_id), scopes: data.scopes ?? [...HUBSPOT_SCOPES] };

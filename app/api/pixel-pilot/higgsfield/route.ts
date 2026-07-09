@@ -5,6 +5,7 @@
 // returns the CreativeJob the Forge polls/animates on screen.
 
 import { NextRequest, NextResponse } from 'next/server';
+import { guard, fail } from '@/pixel-pilot/api';
 import {
   generateCreative,
   higgsfieldIsLive,
@@ -13,30 +14,34 @@ import {
   type CreativeVibe,
 } from '@/pixel-pilot';
 
+export const maxDuration = 30;
+
 const CHANNELS: CreativeRequest['channel'][] = ['tiktok', 'reels', 'shorts', 'feed'];
 const VIBE_IDS = VIBES.map((v) => v.id);
 
 export async function POST(req: NextRequest) {
-  let body: Partial<CreativeRequest>;
-  try {
-    body = await req.json();
-  } catch {
-    return NextResponse.json({ error: 'Invalid JSON body' }, { status: 400 });
-  }
+  const g = await guard(req, {
+    source: 'higgsfield', bucket: 'render', limit: 10, windowSec: 60,
+    schema: {
+      brand: { type: 'string', required: true, maxLen: 80 },
+      product: { type: 'string', maxLen: 280 },
+      vibe: { type: 'string', maxLen: 40 },
+      channel: { type: 'string', maxLen: 40 },
+    },
+  });
+  if (!g.ok) return g.response;
+  const body = g.body as Partial<CreativeRequest>;
 
   const brand = (body.brand ?? '').toString().trim().slice(0, 80);
   const product = (body.product ?? '').toString().trim().slice(0, 280);
   const vibe = (body.vibe ?? 'kinetic') as CreativeVibe;
   const channel = (body.channel ?? 'tiktok') as CreativeRequest['channel'];
 
-  if (!brand) {
-    return NextResponse.json({ error: 'brand is required' }, { status: 400 });
-  }
   if (!VIBE_IDS.includes(vibe)) {
-    return NextResponse.json({ error: 'unknown vibe', valid: VIBE_IDS }, { status: 400 });
+    return fail(400, 'unknown vibe', g.rid, { valid: VIBE_IDS });
   }
   if (!CHANNELS.includes(channel)) {
-    return NextResponse.json({ error: 'unknown channel', valid: CHANNELS }, { status: 400 });
+    return fail(400, 'unknown channel', g.rid, { valid: CHANNELS });
   }
 
   try {

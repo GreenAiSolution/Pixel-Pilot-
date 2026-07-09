@@ -6,6 +6,7 @@
 
 import { NextRequest, NextResponse } from 'next/server';
 import { askClaudeJSON, aiConfigured, AINotConfiguredError } from '@/pixel-pilot/ai';
+import { guard } from '@/pixel-pilot/api';
 import { pushToList } from '@/pixel-pilot/store';
 
 export const maxDuration = 60;
@@ -31,7 +32,12 @@ interface ContentResult {
 }
 
 export async function POST(req: NextRequest) {
-  const input = (await req.json().catch(() => ({}))) as ContentInput;
+  const g = await guard(req, {
+    source: 'tools/content', bucket: 'tools', limit: 20, windowSec: 60,
+    schema: { business: { type: 'string', required: true, maxLen: 400 }, platform: { type: 'string', maxLen: 80 }, goal: { type: 'string', maxLen: 200 }, days: { type: 'number', max: 90 }, tone: { type: 'string', maxLen: 80 } },
+  });
+  if (!g.ok) return g.response;
+  const input = g.body as ContentInput;
   const business = input.business?.trim() || 'a modern business';
   const platform = input.platform?.trim() || 'Instagram';
   const days = Math.max(3, Math.min(14, Number(input.days) || 7));

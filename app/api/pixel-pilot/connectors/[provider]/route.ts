@@ -13,6 +13,8 @@ import {
   buildAuthUrl,
 } from '@/pixel-pilot';
 
+export const maxDuration = 15;
+
 export async function GET(
   req: NextRequest,
   { params }: { params: Promise<{ provider: string }> }

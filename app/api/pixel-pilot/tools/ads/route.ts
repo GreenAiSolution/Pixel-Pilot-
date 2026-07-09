@@ -6,6 +6,7 @@
 
 import { NextRequest, NextResponse } from 'next/server';
 import { askClaudeJSON, aiConfigured, AINotConfiguredError } from '@/pixel-pilot/ai';
+import { guard } from '@/pixel-pilot/api';
 import { pushToList } from '@/pixel-pilot/store';
 
 // Allow long Claude generations to finish instead of timing out (freezing).
@@ -27,7 +28,12 @@ interface AdResult {
 }
 
 export async function POST(req: NextRequest) {
-  const input = (await req.json().catch(() => ({}))) as AdInput;
+  const g = await guard(req, {
+    source: 'tools/ads', bucket: 'tools', limit: 20, windowSec: 60,
+    schema: { product: { type: 'string', required: true, maxLen: 400 }, audience: { type: 'string', maxLen: 400 }, angle: { type: 'string', maxLen: 400 }, platform: { type: 'string', maxLen: 80 } },
+  });
+  if (!g.ok) return g.response;
+  const input = g.body as AdInput;
   const product = input.product?.trim() || 'the product';
   const platform = input.platform?.trim() || 'Meta';
 

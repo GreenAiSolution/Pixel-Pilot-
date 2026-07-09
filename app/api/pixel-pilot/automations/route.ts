@@ -14,6 +14,8 @@ import { pushToList, getList, storeIsDurable } from '@/pixel-pilot/store';
 import { triggerWorkflow, fireZapier, type Receipt } from '@/pixel-pilot/executor';
 import { isConnected as qbConnected, companyInfo as qbCompanyInfo } from '@/pixel-pilot/quickbooks';
 
+export const maxDuration = 20;
+
 const LIST_KEY = 'pp:automations';
 
 interface Manifest {

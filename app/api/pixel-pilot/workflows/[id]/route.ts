@@ -5,6 +5,9 @@
 
 import { NextRequest, NextResponse } from 'next/server';
 import { getWorkflow, WORKFLOWS } from '@/pixel-pilot';
+import { fetchWithTimeout } from '@/pixel-pilot/http';
+
+export const maxDuration = 15;
 
 export async function POST(
   req: NextRequest,
@@ -39,7 +42,8 @@ export async function POST(
   }
 
   try {
-    const res = await fetch(`${base}${workflow.webhookPath}`, {
+    const res = await fetchWithTimeout(`${base}${workflow.webhookPath}`, {
+      timeoutMs: 10_000,
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',

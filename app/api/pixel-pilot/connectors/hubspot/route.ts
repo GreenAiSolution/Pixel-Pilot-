@@ -12,6 +12,8 @@ import crypto from 'crypto';
 import { buildInstallUrl, hubspotConfigured } from '@/pixel-pilot/hubspot';
 import { tokenEncryptionConfigured } from '@/pixel-pilot/crypto';
 
+export const maxDuration = 15;
+
 export async function GET(req: NextRequest) {
   if (!hubspotConfigured() || !tokenEncryptionConfigured()) {
     return NextResponse.json(

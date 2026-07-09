@@ -7,6 +7,8 @@
 //
 // Env: ANTHROPIC_API_KEY  (get one at https://console.anthropic.com)
 
+import { fetchWithTimeout } from './http';
+
 const API_URL = 'https://api.anthropic.com/v1/messages';
 const MODEL = 'claude-opus-4-8';
 
@@ -38,7 +40,8 @@ export async function askClaude({ system, prompt, maxTokens = 4096 }: AskOptions
   const key = anthropicKey();
   if (!key) throw new AINotConfiguredError();
 
-  const res = await fetch(API_URL, {
+  const res = await fetchWithTimeout(API_URL, {
+    timeoutMs: 55_000, // Claude can be slow; stay under the route's maxDuration=60
     method: 'POST',
     headers: {
       'x-api-key': key,

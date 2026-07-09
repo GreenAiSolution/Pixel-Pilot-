@@ -8,6 +8,8 @@ import { NextResponse } from 'next/server';
 import crypto from 'crypto';
 import { buildAuthUrl, quickbooksConfigured, redirectUri } from '@/pixel-pilot/quickbooks';
 
+export const maxDuration = 15;
+
 export async function GET() {
   if (!quickbooksConfigured() || !redirectUri()) {
     return NextResponse.json(
