@@ -5,11 +5,10 @@
 // composes a lean subset; each menu item renders its own section on a dedicated
 // page (app/(marketing)/<name>/page.tsx). Single source of truth for the surface.
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef } from "react";
 import Link from "next/link";
 import {
   SERVICES,
-  CONNECTOR_LIST,
   CREATIVE_APPS,
   WORKFLOWS,
   PIXEL_AGENTS,
@@ -24,7 +23,6 @@ import {
   SHOWCASE,
   VIBES,
   PIXEL_PILOT_REEL,
-  type Connector,
 } from "@/pixel-pilot";
 import { CreativeForge } from "@/components/pixel-pilot/creative-forge";
 
@@ -53,52 +51,6 @@ export function Reveal({ children, className = "", id }: { children: React.React
   return (
     <div ref={ref} id={id} className={`transition-all duration-700 ease-out ${className}`} style={{ opacity: 0, transform: "translateY(28px)" }}>
       {children}
-    </div>
-  );
-}
-
-// ─── CONNECTOR CARD (live wiring) ─────────────────────────────────────────────
-function ConnectorCard({ c }: { c: Connector }) {
-  const [status, setStatus] = useState<"idle" | "checking" | "needs-config">("idle");
-  async function connect() {
-    setStatus("checking");
-    try {
-      const res = await fetch(`/api/pixel-pilot/connectors/${c.id}`, { redirect: "manual" });
-      if (res.type === "opaqueredirect" || (res.status >= 300 && res.status < 400)) {
-        window.location.href = `/api/pixel-pilot/connectors/${c.id}`;
-        return;
-      }
-      setStatus("needs-config");
-    } catch {
-      setStatus("needs-config");
-    }
-  }
-  return (
-    <div className="group relative rounded-2xl border border-white/10 bg-white/[0.03] backdrop-blur-md p-6 overflow-hidden hover:-translate-y-1 transition" style={{ ["--hue" as string]: c.hue }}>
-      <div className="absolute -inset-px rounded-2xl opacity-0 group-hover:opacity-100 transition" style={{ background: `radial-gradient(120px 80px at 30% 0%, ${c.hue}22, transparent)` }} />
-      <div className="relative">
-        <div className="flex items-center gap-3">
-          <span className="inline-flex h-9 w-9 items-center justify-center rounded-lg text-sm font-bold text-white" style={{ background: c.hue, boxShadow: `0 0 20px ${c.hue}66` }}>
-            {c.name[0]}
-          </span>
-          <div>
-            <div className="font-semibold">{c.name}</div>
-            <div className="text-[11px] uppercase tracking-widest text-text-tertiary">{c.category}</div>
-          </div>
-        </div>
-        <p className="mt-4 text-sm text-text-secondary">{c.tagline}</p>
-        <ul className="mt-4 space-y-1.5">
-          {c.powers.map((p) => (
-            <li key={p} className="flex items-start gap-2 text-xs text-text-secondary">
-              <span className="mt-1 h-1 w-1 rounded-full" style={{ background: c.hue }} />
-              {p}
-            </li>
-          ))}
-        </ul>
-        <button onClick={connect} className="mt-5 w-full rounded-lg border border-white/10 bg-white/[0.04] px-4 py-2.5 text-sm font-medium hover:border-white/25 transition">
-          {status === "checking" ? "Opening…" : status === "needs-config" ? "Add credentials to connect" : `Connect ${c.name}`}
-        </button>
-      </div>
     </div>
   );
 }
@@ -158,7 +110,6 @@ const DIRECTORY: { href: string; label: string; blurb: string; accent: string }[
   { href: "/studio", label: "Studio", blurb: "Eight live tools + a guided workflow.", accent: "#00D4FF" },
   { href: "/pricing", label: "Pricing", blurb: "Every service priced, plus managed plans.", accent: "#C9A84C" },
   { href: "/agents", label: "Agents", blurb: "The crew of specialist operators.", accent: "#6C63FF" },
-  { href: "/connectors", label: "Connectors", blurb: "Meta, Google, TikTok & Shopify — OAuth in a click.", accent: "#00D4FF" },
   { href: "/forge", label: "Creative Forge", blurb: "Watch it make the ad, live.", accent: "#FF2E9A" },
   { href: "/automation", label: "Automation", blurb: "The n8n loops + zero-to-live flight plan.", accent: "#00D4FF" },
   { href: "/stack", label: "The Stack", blurb: "The full business brain of apps & tools.", accent: "#6C63FF" },
@@ -352,40 +303,6 @@ export function AgentCrew() {
                     Invoke <code className="text-text-secondary">@{agent.command}</code>
                   </div>
                 </div>
-              ))}
-            </div>
-          </Reveal>
-        </div>
-      </section>
-    </PageTop>
-  );
-}
-
-// ─── CONNECTORS ───────────────────────────────────────────────────────────────
-export function Connectors() {
-  return (
-    <PageTop>
-      <section id="connectors" className="px-6 py-24">
-        <div className="container mx-auto max-w-6xl">
-          <Reveal className="grid lg:grid-cols-[1fr_1.4fr] gap-12 items-start">
-            <div className="lg:sticky lg:top-28 space-y-4">
-              <div className="text-xs uppercase tracking-[0.3em] text-secondary">── Connectors</div>
-              <h2 className="text-4xl md:text-5xl font-semibold tracking-tight leading-tight">
-                Four pipes.
-                <br />
-                One flight plan.
-              </h2>
-              <p className="text-text-secondary text-lg max-w-md">
-                Pixel Pilot flies where your money already lives. OAuth in a click — spend and delivery flow in, decisions flow back out, and Shopify keeps everyone honest with real profit.
-              </p>
-              <div className="flex items-center gap-3 text-xs uppercase tracking-[0.25em] text-text-tertiary pt-2">
-                <span className="inline-block h-px w-10 bg-text-tertiary/60" />
-                Native OAuth · Real-time
-              </div>
-            </div>
-            <div className="grid sm:grid-cols-2 gap-5">
-              {CONNECTOR_LIST.map((c) => (
-                <ConnectorCard key={c.id} c={c} />
               ))}
             </div>
           </Reveal>
