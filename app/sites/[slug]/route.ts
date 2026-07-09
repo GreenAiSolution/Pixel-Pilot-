@@ -29,5 +29,5 @@ export async function GET(_req: NextRequest, { params }: { params: Promise<{ slu
 }
 
 function notFoundHtml(): string {
-  return `<!doctype html><html><head><meta charset="utf-8"><title>Site not found</title><style>body{font-family:system-ui,sans-serif;background:#05060f;color:#fff;min-height:100vh;display:flex;align-items:center;justify-content:center;text-align:center;margin:0}a{color:#00D4FF}</style></head><body><div><h1>404</h1><p>This site isn't hosted here (or the in-memory host restarted).<br>Generate one at <a href="/studio">/studio</a>.</p></div></body></html>`;
+  return `<!doctype html><html><head><meta charset="utf-8"><title>Site not found</title><style>body{font-family:system-ui,sans-serif;background:#05060f;color:#fff;min-height:100vh;display:flex;align-items:center;justify-content:center;text-align:center;margin:0}a{color:#00D4FF}</style></head><body><div><h1>404</h1><p>This site isn't hosted here (or the in-memory host restarted).<br>Get started at <a href="/book">Pixel Pilot</a>.</p></div></body></html>`;
 }
