@@ -16,7 +16,6 @@ const NAV = [
   { href: "/services", label: "Flight Deck" },
   { href: "/studio", label: "Studio" },
   { href: "/agents", label: "Agents" },
-  { href: "/connectors", label: "Connectors" },
   { href: "/forge", label: "Creative Forge" },
   { href: "/automation", label: "Automation" },
   { href: "/pricing", label: "Pricing" },
