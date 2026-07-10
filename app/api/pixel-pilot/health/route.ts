@@ -13,6 +13,8 @@ import { emailConfigured } from '@/pixel-pilot/quote';
 import { quickbooksConfigured } from '@/pixel-pilot/quickbooks';
 import { hubspotConfigured } from '@/pixel-pilot/hubspot';
 import { tokenEncryptionConfigured } from '@/pixel-pilot/crypto';
+import { listClients, summarize, INTEGRATION_REGISTRY } from '@/pixel-pilot/crm';
+import { deckKeyConfigured } from '@/pixel-pilot/deck-auth';
 
 export const dynamic = 'force-dynamic';
 
@@ -33,12 +35,20 @@ export async function GET() {
       n8n: Boolean(process.env.N8N_BASE_URL),
       zapier: Boolean(process.env.ZAPIER_HOOK_URL),
       tokenEncryption: tokenEncryptionConfigured(),
+      deckKey: deckKeyConfigured(),
       connectors,
     },
     catalog: {
       agents: PIXEL_AGENTS.length,
       workflows: WORKFLOWS.length,
       connectors: CONNECTOR_LIST.length,
+      crmIntegrations: INTEGRATION_REGISTRY.length,
     },
+    crm: await listClients()
+      .then((roster) => {
+        const s = summarize(roster);
+        return { clients: s.totalClients, active: s.activeClients, avgHealth: s.avgHealth };
+      })
+      .catch(() => null),
   });
 }
