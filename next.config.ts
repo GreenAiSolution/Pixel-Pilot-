@@ -1,4 +1,5 @@
 import type { NextConfig } from 'next';
+import { withWorkflow } from 'workflow/next';
 
 const nextConfig: NextConfig = {
   // Security headers — iframe/embed protections are prod-only so local dev
@@ -41,4 +42,7 @@ const nextConfig: NextConfig = {
   },
 };
 
-export default nextConfig;
+// withWorkflow enables the "use workflow" / "use step" directives (Vercel
+// Workflow DevKit) behind workflows/*.ts — durable functions that survive
+// redeploys and can sleep for days between steps.
+export default withWorkflow(nextConfig);

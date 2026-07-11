@@ -188,6 +188,49 @@ export async function sendQuoteEmail(lead: LeadInput, quote: Quote): Promise<str
   return sendEmail(lead.email, quote.subject, renderHtml(quote), process.env.PIXEL_PILOT_OWNER_EMAIL);
 }
 
+/**
+ * Deterministic follow-up touches for the durable lead cadence
+ * (workflows/lead-follow-up.ts). No AI hop — the quote already carried the
+ * personalization; follow-ups just need to be short, honest, and on time.
+ * Prices are resolved from the price book, never carried in workflow state.
+ */
+export function draftFollowUp(lead: LeadInput, planName: string, touch: 1 | 2): Quote {
+  const first = lead.name.trim().split(/\s+/)[0] || 'there';
+  const plan = PRICE_BOOK.get(planName.toLowerCase()) ?? (() => {
+    const t = tierFromSpend(lead.monthlySpend);
+    return { name: t.name, price: `$${t.price.toLocaleString()}/mo ${t.performance}` };
+  })();
+  const paragraphs =
+    touch === 1
+      ? [
+          `Hi ${first} — a couple of days ago we sent over a flight plan for ${lead.goal || 'more customers'}${lead.company ? ` at ${lead.company}` : ''}, and wanted to make sure it landed.`,
+          `The recommendation stands: ${plan.name} at ${plan.price}. Setup takes under an hour, and every decision steers by your real profit — not the ad platforms grading their own homework.`,
+          'Any questions about the plan or the price, just reply — a real person reads these.',
+          '— Pixel Pilot Flight Command',
+        ]
+      : [
+          `Hi ${first} — last check-in from us, promised.`,
+          `Your quote for ${plan.name} (${plan.price}) is still good whenever the timing is right. No pressure and no expiry games — reply any time and we pick up where we left off.`,
+          'Wishing you full boards and cheap clicks either way.',
+          '— Pixel Pilot Flight Command',
+        ];
+  return {
+    subject:
+      touch === 1
+        ? `${first} — did your Pixel Pilot flight plan land?`
+        : `${first} — leaving the runway lights on`,
+    paragraphs,
+    recommendedPlan: { name: plan.name, price: plan.price, why: '' },
+    addOns: [],
+  };
+}
+
+/** Send one follow-up touch to the lead. Returns the Resend message id. */
+export async function sendFollowUpEmail(lead: LeadInput, planName: string, touch: 1 | 2): Promise<string> {
+  const q = draftFollowUp(lead, planName, touch);
+  return sendEmail(lead.email, q.subject, renderHtml(q), process.env.PIXEL_PILOT_OWNER_EMAIL);
+}
+
 /** The internal "new lead + what we quoted" alert. No-op without an owner email. */
 export async function sendOwnerAlert(lead: LeadInput, quote: Quote): Promise<string | null> {
   const owner = process.env.PIXEL_PILOT_OWNER_EMAIL;
