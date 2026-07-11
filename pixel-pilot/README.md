@@ -43,6 +43,9 @@ matching Claude subagent prompt under `.claude/agents/`:
 | `GET /api/pixel-pilot/connectors/[provider]` | Mints a live OAuth consent URL (302) or a legible 503 when creds are missing. Sets a CSRF `state` cookie. |
 | `POST /api/pixel-pilot/higgsfield` | Fires a Higgsfield render for the Creative Forge. |
 | `POST /api/pixel-pilot/workflows/[id]` | Triggers an n8n workflow webhook (dry-run receipt when `N8N_BASE_URL` is unset). |
+| `GET /api/pixel-pilot/cron/autopilot` | **Vercel cron, every 15 min** — the 24/7 optimization heartbeat. Gated by `CRON_SECRET`. |
+| `GET /api/pixel-pilot/cron/nurture` | **Vercel cron, hourly** — lead re-engagement sweep. Gated by `CRON_SECRET`. |
+| `GET /api/pixel-pilot/autopilot` | Public, secret-free read of the heartbeat: last sweep, flight-log tail, total sweeps. |
 
 ## Environment (all optional — the platform degrades gracefully)
 
@@ -58,7 +61,15 @@ HIGGSFIELD_API_KEY        # HIGGSFIELD_API_URL optional, defaults to api.higgsfi
 
 # Automation
 N8N_BASE_URL              # N8N_WEBHOOK_SECRET optional (sent as x-pp-signature)
+
+# Autopilot heartbeat (Vercel Pro crons — see vercel.json)
+CRON_SECRET               # required in prod: Vercel sends it as `Authorization: Bearer`
+                          # on every scheduled sweep; unauthenticated calls get 401.
 ```
+
+The heartbeat needs a durable store to accumulate a flight log across sweeps —
+wire Vercel KV / Upstash (any `*_KV_REST_API_URL` + token) so `/autopilot` shows
+history rather than just the latest in-memory run.
 
 Nothing here is required to build or to render the marketing site — every
 integration checks for its credentials at request time and falls back to a

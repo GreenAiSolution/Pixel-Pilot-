@@ -14,7 +14,9 @@ import {
   type CreativeVibe,
 } from '@/pixel-pilot';
 
-export const maxDuration = 30;
+// A live Higgsfield render can take minutes; on Vercel Pro the ceiling is 300s,
+// so give the Forge real headroom instead of timing out a genuine render.
+export const maxDuration = 300;
 
 const CHANNELS: CreativeRequest['channel'][] = ['tiktok', 'reels', 'shorts', 'feed'];
 const VIBE_IDS = VIBES.map((v) => v.id);
