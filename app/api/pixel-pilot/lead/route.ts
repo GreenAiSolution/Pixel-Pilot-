@@ -16,6 +16,8 @@ import { pushToList } from '@/pixel-pilot/store';
 import { fetchWithTimeout } from '@/pixel-pilot/http';
 import { hubspotConfigured, getConnection, createContact } from '@/pixel-pilot/hubspot';
 import { draftQuote, sendQuoteEmail, sendOwnerAlert, emailConfigured } from '@/pixel-pilot/quote';
+import { start } from 'workflow/api';
+import { leadFollowUp } from '@/workflows/lead-follow-up';
 
 // Drafting the quote is one Claude call (~5-20s); leave headroom on top of it.
 export const maxDuration = 60;
@@ -108,6 +110,15 @@ export async function POST(req: NextRequest) {
       quoted = { plan: quote.recommendedPlan.name, price: quote.recommendedPlan.price, messageId };
       routed.push(`Personalized quote emailed (${quote.recommendedPlan.name})`);
       await sendOwnerAlert(lead, quote).catch(() => null);
+      // Durable follow-up cadence (day 2 + day 6) — a Workflow DevKit run that
+      // sleeps between touches and survives redeploys. Failure to enqueue is
+      // logged, never surfaced: the quote already went out.
+      try {
+        await start(leadFollowUp, [lead, quote.recommendedPlan.name]);
+        routed.push('Follow-up cadence scheduled (day 2 + day 6)');
+      } catch (err) {
+        log('warn', 'pixel-pilot/lead', 'follow-up workflow start failed', { err: err instanceof Error ? err.message : String(err) });
+      }
     } catch (err) {
       log('warn', 'pixel-pilot/lead', 'quote email failed', { err: err instanceof Error ? err.message : String(err) });
     }
