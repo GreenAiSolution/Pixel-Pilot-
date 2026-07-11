@@ -83,6 +83,10 @@ export function CrmDeck() {
   }, []);
 
   useEffect(() => {
+    // Mount-time fetch-and-sync from the server — the canonical use of an
+    // effect, not derivable during render, so the setState-in-effect rule is
+    // a false positive here.
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     refresh();
     fetch("/api/pixel-pilot/crm/integrations", { cache: "no-store" })
       .then((r) => r.json())
