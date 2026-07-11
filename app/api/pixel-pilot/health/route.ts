@@ -15,6 +15,7 @@ import { hubspotConfigured } from '@/pixel-pilot/hubspot';
 import { tokenEncryptionConfigured } from '@/pixel-pilot/crypto';
 import { listClients, summarize, INTEGRATION_REGISTRY } from '@/pixel-pilot/crm';
 import { deckKeyConfigured } from '@/pixel-pilot/deck-auth';
+import { cronConfigured, autopilotStatus } from '@/pixel-pilot/cron';
 
 export const dynamic = 'force-dynamic';
 
@@ -36,6 +37,7 @@ export async function GET() {
       zapier: Boolean(process.env.ZAPIER_HOOK_URL),
       tokenEncryption: tokenEncryptionConfigured(),
       deckKey: deckKeyConfigured(),
+      cron: cronConfigured(),
       connectors,
     },
     catalog: {
@@ -49,6 +51,15 @@ export async function GET() {
         const s = summarize(roster);
         return { clients: s.totalClients, active: s.activeClients, avgHealth: s.avgHealth };
       })
+      .catch(() => null),
+    autopilot: await autopilotStatus()
+      .then((s) => ({
+        secured: s.cronSecured,
+        durable: s.durable,
+        totalSweeps: s.totalSweeps,
+        lastRunAt: s.lastRun?.at ?? null,
+        lastMode: s.lastRun?.mode ?? null,
+      }))
       .catch(() => null),
   });
 }

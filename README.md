@@ -72,3 +72,18 @@ The five headline services and every plan are presented together on the
 Production is hosted on Vercel and deploys automatically from `main`. Vercel
 requires verified commits, so production changes are committed through the
 GitHub API (which signs them) rather than plain pushes.
+
+### Autopilot heartbeat (Vercel Pro)
+
+`vercel.json` schedules the platform's real 24/7 pulse — cadences that Vercel Pro
+unlocks over Hobby's once-a-day cap:
+
+- `*/15 * * * *` → `/api/pixel-pilot/cron/autopilot` — optimization sweep across the crew
+- `0 * * * *` → `/api/pixel-pilot/cron/nurture` — lead re-engagement sweep
+
+Set **`CRON_SECRET`** in the Vercel project so the scheduler's `Authorization:
+Bearer` is enforced (unauthenticated hits get 401). Each run records a mode-tagged
+flight-log entry to the store; `GET /api/pixel-pilot/autopilot` reads it back — the
+logs behind the "24/7, with the logs to prove it" claim. Pro's 300s function
+ceiling also lets the Creative Forge finish genuine multi-minute Higgsfield renders
+instead of timing out.
