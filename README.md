@@ -2,6 +2,9 @@
 
 **The autonomous media buyer that flies your ad spend to profit.**
 
+> The Pixel Pilot brand was fully rebranded to **PHX Growth** in July 2026. This repo keeps
+> the original name and history — the product underneath is what now ships as PHX Growth.
+
 An immersive, 3D marketing + product platform for the ads / media-buying niche.
 Not a dashboard — an autonomous media buyer that flies Meta, Google & TikTok to
 *real profit*, 24/7, with Higgsfield-powered creative and an n8n automation spine.
@@ -87,3 +90,31 @@ flight-log entry to the store; `GET /api/pixel-pilot/autopilot` reads it back �
 logs behind the "24/7, with the logs to prove it" claim. Pro's 300s function
 ceiling also lets the Creative Forge finish genuine multi-minute Higgsfield renders
 instead of timing out.
+
+## MCP Server
+
+`mcp-server/` is a working [Model Context Protocol](https://modelcontextprotocol.io) stdio
+server that reads this repository directly — no hardcoded data — so an AI assistant can
+introspect the real product instead of guessing at it.
+
+| Tool | What it does |
+|---|---|
+| `get_services` | Real `SERVICES` array from `pixel-pilot/services.ts` |
+| `get_pricing` | Real `TIERS` array from `pixel-pilot/pricing.ts` |
+| `get_connectors` | Real `CONNECTORS` registry from `pixel-pilot/connectors.ts` |
+| `get_agent_crew` | Real `PIXEL_AGENTS` roster from `pixel-pilot/agents.ts` |
+| `list_routes` | Every page/API route found under `app/` |
+| `search_code` | Regex search across all tracked source files |
+| `read_file` | Read any file in the repo by relative path |
+
+```bash
+cd mcp-server
+npm install
+claude mcp add pixel-pilot -- node mcp-server/server.mjs
+```
+
+See `mcp-server/README.md` for details.
+
+## License
+
+MIT — see [LICENSE](./LICENSE).
