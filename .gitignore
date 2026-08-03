@@ -31,6 +31,9 @@ next-env.d.ts
 .vercel
 .env*
 
+# mcp server
+mcp-server/node_modules/
+
 # HyperFrames tooling (installed via `npx skills add heygen-com/hyperframes`)
 /.agents/
 /videos/
