@@ -41,7 +41,7 @@ export async function POST(req: NextRequest) {
       company: { type: 'string', maxLen: 160 },
       website: { type: 'string', maxLen: 300 },
       goal: { type: 'string', maxLen: 200 },
-      monthlySpend: { type: 'string', maxLen: 60 },
+      callVolume: { type: 'string', maxLen: 60 },
       details: { type: 'string', maxLen: 1200 },
     },
   });
@@ -58,19 +58,19 @@ export async function POST(req: NextRequest) {
   const { firstName, lastName } = splitName(name);
   const company = (b.company ?? '').toString().trim();
   const website = (b.website ?? '').toString().trim();
-  const goal = (b.goal ?? '').toString().trim() || 'More customers';
-  const monthlySpend = (b.monthlySpend ?? '').toString().trim();
+  const goal = (b.goal ?? '').toString().trim() || 'Answer every call';
+  const callVolume = (b.callVolume ?? '').toString().trim();
   const details = (b.details ?? '').toString().trim();
 
   const lead = {
-    source: 'pixel-pilot-website',
+    source: 'phx-growth-website',
     receivedAt: new Date().toISOString(),
     name,
     email,
     company,
     website,
     goal,
-    monthlySpend,
+    callVolume,
     details,
   };
 
@@ -78,14 +78,14 @@ export async function POST(req: NextRequest) {
 
   // Always capture first — persistence never blocks the response for long, and a
   // downstream failure must never lose the lead.
-  await pushToList('pp:leads', lead).catch(() => {});
+  await pushToList('phx:leads', lead).catch(() => {});
   routed.push('Captured to flight log');
 
   // 1 · HubSpot — create the contact as a marketing lead, if a portal is connected.
   let hubspot: { id: string; created: boolean } | null = null;
   const note =
     `Goal: ${goal}` +
-    (monthlySpend ? ` · Monthly spend: ${monthlySpend}` : '') +
+    (callVolume ? ` · Calls a week: ${callVolume}` : '') +
     (website ? ` · Site: ${website}` : '') +
     (details ? `\n${details}` : '');
   if (hubspotConfigured()) {
@@ -164,7 +164,7 @@ export async function GET() {
     {
       tool: 'pixel-pilot-lead-intake',
       method: 'POST',
-      body: ['name', 'email', 'company?', 'website?', 'goal?', 'monthlySpend?', 'details?'],
+      body: ['name', 'email', 'company?', 'website?', 'goal?', 'callVolume?', 'details?'],
       routes: {
         hubspot: hubspotConfigured() ? 'configured' : 'set HUBSPOT_CLIENT_ID/SECRET + HUBSPOT_DEFAULT_PORTAL_ID',
         quote: emailConfigured() ? 'configured' : 'set RESEND_API_KEY (+ PIXEL_PILOT_FROM_EMAIL, PIXEL_PILOT_OWNER_EMAIL)',

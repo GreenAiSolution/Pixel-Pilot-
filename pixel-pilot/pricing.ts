@@ -1,16 +1,25 @@
-// ─── PIXEL PILOT · PRICING ───────────────────────────────────────────────────
-// This is not a cheap tool — it is a media-buying department that never sleeps.
-// Premium, retainer + performance. Priced against the media buyer you would hire,
-// not the SaaS you would cancel.
+// ─── PHX GROWTH AGENTIC · PRICING ────────────────────────────────────────────
+// The single source of truth for money. The marketing page in
+// components/phx/pricing.tsx and the AI-drafted quote email both read from
+// here, so a price can never be right in one place and wrong in the other.
+//
+// Priced against the person you would otherwise hire, not against software.
+// One part-time receptionist in Phoenix costs ~$2,400/mo fully loaded and
+// covers 24% of the week; Front Office covers all of it for less.
+//
+// The ladder is deliberately built so cost per employee falls as you climb —
+// $899 → $795 → $730 — because the reason to buy up should be arithmetic the
+// customer can check, not a badge that says "most popular".
 
 export interface Tier {
   readonly id: string;
   readonly name: string;
-  readonly price: number; // monthly retainer, USD
-  readonly performance: string; // performance component
+  readonly price: number; // monthly, USD
+  readonly performance: string; // per-employee economics, shown on the card
   readonly tagline: string;
   readonly forWho: string;
-  readonly adSpend: string;
+  readonly coverage: string;
+  readonly staff: number;
   readonly includes: string[];
   readonly accent: string;
   readonly border: string;
@@ -20,164 +29,139 @@ export interface Tier {
 
 export const TIERS: Tier[] = [
   {
-    id: 'PILOT',
-    name: 'Pilot',
-    price: 2500,
-    performance: '+ 8% of ad spend',
-    tagline: 'One channel, fully flown to profit',
-    forWho: 'Brands scaling their first paid channel',
-    adSpend: 'Up to $50k/mo managed',
+    id: 'LINE',
+    name: 'Line',
+    price: 349.99,
+    performance: 'no employee — automations only',
+    tagline: "Texts back. Doesn't talk.",
+    forWho: 'Owners not ready to hand over the phone',
+    coverage: 'Text and web only',
+    staff: 0,
     includes: [
-      'Autonomous buyer on 1 channel',
-      'Creative Forge + Genome Lab',
-      'Profit-based optimization',
-      'Slack war room',
+      'Missed-call text-back within 60 seconds',
+      'Web-form replies within 60 seconds',
+      'Review request after every completed job',
+      'Monthly report with the honest misses',
     ],
-    accent: 'from-secondary/60 to-secondary/0',
-    border: 'border-secondary/30',
+    accent: '#7c8996',
+    border: 'rgba(124,137,150,0.35)',
   },
   {
-    id: 'SQUADRON',
-    name: 'Squadron',
-    price: 6000,
-    performance: '+ 6% of ad spend',
-    tagline: 'The full media mix, flown as one portfolio',
-    forWho: 'Growth brands across Meta, Google & TikTok',
-    adSpend: 'Up to $250k/mo managed',
+    id: 'ANSWER',
+    name: 'Answer',
+    price: 899,
+    performance: '$899 per employee',
+    tagline: 'Ivy picks up. Every time.',
+    forWho: 'One line, one location, calls going to voicemail',
+    coverage: '24/7, one line',
+    staff: 1,
     includes: [
-      'Cross-Channel Conductor',
-      'Synthetic Arena pre-testing',
-      'Attribution Truth Engine',
-      'All n8n automations',
-      'Impression-level creative',
+      'Every call answered, 24/7 — no voicemail',
+      'Books straight onto your calendar',
+      'Emergencies escalated to a human in under a minute',
+      'Sales calls screened before they reach you',
+      'Everything in Line',
     ],
-    accent: 'from-primary/70 to-secondary/30',
-    border: 'border-primary/40',
+    accent: '#e9eef3',
+    border: 'rgba(233,238,243,0.28)',
+  },
+  {
+    id: 'CREW',
+    name: 'Crew',
+    price: 1590,
+    performance: '$795 per employee',
+    tagline: 'Ivy answers. Dex runs the day.',
+    forWho: 'Shops losing an hour a day to confirmations and reschedules',
+    coverage: '24/7, two lines or two locations',
+    staff: 2,
+    includes: [
+      'Ivy + Dex',
+      'Morning confirmations, reschedules, on-the-way texts',
+      'Two lines or two locations',
+      'Everything in Answer',
+    ],
+    accent: '#4fd1a5',
+    border: 'rgba(79,209,165,0.4)',
+  },
+  {
+    id: 'FRONT_OFFICE',
+    name: 'Front Office',
+    price: 2190,
+    performance: '$730 per employee — the best rate on the ladder',
+    tagline: 'All three. The whole front desk.',
+    forWho: 'Anyone who would otherwise hire a receptionist',
+    coverage: '168 hours a week, unlimited lines',
+    staff: 3,
+    includes: [
+      'Ivy + Dex + Rae',
+      'Rae works every open quote and dormant customer',
+      'Unlimited lines',
+      'Named operator and a monthly review call',
+      'Everything in Crew',
+    ],
+    accent: '#ffb44a',
+    border: 'rgba(255,180,74,0.5)',
     featured: true,
-  },
-  {
-    id: 'FLEET',
-    name: 'Fleet Command',
-    price: 15000,
-    performance: '+ 4% of ad spend',
-    tagline: 'No ceiling. Your own air force.',
-    forWho: 'Category leaders & regulated categories at scale',
-    adSpend: 'Unlimited spend managed',
-    includes: [
-      'Everything in Squadron',
-      'Compliance-Safe Autopilot',
-      'Private data flywheel + model',
-      'Dedicated flight director',
-      'White-label for agencies',
-    ],
-    accent: 'from-gold/70 to-accent/30',
-    border: 'border-gold/40',
     apex: true,
   },
 ];
 
-// ─── À LA CARTE SERVICES ─────────────────────────────────────────────────────
-// Every Studio deliverable, priced on its own. Retainers above are for a fully-
-// managed account; these are for teams who want a specific product built fast.
-// Prices are the single source of truth — edit here, they propagate to the
-// Pricing page. (Adjust freely; these are set to premium, defensible anchors.)
+// What the human alternative actually costs — the anchor used by both the page
+// and the drafted quote. Phoenix market, fully loaded (wage + tax + benefits).
+export const HUMAN_ANCHOR = {
+  role: 'part-time receptionist',
+  monthlyLow: 2400,
+  monthlyHigh: 3200,
+  hoursCovered: 40,
+  hoursInWeek: 168,
+} as const;
 
+// Add-ons, priced on their own. Deliberately short — a long menu invites
+// negotiation, and the ladder above is where the decision should happen.
 export interface ServicePrice {
   readonly id: string;
   readonly name: string;
-  readonly price: string; // display price, e.g. "$1,500"
-  readonly unit: string; // "one-time" | "/mo" | "/batch"
-  readonly from?: boolean; // show a "from" prefix
+  readonly price: string;
+  readonly unit: string;
+  readonly from?: boolean;
   readonly tagline: string;
   readonly includes: string[];
   readonly accent: string;
-  readonly tool: string; // where the card's CTA sends the buyer (lead flow)
+  readonly tool: string;
   readonly popular?: boolean;
 }
 
 export const SERVICE_PRICING: ServicePrice[] = [
   {
-    id: 'launch',
-    name: 'Zero-to-Live Plan',
-    price: '$1,500',
-    unit: 'one-time',
-    tagline: 'One product URL in. A complete, profit-first launch plan out.',
-    includes: ['Market + competitor research', 'Synthetic buyer personas', 'Channel & budget split', 'Creative concepts + tracking plan'],
-    accent: '#00D4FF',
-    tool: '/book',
+    id: 'extra-line',
+    name: 'Additional line',
+    price: '$149',
+    unit: '/mo',
+    tagline: 'A second number answered by the same employee',
+    includes: ['Separate greeting and hours', 'Rolls into the same report'],
+    accent: '#4fd1a5',
+    tool: 'lead',
   },
   {
-    id: 'brand',
-    name: 'Brand Identity Kit',
-    price: '$1,200',
-    unit: 'one-time',
-    tagline: 'Name, tagline, positioning, a real color system + voice — a brand, not a mood board.',
-    includes: ['Name + tagline + positioning', 'Full color system (hex)', 'Type + voice principles', 'Do / don’t brand rules'],
-    accent: '#C9A84C',
-    tool: '/book',
-  },
-  {
-    id: 'funnel',
-    name: 'Offer & Funnel Architect',
-    price: '$900',
-    unit: 'one-time',
-    tagline: 'An offer buyers say yes to — value stack, tiers, guarantee, funnel.',
-    includes: ['Core promise + value stack', '3 pricing tiers', 'Risk-reversal guarantee', 'Full funnel + upsell map'],
-    accent: '#6C63FF',
-    tool: '/book',
-  },
-  {
-    id: 'website',
-    name: 'Website Creation',
-    price: '$2,500',
-    unit: 'one-time',
-    from: true,
-    tagline: 'A complete, deploy-ready landing page, live — and you own the code.',
-    includes: ['Sitemap + conversion copy', 'Responsive, accessible build', 'Deployed to a live URL', 'You own the code'],
-    accent: '#00D4FF',
-    tool: '/book',
+    id: 'spanish',
+    name: 'Spanish line',
+    price: '$199',
+    unit: '/mo',
+    tagline: 'The same employee, answering in Spanish',
+    includes: ['Bilingual greeting and booking', 'Transcripts in both languages'],
+    accent: '#ffb44a',
+    tool: 'lead',
     popular: true,
   },
   {
-    id: 'ads',
-    name: 'Premium AI Ads',
-    price: '$1,500',
+    id: 'after-hours-only',
+    name: 'After-hours only',
+    price: '$549',
     unit: '/mo',
     from: true,
-    tagline: 'Scroll-stopping ad copy, policy-cleared, with a visual brief — fresh on demand.',
-    includes: ['Platform-native copy sets', 'Policy compliance screen', 'On-brand visual briefs', 'Fresh creative on demand'],
-    accent: '#FF2E9A',
-    tool: '/book',
-  },
-  {
-    id: 'content',
-    name: 'Content Engine',
-    price: '$1,200',
-    unit: '/mo',
-    tagline: 'A ready-to-post content calendar — hook, caption, CTA per day.',
-    includes: ['Up to 14-day calendars', 'Hook + caption + format', 'Platform-native voice', 'Hashtag sets'],
-    accent: '#FF2E9A',
-    tool: '/book',
-  },
-  {
-    id: 'pretest',
-    name: 'Synthetic Pre-Testing',
-    price: '$400',
-    unit: '/batch',
-    tagline: 'Score ad variants on synthetic buyers before a dollar of spend.',
-    includes: ['Synthetic buyer personas', 'Scroll-stop + clarity scores', 'Launch / iterate / kill verdicts', 'Ranked best-first'],
-    accent: '#C9A84C',
-    tool: '/book',
-  },
-  {
-    id: 'employees',
-    name: 'AI Employees',
-    price: '$2,000',
-    unit: '/mo',
-    from: true,
-    tagline: 'A crew of AI operators in your Slack, with a first-week deployment plan.',
-    includes: ['Specialist agent crew', 'First-week deployment plan', 'Lives in your Slack', 'Works 24/7'],
-    accent: '#6C63FF',
-    tool: '/book',
+    tagline: 'She covers evenings and weekends; your office keeps the day',
+    includes: ['6pm–7am and weekends', 'Emergency escalation included'],
+    accent: '#7c8996',
+    tool: 'lead',
   },
 ];

@@ -8,7 +8,7 @@
 // blocked by either.
 //
 // Env: RESEND_API_KEY            (Vercel Marketplace → Resend)
-//      PIXEL_PILOT_FROM_EMAIL    optional — verified sender, e.g. "Pixel Pilot <hello@yourdomain.com>"
+//      PIXEL_PILOT_FROM_EMAIL    optional — verified sender, e.g. "PHX Growth <hello@phxgrowth.com>"
 //      PIXEL_PILOT_OWNER_EMAIL   optional — where the internal lead alert goes
 
 import { askClaudeJSON, aiConfigured } from './ai';
@@ -33,7 +33,7 @@ export interface LeadInput {
   readonly company?: string;
   readonly website?: string;
   readonly goal?: string;
-  readonly monthlySpend?: string;
+  readonly callVolume?: string;
   readonly details?: string;
 }
 
@@ -49,17 +49,25 @@ export interface Quote {
 // The catalog rendered once for the drafting prompt — real names, real prices.
 const CATALOG = [
   'MANAGED PLANS (monthly retainer + performance):',
-  ...TIERS.map((t) => `- ${t.name}: $${t.price.toLocaleString()}/mo ${t.performance} — ${t.tagline}. For: ${t.forWho}. ${t.adSpend}.`),
+  ...TIERS.map((t) => `- ${t.name}: $${t.price.toLocaleString()}/mo (${t.performance}) — ${t.tagline}. For: ${t.forWho}. Coverage: ${t.coverage}.`),
   'À LA CARTE (one-time, done for you):',
   ...SERVICE_PRICING.map((s) => `- ${s.name}: ${s.price} ${s.unit} — ${s.tagline}`),
 ].join('\n');
 
 /** Pick a sensible tier from the stated spend — the no-AI fallback heuristic. */
-function tierFromSpend(monthlySpend?: string): (typeof TIERS)[number] {
-  const n = Number((monthlySpend ?? '').replace(/[^0-9.]/g, ''));
-  if (n >= 150_000) return TIERS[2] ?? TIERS[0];
-  if (n >= 50_000) return TIERS[1] ?? TIERS[0];
-  return TIERS[0];
+function tierFromCallVolume(callVolume?: string): (typeof TIERS)[number] {
+  // The form sends ranges: "Under 20 calls/wk", "50–100 calls/wk", "250+".
+  // Stripping every non-digit turns "50–100" into 50100, which recommended the
+  // top tier to everyone — including a twenty-call shop. Take the first number.
+  const raw = (callVolume ?? '').toLowerCase();
+  const first = raw.match(/\d+/);
+  const n = first ? Number(first[0]) : 0;
+  const byId = (id: string) => TIERS.find((t) => t.id === id) ?? TIERS[1];
+  if (!n) return byId('ANSWER');
+  if (/under|less than|fewer/.test(raw) || n < 20) return byId('LINE');
+  if (n < 50) return byId('ANSWER');
+  if (n < 100) return byId('CREW');
+  return byId('FRONT_OFFICE');
 }
 
 // Every quotable item with its canonical display price — the only prices an
@@ -93,7 +101,7 @@ function normalizeQuote(q: Quote): Quote {
     .filter((a): a is { name: string; price: string } => Boolean(a))
     .slice(0, 2);
   return {
-    subject: typeof q.subject === 'string' && q.subject.trim() ? q.subject : 'Your Pixel Pilot flight plan and price',
+    subject: typeof q.subject === 'string' && q.subject.trim() ? q.subject : 'Your PHX Growth quote',
     paragraphs: q.paragraphs,
     recommendedPlan: { name: plan.name, price: plan.price, why: String(q.recommendedPlan.why ?? '') },
     addOns,
@@ -110,12 +118,14 @@ export async function draftQuote(lead: LeadInput): Promise<Quote> {
     try {
       return normalizeQuote(await askClaudeJSON<Quote>({
         system:
-          'You are Pixel Pilot, an autonomous AI media buyer, replying to a new inbound lead. ' +
+          'You are PHX Growth Agentic, which puts AI employees on the phones of home-services businesses, replying to a new inbound lead. ' +
           'Write a short, personal, plain-English reply that addresses THEIR stated goal and situation, ' +
           'then recommend exactly one plan or service from the catalog below with its real price. ' +
           'Voice: confident, concrete, aviation-flavored, zero hype. HARD RULES: prices must come ' +
           'verbatim from the catalog; never promise results, ROAS, or income; never invent case studies; ' +
-          '3-5 short paragraphs; sign off as "Pixel Pilot Flight Command".\n\nCATALOG:\n' + CATALOG +
+          '3-5 short paragraphs; sign off as "PHX Growth". Never mention advertising, ad spend or media buying — we do not sell those. '
+          + 'Anchor the price against what a part-time receptionist costs (~$2,400/mo for 40 of the week\'s 168 hours). '
+          + 'Never promise a result we have not measured for this business.\n\nCATALOG:\n' + CATALOG +
           '\n\nReturn JSON: {"subject": string, "paragraphs": string[], ' +
           '"recommendedPlan": {"name": string, "price": string, "why": string}, ' +
           '"addOns": [{"name": string, "price": string}]} — addOns may be empty, max 2.',
@@ -127,16 +137,16 @@ export async function draftQuote(lead: LeadInput): Promise<Quote> {
       // must not cost the reply
     }
   }
-  const tier = tierFromSpend(lead.monthlySpend);
+  const tier = tierFromCallVolume(lead.callVolume);
   const first = lead.name.trim().split(/\s+/)[0] || 'there';
   return {
-    subject: `${first} — your Pixel Pilot flight plan and price`,
+    subject: `${first} — what it would cost to have every call answered`,
     paragraphs: [
-      `Hi ${first}, thanks for reaching out${lead.company ? ` about ${lead.company}` : ''}. Your goal — ${lead.goal || 'more customers'} — is exactly what Pixel Pilot is built to fly.`,
-      `Based on what you shared${lead.monthlySpend ? ` (around ${lead.monthlySpend}/mo in ad spend)` : ''}, the right fit is our ${tier.name} plan: $${tier.price.toLocaleString()}/mo ${tier.performance}. ${tier.tagline} — ${tier.adSpend.toLowerCase()}.`,
+      `Hi ${first}, thanks for reaching out${lead.company ? ` about ${lead.company}` : ''}. You said the goal is ${lead.goal || 'answering every call'} — that is the whole job here.`,
+      `Based on ${lead.callVolume ? `about ${lead.callVolume}` : 'what you shared'}, the fit is our ${tier.name} plan: $${tier.price.toLocaleString()}/mo (${tier.performance}). ${tier.tagline} Coverage: ${tier.coverage.toLowerCase()}. For comparison, one part-time receptionist runs about $2,400/mo and covers 40 of the week's 168 hours.`,
       'Every decision steers by your real profit, not the ad platform grading its own homework — and creative is pre-tested on synthetic buyers before a dollar of your budget moves.',
       'Reply to this email or book a call and we can have you live in under an hour.',
-      '— Pixel Pilot Flight Command',
+      '— PHX Growth',
     ],
     recommendedPlan: { name: tier.name, price: `$${tier.price.toLocaleString()}/mo ${tier.performance}`, why: tier.forWho },
     addOns: [],
@@ -171,7 +181,7 @@ function escapeHtml(s: string): string {
 async function sendEmail(to: string, subject: string, html: string, replyTo?: string): Promise<string> {
   const key = resendKey();
   if (!key) throw new Error('RESEND_API_KEY is not set');
-  const from = process.env.PIXEL_PILOT_FROM_EMAIL || 'Pixel Pilot <onboarding@resend.dev>';
+  const from = process.env.PIXEL_PILOT_FROM_EMAIL || 'PHX Growth <onboarding@resend.dev>';
   const res = await fetchWithTimeout(RESEND_URL, {
     timeoutMs: 10_000,
     method: 'POST',
@@ -197,7 +207,7 @@ export async function sendQuoteEmail(lead: LeadInput, quote: Quote): Promise<str
 export function draftFollowUp(lead: LeadInput, planName: string, touch: 1 | 2): Quote {
   const first = lead.name.trim().split(/\s+/)[0] || 'there';
   const plan = PRICE_BOOK.get(planName.toLowerCase()) ?? (() => {
-    const t = tierFromSpend(lead.monthlySpend);
+    const t = tierFromCallVolume(lead.callVolume);
     return { name: t.name, price: `$${t.price.toLocaleString()}/mo ${t.performance}` };
   })();
   const paragraphs =
@@ -206,18 +216,18 @@ export function draftFollowUp(lead: LeadInput, planName: string, touch: 1 | 2): 
           `Hi ${first} — a couple of days ago we sent over a flight plan for ${lead.goal || 'more customers'}${lead.company ? ` at ${lead.company}` : ''}, and wanted to make sure it landed.`,
           `The recommendation stands: ${plan.name} at ${plan.price}. Setup takes under an hour, and every decision steers by your real profit — not the ad platforms grading their own homework.`,
           'Any questions about the plan or the price, just reply — a real person reads these.',
-          '— Pixel Pilot Flight Command',
+          '— PHX Growth',
         ]
       : [
           `Hi ${first} — last check-in from us, promised.`,
           `Your quote for ${plan.name} (${plan.price}) is still good whenever the timing is right. No pressure and no expiry games — reply any time and we pick up where we left off.`,
           'Wishing you full boards and cheap clicks either way.',
-          '— Pixel Pilot Flight Command',
+          '— PHX Growth',
         ];
   return {
     subject:
       touch === 1
-        ? `${first} — did your Pixel Pilot flight plan land?`
+        ? `${first} — did that quote reach you?`
         : `${first} — leaving the runway lights on`,
     paragraphs,
     recommendedPlan: { name: plan.name, price: plan.price, why: '' },
@@ -237,7 +247,7 @@ export async function sendOwnerAlert(lead: LeadInput, quote: Quote): Promise<str
   if (!owner) return null;
   const rows = Object.entries({
     Name: lead.name, Email: lead.email, Company: lead.company, Website: lead.website,
-    Goal: lead.goal, 'Monthly spend': lead.monthlySpend, Details: lead.details,
+    Goal: lead.goal, 'Calls a week': lead.callVolume, Details: lead.details,
   })
     .filter(([, v]) => v)
     .map(([k, v]) => `<tr><td style="padding:4px 12px 4px 0;color:#888;font-size:13px">${k}</td><td style="padding:4px 0;font-size:13px">${escapeHtml(String(v))}</td></tr>`)
