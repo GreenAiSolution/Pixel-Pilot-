@@ -1,17 +1,17 @@
 import type { Metadata } from "next";
-import { Pricing, Outcomes, Close } from "@/components/phx/agentic";
+import { PricingPage } from "@/components/phx/pricing";
+import { Close } from "@/components/phx/agentic";
 
 export const metadata: Metadata = {
   title: "Pricing — PHX Growth Agentic",
   description:
-    "An AI employee who answers every call, books the job and escalates emergencies — $599 to $899 a month. A part-time receptionist costs $2,400 and works 40 of the week's 168 hours.",
+    "Four plans from $349.99. Front Office puts three AI employees on your front desk for $2,190 — less than one part-time receptionist who works 40 of the week's 168 hours.",
 };
 
-export default function PricingPage() {
+export default function Page() {
   return (
     <>
-      <Pricing />
-      <Outcomes />
+      <PricingPage />
       <Close />
     </>
   );

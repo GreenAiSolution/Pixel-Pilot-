@@ -19,6 +19,9 @@ export function AgenticShell({ children }: { children: ReactNode }) {
             <span className="ag-mono ag-mark__suffix">AGENTIC</span>
           </Link>
           <nav className="ag-nav__links">
+            <Link href="/employees">Employees</Link>
+            <Link href="/how-it-works">How it works</Link>
+            <Link href="/report">The report</Link>
             <Link href="/pricing">Pricing</Link>
             <Link href="/book" className="ag-btn ag-btn--solid ag-btn--sm">
               Book 15 min
@@ -37,6 +40,13 @@ export function AgenticShell({ children }: { children: ReactNode }) {
               An AI employee on your line. Phoenix, Arizona.
             </p>
           </div>
+          <nav className="ag-foot__links">
+            <Link href="/employees">Employees</Link>
+            <Link href="/how-it-works">How it works</Link>
+            <Link href="/report">The report</Link>
+            <Link href="/pricing">Pricing</Link>
+            <Link href="/book">Book a call</Link>
+          </nav>
           <div className="ag-mono ag-foot__meta">© 2026</div>
         </div>
       </footer>
