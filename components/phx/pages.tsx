@@ -9,6 +9,7 @@ import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import { LiveLine } from "@/components/phx/live-line";
 import { DEX_CALLS, IVY_CALLS, RAE_CALLS } from "@/components/phx/scripts";
+import { CREW, Robot, type Who } from "@/components/phx/robots";
 
 // Reveal-on-scroll with a failsafe, so nothing can end up permanently blank.
 function useInView<T extends HTMLElement>() {
@@ -39,37 +40,10 @@ function useInView<T extends HTMLElement>() {
 }
 
 // ─── EMPLOYEES ───────────────────────────────────────────────────────────────
-const STAFF = [
-  {
-    id: "ivy",
-    name: "Ivy",
-    role: "Receptionist",
-    tone: "var(--ag-amber)",
-    job: "Answers every call, books the job, screens the pitches, and wakes a human when someone's house is flooding.",
-    hours: "24 / 7",
-    from: "$899",
-    calls: IVY_CALLS,
-  },
-  {
-    id: "dex",
-    name: "Dex",
-    role: "Dispatcher",
-    tone: "var(--ag-signal)",
-    job: "Confirms tomorrow's jobs before you're awake, handles reschedules, and texts the customer when the tech is rolling.",
-    hours: "6am – 8pm",
-    from: "+$691",
-    calls: DEX_CALLS,
-  },
-  {
-    id: "rae",
-    name: "Rae",
-    role: "Follow-up",
-    tone: "#9b8cff",
-    job: "Works every quote that went quiet and every customer who hasn't called in a year. Hands the live ones to you.",
-    hours: "Weekdays",
-    from: "+$600",
-    calls: RAE_CALLS,
-  },
+const STAFF: { id: Who; calls: typeof IVY_CALLS }[] = [
+  { id: "ivy", calls: IVY_CALLS },
+  { id: "dex", calls: DEX_CALLS },
+  { id: "rae", calls: RAE_CALLS },
 ];
 
 export function EmployeesPage() {
@@ -86,41 +60,46 @@ export function EmployeesPage() {
         </div>
       </section>
 
-      {STAFF.map((s, i) => (
+      {STAFF.map((s, i) => {
+        const bot = CREW[s.id];
+        return (
         <section key={s.id} id={s.id} className="ag-section ag-section--tight">
           <div className="ag-shell">
             <div className={`ag-staff ${i % 2 ? "is-flipped" : ""}`}>
               <div className="ag-staff__copy">
-                <div className="ag-staff__head">
-                  <span className="ag-staff__initial" style={{ color: s.tone, borderColor: s.tone }}>
-                    {s.name[0]}
-                  </span>
-                  <div>
-                    <div className="ag-staff__name">{s.name}</div>
-                    <div className="ag-mono ag-staff__role" style={{ color: s.tone }}>
-                      {s.role}
+                <div className="ag-portrait">
+                  <Robot who={s.id} size={104} status="live" />
+                  <div className="ag-portrait__meta">
+                    <div className="ag-staff__name">{bot.name}</div>
+                    <div className="ag-mono ag-staff__role" style={{ color: bot.tone }}>
+                      {bot.role}
                     </div>
                   </div>
                 </div>
-                <p className="ag-staff__job">{s.job}</p>
+                <p className="ag-staff__line" style={{ color: bot.tone }}>
+                  &ldquo;{bot.line}&rdquo;
+                </p>
+                <p className="ag-staff__job">{bot.job}</p>
+                <p className="ag-staff__quirk">{bot.quirk}</p>
                 <dl className="ag-staff__facts">
                   <div>
                     <dt className="ag-mono">On shift</dt>
-                    <dd>{s.hours}</dd>
+                    <dd>{bot.hours}</dd>
                   </div>
                   <div>
                     <dt className="ag-mono">Cost</dt>
-                    <dd>{s.from}<span className="ag-staff__mo"> /mo</span></dd>
+                    <dd>{bot.cost}<span className="ag-staff__mo"> /mo</span></dd>
                   </div>
                 </dl>
               </div>
               <div className="ag-staff__demo">
-                <LiveLine calls={s.calls} agent={s.name} />
+                <LiveLine calls={s.calls} agent={bot.name} who={s.id} />
               </div>
             </div>
           </div>
         </section>
-      ))}
+        );
+      })}
 
       <section className="ag-section">
         <div className="ag-shell ag-mid-cta">

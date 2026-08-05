@@ -655,3 +655,97 @@
   .ag-root .ag-step,
   .ag-root .ag-report__line { opacity: 1 !important; }
 }
+
+/* ═══ THE CREW ══════════════════════════════════════════════════════════════
+ * Each robot idles differently, because that is where the personality lives:
+ * Ivy blinks like someone listening, Dex sweeps on a metronome, Rae's eye
+ * drifts and narrows like someone deciding whether to call again.
+ * ────────────────────────────────────────────────────────────────────────── */
+
+.ag-robot { display: block; overflow: visible; }
+.ag-robot__body { animation: ag-bot-float 5.5s ease-in-out infinite; transform-origin: 60px 60px; }
+@keyframes ag-bot-float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-2.5px); }
+}
+
+/* Ivy — a double blink, then a long pause. Attentive, not twitchy. */
+.ag-eye-blink { animation: ag-blinkeyes 5.2s infinite; transform-origin: 60px 61px; }
+@keyframes ag-blinkeyes {
+  0%, 43%, 100% { transform: scaleY(1); }
+  45%, 46.5% { transform: scaleY(0.1); }
+  48% { transform: scaleY(1); }
+  51%, 52.5% { transform: scaleY(0.1); }
+  54% { transform: scaleY(1); }
+}
+.ag-mic { animation: ag-micpulse 2.6s ease-in-out infinite; transform-origin: 92px 83px; }
+@keyframes ag-micpulse {
+  0%, 100% { opacity: 0.45; transform: scale(1); }
+  50% { opacity: 1; transform: scale(1.22); }
+}
+
+/* Dex — the scan bar keeps time. Beacon on the same beat. */
+.ag-scan { animation: ag-sweep 2.8s cubic-bezier(0.65, 0, 0.35, 1) infinite; }
+@keyframes ag-sweep {
+  0%, 100% { transform: translateX(0); }
+  50% { transform: translateX(27px); }
+}
+.ag-beacon { animation: ag-beacon 2.8s ease-in-out infinite; transform-origin: 60px 24px; }
+@keyframes ag-beacon {
+  0%, 82%, 100% { opacity: 0.4; }
+  88% { opacity: 1; }
+}
+
+/* Rae — the iris drifts, then narrows. Patience, drawn. */
+.ag-iris { animation: ag-drift 7s ease-in-out infinite; transform-origin: 60px 60px; }
+@keyframes ag-drift {
+  0%, 100% { transform: translateX(0) scaleY(1); }
+  28% { transform: translateX(5px) scaleY(1); }
+  40% { transform: translateX(5px) scaleY(0.42); }
+  48% { transform: translateX(5px) scaleY(1); }
+  72% { transform: translateX(-5px) scaleY(1); }
+}
+.ag-signal { animation: ag-ping 3.4s ease-out infinite; transform-origin: 84px 22px; }
+@keyframes ag-ping {
+  0%, 100% { opacity: 0.25; }
+  35% { opacity: 1; }
+}
+
+/* Portrait framing on /employees */
+.ag-portrait { display: flex; align-items: center; gap: 18px; }
+.ag-portrait__meta { min-width: 0; }
+.ag-portrait .ag-robot { flex: none; }
+.ag-staff__line {
+  margin: 1.1rem 0 0;
+  font-family: var(--ag-display);
+  font-weight: 700;
+  font-size: clamp(1.15rem, 2.2vw, 1.5rem);
+  letter-spacing: -0.02em;
+  line-height: 1.2;
+}
+.ag-staff__quirk {
+  margin: 0.85rem 0 0;
+  font-size: 12.5px;
+  color: #5d6a76;
+  border-left: 2px solid var(--ag-rule);
+  padding-left: 11px;
+  max-width: 38ch;
+}
+
+/* Who you get, on the pricing cards — the ladder made visual */
+.ag-plan__crew { display: flex; align-items: center; gap: 7px; margin-top: 14px; min-height: 34px; }
+.ag-plan__crew .ag-robot { flex: none; }
+.ag-plan__crewnone { font-family: var(--ag-mono); font-size: 10.5px; color: #4a5762; letter-spacing: 0.06em; }
+
+/* Tiny avatar in the console header */
+.ag-console__bot { flex: none; margin-right: 2px; }
+
+@media (prefers-reduced-motion: reduce) {
+  .ag-root .ag-robot__body,
+  .ag-root .ag-eye-blink,
+  .ag-root .ag-mic,
+  .ag-root .ag-scan,
+  .ag-root .ag-beacon,
+  .ag-root .ag-iris,
+  .ag-root .ag-signal { animation: none !important; }
+}

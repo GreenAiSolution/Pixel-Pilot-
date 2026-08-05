@@ -24,6 +24,7 @@
 
 import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
+import { Robot, type Who } from "@/components/phx/robots";
 
 type Plan = {
   id: string;
@@ -36,6 +37,7 @@ type Plan = {
   replaces: string;
   points: string[];
   tone: string;
+  crew: Who[];
   featured?: boolean;
 };
 
@@ -50,6 +52,7 @@ const PLANS: Plan[] = [
     replaces: "Replaces: nothing — it plugs the gaps you already have",
     points: ["Missed-call text-back", "Web leads answered in 60s", "Review requests after every job"],
     tone: "var(--ag-mute)",
+    crew: [],
   },
   {
     id: "answer",
@@ -61,6 +64,7 @@ const PLANS: Plan[] = [
     replaces: "Replaces: the calls going to voicemail",
     points: ["Every call answered, 24/7", "Books onto your calendar", "Emergencies wake a human", "Everything in Line"],
     tone: "var(--ag-paper)",
+    crew: ["ivy"],
   },
   {
     id: "crew",
@@ -77,6 +81,7 @@ const PLANS: Plan[] = [
       "Everything in Answer",
     ],
     tone: "var(--ag-signal)",
+    crew: ["ivy", "dex"],
   },
   {
     id: "front-office",
@@ -94,6 +99,7 @@ const PLANS: Plan[] = [
       "Everything in Crew",
     ],
     tone: "var(--ag-amber)",
+    crew: ["ivy", "dex", "rae"],
     featured: true,
   },
 ];
@@ -169,8 +175,15 @@ export function Plans() {
               <span className="ag-plan__cents">{p.suffix ?? ""}</span>
               <span className="ag-mono ag-plan__per">/mo</span>
             </div>
+            <div className="ag-plan__crew" aria-hidden>
+              {p.crew.length ? (
+                p.crew.map((w) => <Robot key={w} who={w} size={34} />)
+              ) : (
+                <span className="ag-plan__crewnone">No employee</span>
+              )}
+            </div>
             <div className="ag-mono ag-plan__each">
-              {p.per ? `${p.per} per employee` : "No employee — automations only"}
+              {p.per ? `${p.per} per employee` : "Automations only"}
             </div>
             <p className="ag-plan__line">{p.line}</p>
             <ul className="ag-plan__points">

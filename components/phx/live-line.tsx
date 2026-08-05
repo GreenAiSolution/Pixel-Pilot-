@@ -13,6 +13,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import { type Call, IVY_CALLS, RING_MS, TONE } from "@/components/phx/scripts";
+import { Robot, type Who } from "@/components/phx/robots";
 
 function clock(ms: number) {
   const s = Math.max(0, Math.floor(ms / 1000));
@@ -22,10 +23,12 @@ function clock(ms: number) {
 export function LiveLine({
   calls = IVY_CALLS,
   agent = "Ivy",
+  who = "ivy",
   compact = false,
 }: {
   calls?: Call[];
   agent?: string;
+  who?: Who;
   compact?: boolean;
 }) {
   const [index, setIndex] = useState(0);
@@ -72,11 +75,7 @@ export function LiveLine({
     >
       <div className="ag-console__bar">
         <div className="ag-console__who">
-          <span
-            className={`ag-dot ${ringing ? "is-ringing" : "is-live"}`}
-            style={{ background: ringing ? "var(--ag-amber)" : "var(--ag-signal)" }}
-            aria-hidden
-          />
+          <Robot who={who} size={32} status={ringing ? "ringing" : "live"} className="ag-console__bot" />
           <span className="ag-mono ag-console__num">{call.from}</span>
           <span className="ag-console__when">{call.when}</span>
         </div>
