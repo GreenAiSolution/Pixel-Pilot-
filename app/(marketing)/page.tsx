@@ -1,27 +1,15 @@
 "use client";
 
-// ─── PHX GROWTH · HOME ───────────────────────────────────────────────────────
-// One pitch, top to bottom: we put an AI employee on your phones.
-// Nothing on this page sells advertising. See ~/phxgrowth-engine/SERVICES.md.
+import { Hero, TheLeak, Outcomes, Pricing, Close } from "@/components/phx/agentic";
 
-import {
-  EmployeeHero,
-  TheLeak,
-  MeetIvy,
-  WhatSheDoes,
-  HowItGoesLive,
-  EmployeeCTA,
-} from "@/components/pixel-pilot/employees";
-
-export default function PhxGrowthHome() {
+export default function AgenticHome() {
   return (
-    <div className="relative">
-      <EmployeeHero />
+    <>
+      <Hero />
       <TheLeak />
-      <MeetIvy />
-      <WhatSheDoes />
-      <HowItGoesLive />
-      <EmployeeCTA />
-    </div>
+      <Outcomes />
+      <Pricing />
+      <Close />
+    </>
   );
 }

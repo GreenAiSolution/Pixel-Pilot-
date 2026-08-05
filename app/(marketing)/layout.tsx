@@ -1,7 +1,7 @@
-import { Shell } from '@/components/pixel-pilot/shell';
+import { AgenticShell } from '@/components/phx/agentic-shell';
 
-// Pixel Pilot marketing chrome (nav, footer, 3D flight scene). Scoped to this
-// route group so sibling apps (e.g. /eagle) can render their own chrome.
+// PHX Growth Agentic chrome. Scoped to this route group so sibling apps
+// (/eagle, /deck) keep rendering their own.
 export default function MarketingLayout({ children }: { children: React.ReactNode }) {
-  return <Shell>{children}</Shell>;
+  return <AgenticShell>{children}</AgenticShell>;
 }
