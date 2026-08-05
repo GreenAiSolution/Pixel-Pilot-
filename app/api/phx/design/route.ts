@@ -19,8 +19,10 @@ import { fetchWithTimeout } from '@/pixel-pilot/http';
 
 const RESEND_URL = 'https://api.resend.com/emails';
 
-// Where builds land. Overridable, but the default is the inbox that owns them.
-const TO = process.env.PHX_BUILD_TO || process.env.PIXEL_PILOT_OWNER_EMAIL || 'jadengreen808@gmail.com';
+// Where builds land. Deliberately NOT falling back to PIXEL_PILOT_OWNER_EMAIL:
+// that variable is already set on this project to a different inbox, and builds
+// were asked for at this address specifically. PHX_BUILD_TO is the only override.
+const TO = process.env.PHX_BUILD_TO || 'jadengreen808@gmail.com';
 
 const resendKey = () => process.env.RESEND_API_KEY || process.env.RESEND_TOKEN;
 
