@@ -74,14 +74,26 @@ export function Robot({
   size = 96,
   status = "idle",
   className = "",
+  tone,
+  label,
 }: {
   who: Who;
   size?: number;
   status?: Status;
   className?: string;
+  /** Override the crew member's colour — used by the builder, where the
+   *  customer picks their own lamp colour on a stock chassis. */
+  tone?: string;
+  label?: string;
 }) {
   const c = CREW[who];
-  const lamp = status === "live" ? "#4fd1a5" : status === "ringing" ? "#ffb44a" : c.tone;
+  const accent = tone ?? c.tone;
+  const dim = tone ? `${tone}2e` : c.dim; // 2e ≈ 18% alpha, matching CREW.dim
+  const lamp = status === "live" ? "#4fd1a5" : status === "ringing" ? "#ffb44a" : accent;
+  // The glow gradient is the only tone-dependent def, so its id must vary with
+  // the tone too — otherwise two robots on the same page sharing a chassis but
+  // not a colour would both resolve to whichever mounted first.
+  const gid = `glow-${who}${tone ? `-${tone.replace("#", "")}` : ""}`;
 
   return (
     <svg
@@ -90,13 +102,13 @@ export function Robot({
       height={size}
       viewBox="0 0 120 120"
       role="img"
-      aria-label={`${c.name}, ${c.role.toLowerCase()}`}
-      style={{ ["--bot" as string]: c.tone, ["--botdim" as string]: c.dim }}
+      aria-label={label ?? `${c.name}, ${c.role.toLowerCase()}`}
+      style={{ ["--bot" as string]: accent, ["--botdim" as string]: dim }}
     >
       <defs>
-        <radialGradient id={`glow-${who}`} cx="50%" cy="38%" r="62%">
-          <stop offset="0%" stopColor={c.tone} stopOpacity="0.22" />
-          <stop offset="100%" stopColor={c.tone} stopOpacity="0" />
+        <radialGradient id={gid} cx="50%" cy="38%" r="62%">
+          <stop offset="0%" stopColor={accent} stopOpacity="0.22" />
+          <stop offset="100%" stopColor={accent} stopOpacity="0" />
         </radialGradient>
         <linearGradient id={`plate-${who}`} x1="0" y1="0" x2="0" y2="1">
           <stop offset="0%" stopColor="#212c37" />
@@ -105,18 +117,18 @@ export function Robot({
       </defs>
 
       {/* port: the socket each of them sits in */}
-      <circle cx="60" cy="60" r="57" fill="#0d141c" stroke={c.dim} strokeWidth="1.5" />
-      <circle cx="60" cy="60" r="57" fill={`url(#glow-${who})`} />
+      <circle cx="60" cy="60" r="57" fill="#0d141c" stroke={dim} strokeWidth="1.5" />
+      <circle cx="60" cy="60" r="57" fill={`url(#${gid})`} />
 
       <g className="ag-robot__body">
-        {who === "ivy" && <Ivy tone={c.tone} />}
-        {who === "dex" && <Dex tone={c.tone} />}
-        {who === "rae" && <Rae tone={c.tone} />}
+        {who === "ivy" && <Ivy tone={accent} />}
+        {who === "dex" && <Dex tone={accent} />}
+        {who === "rae" && <Rae tone={accent} />}
       </g>
 
       {/* status lamp — the one thing that changes when they're working */}
       <g className="ag-robot__lamp">
-        <circle cx="100" cy="100" r="8" fill="#0d141c" stroke={c.dim} strokeWidth="1.5" />
+        <circle cx="100" cy="100" r="8" fill="#0d141c" stroke={dim} strokeWidth="1.5" />
         <circle cx="100" cy="100" r="3.6" fill={lamp}>
           {status !== "idle" && (
             <animate attributeName="opacity" values="1;0.35;1" dur="1.4s" repeatCount="indefinite" />

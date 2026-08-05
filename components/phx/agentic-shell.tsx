@@ -23,6 +23,7 @@ export function AgenticShell({ children }: { children: ReactNode }) {
             <Link href="/how-it-works">How it works</Link>
             <Link href="/report">The report</Link>
             <Link href="/pricing">Pricing</Link>
+            <Link href="/build">Build one</Link>
             <Link href="/book" className="ag-btn ag-btn--solid ag-btn--sm">
               Book 15 min
             </Link>
@@ -45,6 +46,7 @@ export function AgenticShell({ children }: { children: ReactNode }) {
             <Link href="/how-it-works">How it works</Link>
             <Link href="/report">The report</Link>
             <Link href="/pricing">Pricing</Link>
+            <Link href="/build">Build one</Link>
             <Link href="/book">Book a call</Link>
           </nav>
           <div className="ag-mono ag-foot__meta">© 2026</div>
