@@ -1,16 +1,18 @@
 import type { Metadata } from "next";
-import { Pricing, FinalCTA } from "@/components/pixel-pilot/sections";
+import { EmployeePricing, HowItGoesLive, EmployeeCTA } from "@/components/pixel-pilot/employees";
 
 export const metadata: Metadata = {
-  title: "Services & Pricing — Pixel Pilot",
-  description: "Every service of Pixel Pilot's autonomous media-buying department, priced in plain English. Buy a single deliverable à la carte, or hand us the whole account on a managed flight plan. No retainers you can't explain.",
+  title: "Pricing — PHX Growth",
+  description:
+    "An AI employee who answers every call, books the job and escalates emergencies — from $599/month. A part-time receptionist in Phoenix costs $2,400–$3,200 and works 40 hours of the week's 168. Month to month, cancel any time.",
 };
 
 export default function PricingPage() {
   return (
     <>
-      <Pricing />
-      <FinalCTA />
+      <EmployeePricing />
+      <HowItGoesLive />
+      <EmployeeCTA />
     </>
   );
 }

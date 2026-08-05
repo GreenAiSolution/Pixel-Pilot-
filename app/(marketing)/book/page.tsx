@@ -2,17 +2,17 @@ import type { Metadata } from "next";
 import { LeadForm } from "@/components/pixel-pilot/lead-form";
 
 export const metadata: Metadata = {
-  title: "Get More Customers — Pixel Pilot",
+  title: "Book a 15-minute call — PHX Growth",
   description:
-    "Book a flight with Pixel Pilot. Tell us your goal and get a custom customer-acquisition plan from the autonomous media buyer that optimizes to real profit — your books, not platform ROAS.",
+    "Fifteen minutes to work out what your unanswered calls are costing, using your numbers. If it isn't much, we'll tell you and you keep the math. If it is, Ivy can be on your line within a week.",
 };
 
 const GRADIENT = "linear-gradient(90deg,#00D4FF,#6C63FF,#FF2E9A)";
 
 const ASSURANCES = [
-  { k: "1 business day", v: "to your custom plan" },
-  { k: "< 60 min", v: "from URL to live ads" },
-  { k: "Profit-based", v: "reporting from your books, not the platform's" },
+  { k: "15 minutes", v: "no pitch deck, no slides" },
+  { k: "Within a week", v: "from signed to answering calls" },
+  { k: "Month to month", v: "cancel any time, no contract" },
 ];
 
 export default function BookPage() {
@@ -25,18 +25,20 @@ export default function BookPage() {
             <div className="lg:sticky lg:top-28 space-y-6">
               <div className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/[0.04] px-4 py-1.5 backdrop-blur-md">
                 <span className="h-1.5 w-1.5 rounded-full bg-[#10B981] animate-pulse" />
-                <span className="text-xs uppercase tracking-[0.3em] text-text-secondary">More customers, on autopilot</span>
+                <span className="text-xs uppercase tracking-[0.3em] text-text-secondary">
+                  A 15-minute fit call
+                </span>
               </div>
               <h1 className="text-[clamp(2.5rem,6vw,4.5rem)] font-semibold leading-[0.95] tracking-tight">
-                <span className="block text-text-primary">Turn ad spend into</span>
+                <span className="block text-text-primary">Find out what</span>
                 <span className="block bg-clip-text text-transparent" style={{ backgroundImage: GRADIENT }}>
-                  new customers.
+                  a ringing phone costs you.
                 </span>
               </h1>
               <p className="text-lg text-text-secondary max-w-md leading-relaxed">
-                Tell the pilot your goal. We reverse-engineer the campaigns, creative and funnel
-                that bring you buyers — then fly them 24/7, steering by real profit instead of
-                platform-reported ROAS. Your flight plan starts here.
+                Tell us your call volume and your average job. We&apos;ll do the arithmetic out
+                loud, on the call, with your numbers. If the leak isn&apos;t big enough to bother
+                with, we&apos;ll say so and you keep the math.
               </p>
               <div className="grid grid-cols-3 gap-4 pt-2 max-w-md">
                 {ASSURANCES.map((a) => (
@@ -48,9 +50,9 @@ export default function BookPage() {
               </div>
               <ul className="space-y-2 pt-2">
                 {[
-                  "A custom customer-acquisition plan for your account",
-                  "Creative concepts forged for your niche — pre-tested before a dollar of spend",
-                  "Honest, profit-based projections — no hype, no guarantees we can't keep",
+                  "Your missed-call math, written down and sent to you the same day",
+                  "A recording of Ivy handling a call for a shop like yours",
+                  "An honest answer about whether this is worth it for you",
                 ].map((f) => (
                   <li key={f} className="flex items-start gap-3 text-sm text-text-secondary">
                     <span className="mt-0.5 text-[#10B981]">✓</span>

@@ -11,12 +11,9 @@ const FlightScene = dynamic(
 );
 
 const NAV = [
-  { href: "/results", label: "Results" },
-  { href: "/growth", label: "Growth Calc" },
-  { href: "/agents", label: "Agents" },
-  { href: "/forge", label: "Creative Forge" },
-  { href: "/automation", label: "Automation" },
+  { href: "/#ivy", label: "Meet Ivy" },
   { href: "/pricing", label: "Pricing" },
+  { href: "/book", label: "Book a call" },
 ];
 
 export function Shell({ children }: { children: ReactNode }) {
@@ -76,9 +73,9 @@ export function Shell({ children }: { children: ReactNode }) {
                 className="bg-clip-text text-transparent"
                 style={{ backgroundImage: "linear-gradient(90deg,#00D4FF,#6C63FF,#FF2E9A)" }}
               >
-                Pixel
+                PHX
               </span>
-              <span className="text-text-primary">/Pilot</span>
+              <span className="text-text-primary">/Growth</span>
             </span>
           </Link>
 
@@ -99,7 +96,7 @@ export function Shell({ children }: { children: ReactNode }) {
             className="inline-flex items-center gap-1.5 rounded-full px-4 py-1.5 text-sm font-medium text-white transition hover:opacity-90"
             style={{ background: "linear-gradient(90deg,#6C63FF,#FF2E9A)" }}
           >
-            Get more customers
+            Put Ivy on the phones
             <span aria-hidden>→</span>
           </Link>
         </nav>
@@ -116,14 +113,15 @@ export function Shell({ children }: { children: ReactNode }) {
               className="text-lg font-semibold tracking-[0.18em] uppercase bg-clip-text text-transparent"
               style={{ backgroundImage: "linear-gradient(90deg,#00D4FF,#6C63FF,#FF2E9A)" }}
             >
-              Pixel/Pilot
+              PHX/Growth
             </div>
             <p className="text-sm text-text-secondary max-w-sm">
-              The autonomous media buyer that flies your ad spend to profit.
+              An AI employee who answers every call, books the job, and wakes a human
+              when it&apos;s an emergency.
             </p>
           </div>
           <div className="text-text-tertiary text-xs uppercase tracking-widest">
-            © 2026 · Built for the autonomous era
+            © 2026 PHX Growth · Phoenix, Arizona
           </div>
         </div>
       </footer>

@@ -5,9 +5,9 @@ const SITE_URL =
   process.env.NEXT_PUBLIC_SITE_URL ||
   (process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : 'http://localhost:3000');
 
-const TITLE = 'Pixel Pilot — the autonomous media buyer that lands on profit';
+const TITLE = 'PHX Growth — an AI employee who answers every call';
 const DESCRIPTION =
-  'AI media buying is table stakes. Pixel Pilot flies Meta, Google & TikTok to real profit — steering by your Shopify and QuickBooks ground truth, not platform-reported ROAS. Creative pre-tested before a dollar of spend. 24/7, hands off the wheel.';
+  'Your phone, always answered. PHX Growth puts an AI receptionist on your line: she answers every call 24/7, books the job onto your calendar, screens sales calls and wakes a human the moment it is an emergency. From $599/month — less than a part-timer who works 40 hours of the week\'s 168.';
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
@@ -15,7 +15,7 @@ export const metadata: Metadata = {
   description: DESCRIPTION,
   // Open Graph + Twitter images are auto-attached by Next.js from
   // app/opengraph-image.png and app/twitter-image.png (the Gemini brand ad).
-  openGraph: { title: TITLE, description: DESCRIPTION, type: 'website', siteName: 'Pixel Pilot' },
+  openGraph: { title: TITLE, description: DESCRIPTION, type: 'website', siteName: 'PHX Growth' },
   twitter: { card: 'summary_large_image', title: TITLE, description: DESCRIPTION },
 };
 

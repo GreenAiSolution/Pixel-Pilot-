@@ -34,19 +34,44 @@ export function Reveal({ children, className = "", id }: { children: React.React
   useEffect(() => {
     const el = ref.current;
     if (!el) return;
+
+    const show = () => {
+      el.style.opacity = "1";
+      el.style.transform = "translateY(0)";
+    };
+
+    // No observer support — show everything rather than a blank page.
+    if (typeof IntersectionObserver === "undefined") {
+      show();
+      return;
+    }
+
     const io = new IntersectionObserver(
       (entries) => {
         entries.forEach((e) => {
-          if (e.isIntersecting) {
-            el.style.opacity = "1";
-            el.style.transform = "translateY(0)";
-          }
+          // `isIntersecting` alone strands anything the reader jumped past —
+          // an anchor link or a fast scroll leaves those blocks invisible for
+          // the rest of the session. Treat "now above the viewport" as seen.
+          if (e.isIntersecting || e.boundingClientRect.top < 0) show();
         });
       },
       { threshold: 0.15 },
     );
     io.observe(el);
-    return () => io.disconnect();
+
+    // Safety net. Observer callbacks are throttled in background tabs and can
+    // be suppressed outright by some browsers and extensions — and this is a
+    // marketing site, so a page that is silently blank is far worse than one
+    // that skipped its fade-in. If nothing has revealed us shortly after mount,
+    // reveal anyway.
+    const failsafe = window.setTimeout(() => {
+      if (el.style.opacity !== "1") show();
+    }, 1500);
+
+    return () => {
+      io.disconnect();
+      window.clearTimeout(failsafe);
+    };
   }, []);
   return (
     <div ref={ref} id={id} className={`transition-all duration-700 ease-out ${className}`} style={{ opacity: 0, transform: "translateY(28px)" }}>

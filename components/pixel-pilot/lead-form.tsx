@@ -12,14 +12,22 @@ import Link from "next/link";
 const GRADIENT = "linear-gradient(90deg,#00D4FF,#6C63FF,#FF2E9A)";
 
 const GOALS = [
-  { id: "more-customers", label: "More customers", accent: "#10B981" },
-  { id: "more-leads", label: "More leads", accent: "#00D4FF" },
-  { id: "lower-cac", label: "Lower my CAC", accent: "#6C63FF" },
-  { id: "scale-profit", label: "Scale profitably", accent: "#FF2E9A" },
-  { id: "new-launch", label: "Launch a product", accent: "#C9A84C" },
+  { id: "answer-calls", label: "Answer every call", accent: "#10B981" },
+  { id: "after-hours", label: "Cover after hours", accent: "#00D4FF" },
+  { id: "book-more", label: "Book more jobs", accent: "#6C63FF" },
+  { id: "stop-missing", label: "Stop missing calls", accent: "#FF2E9A" },
+  { id: "free-up-time", label: "Get off the phone", accent: "#C9A84C" },
 ];
 
-const SPENDS = ["Under $2k/mo", "$2k–$10k/mo", "$10k–$50k/mo", "$50k–$200k/mo", "$200k+/mo"];
+// Call volume, not ad spend — it is the number that sizes the problem and the
+// only input we need to do the missed-call math on the call.
+const SPENDS = [
+  "Under 20 calls/wk",
+  "20–50 calls/wk",
+  "50–100 calls/wk",
+  "100–250 calls/wk",
+  "250+ calls/wk",
+];
 
 type Routed = { ok?: boolean; error?: string; routed?: string[] };
 
@@ -51,7 +59,7 @@ export function LeadForm() {
       const res = await fetch("/api/pixel-pilot/lead", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ ...form, goal, monthlySpend: spend }),
+        body: JSON.stringify({ ...form, goal, callVolume: spend }),
       });
       const data = (await res.json().catch(() => null)) as Routed | null;
       if (!res.ok || !data?.ok) {
@@ -172,11 +180,11 @@ export function LeadForm() {
                 <Field label="Company">
                   <input value={form.company} onChange={(e) => set("company", e.target.value)} placeholder="Brand Co." className={inputCls} />
                 </Field>
-                <Field label="Website / store URL">
-                  <input value={form.website} onChange={(e) => set("website", e.target.value)} placeholder="brand.com" className={inputCls} />
+                <Field label="Website (optional)">
+                  <input value={form.website} onChange={(e) => set("website", e.target.value)} placeholder="yourbusiness.com" className={inputCls} />
                 </Field>
               </div>
-              <Field label="Monthly ad spend">
+              <Field label="Roughly how many calls a week?">
                 <div className="flex flex-wrap gap-2">
                   {SPENDS.map((s) => (
                     <button key={s} type="button" onClick={() => setSpend(s)} className={`rounded-full border px-3 py-1.5 text-xs transition ${spend === s ? "border-white/30 bg-white/[0.06] text-text-primary" : "border-white/10 text-text-secondary hover:border-white/20"}`}>
@@ -197,16 +205,16 @@ export function LeadForm() {
         {/* STEP 2 — review + send */}
         {step === 2 && (
           <div>
-            <h3 className="text-xl font-semibold">Ready for takeoff.</h3>
-            <p className="mt-1 text-sm text-text-secondary">Anything else the pilot should know?</p>
+            <h3 className="text-xl font-semibold">Almost done.</h3>
+            <p className="mt-1 text-sm text-text-secondary">Anything else we should know?</p>
             <div className="mt-5">
               <Field label="Context (optional)">
-                <textarea value={form.details} onChange={(e) => set("details", e.target.value)} rows={4} placeholder="Best-selling product, current CAC, what's not working…" className={`${inputCls} resize-none`} />
+                <textarea value={form.details} onChange={(e) => set("details", e.target.value)} rows={4} placeholder="Your trade, your hours, who answers the phone today…" className={`${inputCls} resize-none`} />
               </Field>
             </div>
             <dl className="mt-5 grid grid-cols-2 gap-3 rounded-2xl border border-white/10 bg-black/20 p-4 text-sm">
               <Summary k="Goal" v={goal} />
-              <Summary k="Ad spend" v={spend} />
+              <Summary k="Call volume" v={spend} />
               <Summary k="Name" v={form.name || "—"} />
               <Summary k="Email" v={form.email || "—"} />
             </dl>

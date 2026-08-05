@@ -29,8 +29,19 @@ const nextConfig: NextConfig = {
     ];
   },
 
+  // Every route below sold advertising — a product PHX Growth no longer offers.
+  // They are redirected rather than deleted so existing inbound links and any
+  // search results still land somewhere truthful instead of 404ing.
+  async redirects() {
+    const retired = [
+      '/growth', '/forge', '/automation', '/automator',
+      '/agents', '/results', '/stack', '/film', '/ad-management',
+    ];
+    return retired.map((source) => ({ source, destination: '/', permanent: false }));
+  },
+
   env: {
-    NEXT_PUBLIC_APP_NAME: 'Pixel Pilot',
+    NEXT_PUBLIC_APP_NAME: 'PHX Growth',
   },
 
   productionBrowserSourceMaps: false,
