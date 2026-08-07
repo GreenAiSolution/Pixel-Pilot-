@@ -1,20 +1,20 @@
 ---
-tags: [pixel-pilot, source]
+tags: [phx-growth, source]
 file: app/(marketing)/automation/page.tsx
 ---
 
 # `app/(marketing)/automation/page.tsx`
 
-Part of [[📁 Codebase]] — live copy at `~/Pixel-Pilot/app/(marketing)/automation/page.tsx`
+Part of [[📁 Codebase]] — live copy at `~/PHX-Growth/app/(marketing)/automation/page.tsx`
 
-**Imports** [[Project Files/components/pixel-pilot/sections.tsx|sections.tsx]]
+**Imports** [[Project Files/components/phx-growth/sections.tsx|sections.tsx]]
 
 ````tsx
 import type { Metadata } from "next";
-import { Automation, FinalCTA } from "@/components/pixel-pilot/sections";
+import { Automation, FinalCTA } from "@/components/phx-growth/sections";
 
 export const metadata: Metadata = {
-  title: "Automation — Pixel Pilot",
+  title: "Automation — PHX Growth",
   description: "The real n8n workflows behind every decision, plus the zero-to-live flight plan that takes one URL to live ads in under 60 minutes.",
 };
 

@@ -1,5 +1,5 @@
 ---
-tags: [pixel-pilot, architecture]
+tags: [phx-growth, architecture]
 ---
 
 # Architecture
@@ -13,7 +13,7 @@ Top-down flow of the whole system. See [[App Connections]] for per-integration s
 ```
 Customer
   → The Automator (design + deploy an automation)
-     → /api/pixel-pilot/automations  (persist + run)
+     → /api/phx-growth/automations  (persist + run)
         → Upstash KV store   (saves the deploy)
         → Executor           (fires the integrations)
              → n8n engine     (optional, ad-loop workflows)
@@ -25,15 +25,15 @@ Customer
 ## Autonomy + delivery loop
 ```
 Maverick (24/7, daily 8:10am)
-  → Higgsfield (creative)  → Slack #pixel-pilot (reports)  → GitHub PRs (ships code)
+  → Higgsfield (creative)  → Slack #phx-growth (reports)  → GitHub PRs (ships code)
 GitHub repo → Vercel (auto-deploys main) → Live site
 ```
 
 ## Layers
 - **Surface** — `app/(marketing)` (marketing site + [[The Automator]]).
-- **Engine** — `pixel-pilot/*.ts` barrel (types, data, wiring). See [[Backend & API]].
-- **API** — `app/api/pixel-pilot/*` route handlers.
-- **Persistence** — `pixel-pilot/store.ts` (Upstash KV + in-memory fallback).
-- **Execution** — `pixel-pilot/executor.ts` (n8n + Zapier fan-out).
+- **Engine** — `phx-growth/*.ts` barrel (types, data, wiring). See [[Backend & API]].
+- **API** — `app/api/phx-growth/*` route handlers.
+- **Persistence** — `phx-growth/store.ts` (Upstash KV + in-memory fallback).
+- **Execution** — `phx-growth/executor.ts` (n8n + Zapier fan-out).
 
 Related: [[The Automator]] · [[Backend & API]] · [[Maverick Agent]]

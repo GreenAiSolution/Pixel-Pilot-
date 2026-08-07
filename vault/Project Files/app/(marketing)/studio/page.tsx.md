@@ -1,13 +1,13 @@
 ---
-tags: [pixel-pilot, source]
+tags: [phx-growth, source]
 file: app/(marketing)/studio/page.tsx
 ---
 
 # `app/(marketing)/studio/page.tsx`
 
-Part of [[📁 Codebase]] — live copy at `~/Pixel-Pilot/app/(marketing)/studio/page.tsx`
+Part of [[📁 Codebase]] — live copy at `~/PHX-Growth/app/(marketing)/studio/page.tsx`
 
-**Imports** [[Project Files/pixel-pilot/index.ts|index.ts]]
+**Imports** [[Project Files/phx-growth/index.ts|index.ts]]
 
 ````tsx
 "use client";
@@ -15,18 +15,18 @@ Part of [[📁 Codebase]] — live copy at `~/Pixel-Pilot/app/(marketing)/studio
 // Result renderers below consume free-form JSON returned by the model, so the
 // shape is intentionally `any` at the render boundary (validated by the UI).
 
-// ─── PIXEL PILOT · STUDIO ────────────────────────────────────────────────────
+// ─── PHX GROWTH · STUDIO ────────────────────────────────────────────────────
 // The luxury working surface. Eight live tools, each with a deluxe, detailed
 // brief so you get the *exact* product you need — and a guided Workflow that
 // chains them end-to-end: every hand-off is one button, all inside the site.
 //
-// Tools run live against /api/pixel-pilot/tools/*. Results render as real,
+// Tools run live against /api/phx-growth/tools/*. Results render as real,
 // finished products (palettes, calendars, pricing tables, a live site) — and
 // each one hands its context forward to the next step in the flight plan.
 
 import { useCallback, useMemo, useState } from "react";
 import { useSearchParams } from "next/navigation";
-import { STUDIO_TOOL_FLOW, getStudioTool, type StudioToolDefinition, type StudioToolId } from "@/pixel-pilot";
+import { STUDIO_TOOL_FLOW, getStudioTool, type StudioToolDefinition, type StudioToolId } from "@/phx-growth";
 
 /* ── Field system ─────────────────────────────────────────────────────────── */
 type Field =

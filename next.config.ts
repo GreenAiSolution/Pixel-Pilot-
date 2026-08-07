@@ -30,7 +30,7 @@ const nextConfig: NextConfig = {
   },
 
   env: {
-    NEXT_PUBLIC_APP_NAME: 'Pixel Pilot',
+    NEXT_PUBLIC_APP_NAME: 'PHX Growth',
   },
 
   productionBrowserSourceMaps: false,

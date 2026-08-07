@@ -1,10 +1,10 @@
 ---
-tags: [pixel-pilot, backend]
+tags: [phx-growth, backend]
 ---
 
 # Backend & API
 
-## Engine modules (`pixel-pilot/`)
+## Engine modules (`phx-growth/`)
 - `connectors.ts` — OAuth defs for Meta / Google / TikTok / Shopify.
 - `services.ts`, `pricing.ts`, `creative-apps.ts` — product data.
 - `workflows.ts` — the 4 n8n workflow definitions (budget-reallocation, creative-refresh, compliance-guard, zero-to-live).
@@ -14,7 +14,7 @@ tags: [pixel-pilot, backend]
 - `quickbooks.ts` — native QuickBooks Online (Intuit OAuth2 + refresh + `companyInfo` / `createCustomer`).
 - `higgsfield.ts` — creative generation wiring.
 
-## API routes (`app/api/pixel-pilot/`)
+## API routes (`app/api/phx-growth/`)
 - `automations` — `POST` persist + run a deploy · `GET` list deploys.
 - `connectors/[provider]` (+ `/callback`) — ad-platform OAuth.
 - `connectors/quickbooks` (+ `/callback`) — QuickBooks OAuth.

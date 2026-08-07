@@ -1,11 +1,11 @@
 ---
-tags: [pixel-pilot, source]
+tags: [phx-growth, source]
 file: postcss.config.mjs
 ---
 
 # `postcss.config.mjs`
 
-Part of [[📁 Codebase]] — live copy at `~/Pixel-Pilot/postcss.config.mjs`
+Part of [[📁 Codebase]] — live copy at `~/PHX-Growth/postcss.config.mjs`
 
 ````js
 const config = {

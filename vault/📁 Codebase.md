@@ -1,13 +1,13 @@
 ---
-tags: [pixel-pilot, source, moc]
+tags: [phx-growth, source, moc]
 ---
 
 # 📁 Codebase
 
-The complete Pixel Pilot repo, mirrored as notes under **Project Files/**. Back to [[🚀 Pixel Pilot — Home]].
+The complete PHX Growth repo, mirrored as notes under **Project Files/**. Back to [[🚀 PHX Growth — Home]].
 
 > [!info] Source of truth
-> Live repo `GreenAiSolution/Pixel-Pilot-` (local `~/Pixel-Pilot`). Snapshot — edit code in the repo, then run `node scripts/sync-vault.mjs` to refresh. `package-lock.json` omitted; images/video are attached raw in the Obsidian copy.
+> Live repo `GreenAiSolution/PHX-Growth-` (local `~/PHX-Growth`). Snapshot — edit code in the repo, then run `node scripts/sync-vault.mjs` to refresh. `package-lock.json` omitted; images/video are attached raw in the Obsidian copy.
 
 **104 files** mirrored.
 
@@ -31,9 +31,9 @@ The complete Pixel Pilot repo, mirrored as notes under **Project Files/**. Back 
 .claude/agents/pixel-profit-analyst.md
 .claude/agents/vercel-ops.md
 .claude/launch.json
-.claude/skills/pixel-pilot-daily-marketing/SKILL.md
+.claude/skills/phx-growth-daily-marketing/SKILL.md
 .gitignore
-Pixel-Pilot-Cold-Call-Script.md
+PHX-Growth-Cold-Call-Script.md
 README.md
 app/(marketing)/agents/page.tsx
 app/(marketing)/automation/page.tsx
@@ -51,25 +51,25 @@ app/(marketing)/studio/page.tsx
 app/api/eagle/lead/route.ts
 app/api/eagle/quickbooks/callback/route.ts
 app/api/eagle/quickbooks/connect/route.ts
-app/api/pixel-pilot/automations/route.ts
-app/api/pixel-pilot/connectors/[provider]/callback/route.ts
-app/api/pixel-pilot/connectors/[provider]/route.ts
-app/api/pixel-pilot/connectors/quickbooks/callback/route.ts
-app/api/pixel-pilot/connectors/quickbooks/route.ts
-app/api/pixel-pilot/debug-env/route.ts
-app/api/pixel-pilot/higgsfield/route.ts
-app/api/pixel-pilot/stack/route.ts
-app/api/pixel-pilot/tools/ads/route.ts
-app/api/pixel-pilot/tools/brand/route.ts
-app/api/pixel-pilot/tools/content/route.ts
-app/api/pixel-pilot/tools/employees/route.ts
-app/api/pixel-pilot/tools/funnel/route.ts
-app/api/pixel-pilot/tools/launch-plan/route.ts
-app/api/pixel-pilot/tools/pretest/route.ts
-app/api/pixel-pilot/tools/route.ts
-app/api/pixel-pilot/tools/website/route.ts
-app/api/pixel-pilot/workflows/[id]/route.ts
-app/api/pixel-pilot/zapier/route.ts
+app/api/phx-growth/automations/route.ts
+app/api/phx-growth/connectors/[provider]/callback/route.ts
+app/api/phx-growth/connectors/[provider]/route.ts
+app/api/phx-growth/connectors/quickbooks/callback/route.ts
+app/api/phx-growth/connectors/quickbooks/route.ts
+app/api/phx-growth/debug-env/route.ts
+app/api/phx-growth/higgsfield/route.ts
+app/api/phx-growth/stack/route.ts
+app/api/phx-growth/tools/ads/route.ts
+app/api/phx-growth/tools/brand/route.ts
+app/api/phx-growth/tools/content/route.ts
+app/api/phx-growth/tools/employees/route.ts
+app/api/phx-growth/tools/funnel/route.ts
+app/api/phx-growth/tools/launch-plan/route.ts
+app/api/phx-growth/tools/pretest/route.ts
+app/api/phx-growth/tools/route.ts
+app/api/phx-growth/tools/website/route.ts
+app/api/phx-growth/workflows/[id]/route.ts
+app/api/phx-growth/zapier/route.ts
 app/eagle/layout.tsx
 app/eagle/ops/page.tsx
 app/eagle/page.tsx
@@ -79,12 +79,12 @@ app/opengraph-image.alt.txt
 app/sites/[slug]/route.ts
 app/twitter-image.alt.txt
 components/eagle/quote-form.tsx
-components/pixel-pilot/automation-graph.tsx
-components/pixel-pilot/connection-banner.tsx
-components/pixel-pilot/creative-forge.tsx
-components/pixel-pilot/flight-scene.tsx
-components/pixel-pilot/sections.tsx
-components/pixel-pilot/shell.tsx
+components/phx-growth/automation-graph.tsx
+components/phx-growth/connection-banner.tsx
+components/phx-growth/creative-forge.tsx
+components/phx-growth/flight-scene.tsx
+components/phx-growth/sections.tsx
+components/phx-growth/shell.tsx
 eagle/agents.ts
 eagle/company.ts
 eagle/index.ts
@@ -95,23 +95,23 @@ eslint.config.mjs
 lib/cn.ts
 next.config.ts
 package.json
-pixel-pilot/README.md
-pixel-pilot/agents.ts
-pixel-pilot/ai.ts
-pixel-pilot/automations.ts
-pixel-pilot/connectors.ts
-pixel-pilot/creative-apps.ts
-pixel-pilot/executor.ts
-pixel-pilot/higgsfield.ts
-pixel-pilot/index.ts
-pixel-pilot/pricing.ts
-pixel-pilot/proof.ts
-pixel-pilot/quickbooks.ts
-pixel-pilot/services.ts
-pixel-pilot/stack.ts
-pixel-pilot/store.ts
-pixel-pilot/tools.ts
-pixel-pilot/workflows.ts
+phx-growth/README.md
+phx-growth/agents.ts
+phx-growth/ai.ts
+phx-growth/automations.ts
+phx-growth/connectors.ts
+phx-growth/creative-apps.ts
+phx-growth/executor.ts
+phx-growth/higgsfield.ts
+phx-growth/index.ts
+phx-growth/pricing.ts
+phx-growth/proof.ts
+phx-growth/quickbooks.ts
+phx-growth/services.ts
+phx-growth/stack.ts
+phx-growth/store.ts
+phx-growth/tools.ts
+phx-growth/workflows.ts
 postcss.config.mjs
 sales/cold-call-script.md
 scripts/generate-brand-ad.mjs

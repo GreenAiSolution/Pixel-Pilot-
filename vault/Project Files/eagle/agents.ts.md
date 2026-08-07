@@ -1,11 +1,11 @@
 ---
-tags: [pixel-pilot, source]
+tags: [phx-growth, source]
 file: eagle/agents.ts
 ---
 
 # `eagle/agents.ts`
 
-Part of [[📁 Codebase]] — live copy at `~/Pixel-Pilot/eagle/agents.ts`
+Part of [[📁 Codebase]] — live copy at `~/PHX-Growth/eagle/agents.ts`
 
 ````ts
 // ─── EAGLE LANDSCAPING · THE 5 AI EMPLOYEES ──────────────────────────────────

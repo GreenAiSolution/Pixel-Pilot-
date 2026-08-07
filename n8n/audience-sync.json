@@ -1,5 +1,5 @@
 {
-  "name": "Pixel Pilot · Audience Sync",
+  "name": "PHX Growth · Audience Sync",
   "nodes": [
     {
       "parameters": {
@@ -24,7 +24,7 @@
     {
       "parameters": {
         "method": "GET",
-        "url": "={{ $env.PP_APP_URL }}/api/pixel-pilot/audiences?portalId={{ $env.HUBSPOT_PORTAL_ID }}",
+        "url": "={{ $env.PP_APP_URL }}/api/phx-growth/audiences?portalId={{ $env.HUBSPOT_PORTAL_ID }}",
         "sendHeaders": true,
         "headerParameters": {
           "parameters": [
@@ -144,7 +144,7 @@
     {
       "parameters": {
         "method": "POST",
-        "url": "={{ $env.PP_APP_URL }}/api/pixel-pilot/audiences",
+        "url": "={{ $env.PP_APP_URL }}/api/phx-growth/audiences",
         "sendHeaders": true,
         "headerParameters": {
           "parameters": [
@@ -290,7 +290,7 @@
     {
       "parameters": {
         "method": "POST",
-        "url": "={{ $env.PP_APP_URL }}/api/pixel-pilot/audiences",
+        "url": "={{ $env.PP_APP_URL }}/api/phx-growth/audiences",
         "sendHeaders": true,
         "headerParameters": {
           "parameters": [
@@ -525,7 +525,7 @@
   },
   "pinData": {},
   "meta": {
-    "pixelPilot": {
+    "phxgrowth": {
       "id": "audience-sync",
       "webhookPath": "/webhook/pp-audience-sync"
     }

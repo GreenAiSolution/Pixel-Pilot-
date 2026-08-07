@@ -1,14 +1,14 @@
 "use client";
 
-// ─── PIXEL PILOT · HOME ──────────────────────────────────────────────────────
+// ─── PHX GROWTH · HOME ──────────────────────────────────────────────────────
 // A lean landing page: the hero, a directory that routes out to every section's
 // own page, and the closing CTA. The heavy sections now live on their own routes
-// (see components/pixel-pilot/sections.tsx + app/(marketing)/<name>/page.tsx).
+// (see components/phx-growth/sections.tsx + app/(marketing)/<name>/page.tsx).
 
-import { ConnectionBanner } from "@/components/pixel-pilot/connection-banner";
-import { Hero, GrowthEngine, HomeDirectory, FinalCTA } from "@/components/pixel-pilot/sections";
+import { ConnectionBanner } from "@/components/phx-growth/connection-banner";
+import { Hero, GrowthEngine, HomeDirectory, FinalCTA } from "@/components/phx-growth/sections";
 
-export default function PixelPilotPage() {
+export default function PHXGrowthPage() {
   return (
     <div className="relative">
       <ConnectionBanner />

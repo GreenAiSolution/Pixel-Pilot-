@@ -1,15 +1,15 @@
 ---
-tags: [pixel-pilot, source]
+tags: [phx-growth, source]
 file: scripts/marketing-angle.mjs
 ---
 
 # `scripts/marketing-angle.mjs`
 
-Part of [[📁 Codebase]] — live copy at `~/Pixel-Pilot/scripts/marketing-angle.mjs`
+Part of [[📁 Codebase]] — live copy at `~/PHX-Growth/scripts/marketing-angle.mjs`
 
 ````js
 #!/usr/bin/env node
-// ─── PIXEL PILOT · DAILY MARKETING ANGLE ENGINE ──────────────────────────────
+// ─── PHX GROWTH · DAILY MARKETING ANGLE ENGINE ──────────────────────────────
 // Deterministic "what do we say today" planner. Given a date, it returns the
 // day's strategic angle so the daily marketing routine is a real campaign on a
 // rotation — every pillar gets its turn, formats and platforms alternate, and
@@ -21,7 +21,7 @@ Part of [[📁 Codebase]] — live copy at `~/Pixel-Pilot/scripts/marketing-angl
 //   node scripts/marketing-angle.mjs 2026-07-10 # a specific date
 //   node scripts/marketing-angle.mjs --week      # the next 7 days
 //
-// The routine (the /pixel-pilot-daily-marketing skill) reads this, then writes
+// The routine (the /phx-growth-daily-marketing skill) reads this, then writes
 // copy + generates a matching visual (scripts/generate-brand-ad.mjs) per slot.
 
 // A 14-slot calendar (two weeks). Each pillar maps to a real service or a

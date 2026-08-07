@@ -1,18 +1,18 @@
 ---
-tags: [pixel-pilot, source]
+tags: [phx-growth, source]
 file: package.json
 ---
 
 # `package.json`
 
-Part of [[📁 Codebase]] — live copy at `~/Pixel-Pilot/package.json`
+Part of [[📁 Codebase]] — live copy at `~/PHX-Growth/package.json`
 
 ````json
 {
-  "name": "pixel-pilot",
+  "name": "phx-growth",
   "version": "1.0.0",
   "private": true,
-  "description": "Pixel Pilot — the autonomous media buyer that flies your ad spend to profit. An immersive 3D platform for the ads / media-buying niche.",
+  "description": "PHX Growth — the autonomous media buyer that flies your ad spend to profit. An immersive 3D platform for the ads / media-buying niche.",
   "scripts": {
     "dev": "next dev",
     "build": "next build",

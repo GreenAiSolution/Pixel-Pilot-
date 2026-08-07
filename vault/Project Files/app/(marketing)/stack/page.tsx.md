@@ -1,28 +1,28 @@
 ---
-tags: [pixel-pilot, source]
+tags: [phx-growth, source]
 file: app/(marketing)/stack/page.tsx
 ---
 
 # `app/(marketing)/stack/page.tsx`
 
-Part of [[📁 Codebase]] — live copy at `~/Pixel-Pilot/app/(marketing)/stack/page.tsx`
+Part of [[📁 Codebase]] — live copy at `~/PHX-Growth/app/(marketing)/stack/page.tsx`
 
-**Imports** [[Project Files/pixel-pilot/index.ts|index.ts]]
+**Imports** [[Project Files/phx-growth/index.ts|index.ts]]
 
 ````tsx
-// ─── PIXEL PILOT · THE STACK ─────────────────────────────────────────────────
+// ─── PHX GROWTH · THE STACK ─────────────────────────────────────────────────
 // The "business brain" page — the full catalog of apps, connectors and tools,
 // grouped by function, with live status read from the environment server-side.
-// Renders from pixel-pilot/stack.ts (single source of truth).
+// Renders from phx-growth/stack.ts (single source of truth).
 
 import type { Metadata } from 'next';
 import Link from 'next/link';
-import { stackByCategory, stackStats, toolIsLive, type StackTool, type IntegrationVia } from '@/pixel-pilot';
+import { stackByCategory, stackStats, toolIsLive, type StackTool, type IntegrationVia } from '@/phx-growth';
 
 export const metadata: Metadata = {
-  title: 'The Stack — Pixel Pilot',
+  title: 'The Stack — PHX Growth',
   description:
-    'Pixel Pilot’s business brain: the curated apps, connectors and tools it flies with — advertising, commerce, analytics, CRM, finance, data and more.',
+    'PHX Growth’s business brain: the curated apps, connectors and tools it flies with — advertising, commerce, analytics, CRM, finance, data and more.',
 };
 
 const VIA_LABEL: Record<IntegrationVia, string> = {
@@ -93,8 +93,8 @@ function ToolCard({ tool }: { tool: StackTool }) {
 }
 
 function stackToolHref(tool: StackTool): string | null {
-  if (tool.id === 'meta_ads' || tool.id === 'google_ads' || tool.id === 'tiktok_ads' || tool.id === 'shopify') return `/api/pixel-pilot/connectors/${tool.id}`;
-  if (tool.id === 'quickbooks') return '/api/pixel-pilot/connectors/quickbooks';
+  if (tool.id === 'meta_ads' || tool.id === 'google_ads' || tool.id === 'tiktok_ads' || tool.id === 'shopify') return `/api/phx-growth/connectors/${tool.id}`;
+  if (tool.id === 'quickbooks') return '/api/phx-growth/connectors/quickbooks';
   if (tool.id === 'higgsfield' || tool.id === 'canva' || tool.id === 'figma') return '/forge';
   if (tool.id === 'zapier' || tool.id === 'n8n' || tool.id === 'make') return '/automation';
   if (tool.via === 'zapier') return '/automator';
@@ -120,7 +120,7 @@ export default function StackPage() {
         <div className="container mx-auto max-w-6xl">
           <div className="text-xs uppercase tracking-[0.3em] text-[#00D4FF]">── The Stack</div>
           <h1 className="mt-4 text-4xl md:text-6xl font-semibold tracking-tight leading-[0.98]">
-            Pixel Pilot’s{' '}
+            PHX Growth’s{' '}
             <span
               className="bg-clip-text text-transparent"
               style={{ backgroundImage: 'linear-gradient(90deg,#00D4FF,#6C63FF,#FF2E9A)' }}
@@ -181,7 +181,7 @@ export default function StackPage() {
       <section className="px-6 pb-32">
         <div className="container mx-auto max-w-3xl text-center">
           <h2 className="text-3xl md:text-4xl font-semibold tracking-tight">
-            Plug in your stack. Let Pixel Pilot fly it.
+            Plug in your stack. Let PHX Growth fly it.
           </h2>
           <p className="mt-3 text-text-secondary">
             Connect the core in minutes; reach everything else through the Zapier bridge.

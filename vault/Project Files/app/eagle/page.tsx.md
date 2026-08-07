@@ -1,11 +1,11 @@
 ---
-tags: [pixel-pilot, source]
+tags: [phx-growth, source]
 file: app/eagle/page.tsx
 ---
 
 # `app/eagle/page.tsx`
 
-Part of [[📁 Codebase]] — live copy at `~/Pixel-Pilot/app/eagle/page.tsx`
+Part of [[📁 Codebase]] — live copy at `~/PHX-Growth/app/eagle/page.tsx`
 
 **Imports** [[Project Files/components/eagle/quote-form.tsx|quote-form.tsx]] · [[Project Files/eagle/index.ts|index.ts]]
 

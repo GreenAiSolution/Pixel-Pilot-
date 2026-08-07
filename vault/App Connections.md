@@ -1,5 +1,5 @@
 ---
-tags: [pixel-pilot, integrations]
+tags: [phx-growth, integrations]
 ---
 
 # App Connections
@@ -9,16 +9,16 @@ Every app the project touches, and where it stands.
 ## 🟢 Live / connected
 | App | Role |
 |---|---|
-| **Slack** | `#pixel-pilot` — [[Maverick Agent\|Maverick]] posts flight-logs; staging |
+| **Slack** | `#phx-growth` — [[Maverick Agent\|Maverick]] posts flight-logs; staging |
 | **Gmail** | Email drafts (never auto-sends) |
 | **Higgsfield** | Ad visuals / creative generation |
-| **GitHub** | Source of truth (`Pixel-Pilot-`) |
+| **GitHub** | Source of truth (`PHX-Growth-`) |
 | **Vercel** | Auto-deploys `main` → live site |
 
 ## 🟡 Needs your key
 | App | What's needed |
 |---|---|
-| **Upstash KV** | `KV_REST_API_URL` + `KV_REST_API_TOKEN` on the `pixel-pilot` project (see [[Setup Checklist]]) |
+| **Upstash KV** | `KV_REST_API_URL` + `KV_REST_API_TOKEN` on the `phx-growth` project (see [[Setup Checklist]]) |
 | **Zapier hook** | `ZAPIER_HOOK_URL` — fans out to your apps |
 | **QuickBooks** | Intuit app → `QUICKBOOKS_CLIENT_ID/SECRET/REDIRECT_URI` |
 | **Gemini** | Billing on the API key (visuals fall back to Higgsfield until then) |

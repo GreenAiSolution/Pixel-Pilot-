@@ -1,5 +1,5 @@
 ---
-tags: [pixel-pilot, status]
+tags: [phx-growth, status]
 updated: 2026-07-06
 ---
 
@@ -10,7 +10,7 @@ Pulse as of **2026-07-06**.
 ## 🟢 Working
 - Live site up (HTTP 200)
 - [[Maverick Agent|Maverick]] scheduled 24/7 (next run 8:10am)
-- Slack `#pixel-pilot`, Gmail, Higgsfield, GitHub, Vercel
+- Slack `#phx-growth`, Gmail, Higgsfield, GitHub, Vercel
 - [[The Automator]] backend (persist + execute) — code deployed
 
 ## 🟡 Open

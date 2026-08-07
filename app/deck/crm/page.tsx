@@ -1,13 +1,13 @@
-// ─── PIXEL PILOT · /deck/crm ─────────────────────────────────────────────────
+// ─── PHX GROWTH · /deck/crm ─────────────────────────────────────────────────
 // The Orbital CRM behind the operator gate. Server component: reads the deck
 // cookie, renders the lock screen unless the request is authorized (or the
 // deck is open in dev with no key configured).
 
 import type { Metadata } from 'next';
 import { cookies } from 'next/headers';
-import { CrmDeck } from '@/components/pixel-pilot/crm-deck';
-import { DeckGate } from '@/components/pixel-pilot/deck-gate';
-import { DECK_COOKIE, deckCookieAllowed } from '@/pixel-pilot/deck-auth';
+import { CrmDeck } from '@/components/phx-growth/crm-deck';
+import { DeckGate } from '@/components/phx-growth/deck-gate';
+import { DECK_COOKIE, deckCookieAllowed } from '@/phx-growth/deck-auth';
 
 export const metadata: Metadata = {
   title: 'Orbital CRM — Operator Deck',

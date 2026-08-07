@@ -1,11 +1,11 @@
 ---
-tags: [pixel-pilot, source]
+tags: [phx-growth, source]
 file: lib/cn.ts
 ---
 
 # `lib/cn.ts`
 
-Part of [[📁 Codebase]] — live copy at `~/Pixel-Pilot/lib/cn.ts`
+Part of [[📁 Codebase]] — live copy at `~/PHX-Growth/lib/cn.ts`
 
 ````ts
 import { type ClassValue, clsx } from 'clsx';

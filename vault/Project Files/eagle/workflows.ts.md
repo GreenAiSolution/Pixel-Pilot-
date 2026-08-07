@@ -1,11 +1,11 @@
 ---
-tags: [pixel-pilot, source]
+tags: [phx-growth, source]
 file: eagle/workflows.ts
 ---
 
 # `eagle/workflows.ts`
 
-Part of [[📁 Codebase]] — live copy at `~/Pixel-Pilot/eagle/workflows.ts`
+Part of [[📁 Codebase]] — live copy at `~/PHX-Growth/eagle/workflows.ts`
 
 ````ts
 // ─── EAGLE LANDSCAPING · n8n WORKFLOWS ───────────────────────────────────────

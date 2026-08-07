@@ -35,6 +35,6 @@ next-env.d.ts
 /.agents/
 /videos/
 /.claude/skills/*
-!/.claude/skills/pixel-pilot-daily-marketing/
+!/.claude/skills/phx-growth-daily-marketing/
 skills-lock.json
 /.swc

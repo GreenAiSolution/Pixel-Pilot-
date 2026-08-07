@@ -1,0 +1,61 @@
+{
+  "business": {
+    "name": "Summit Plumbing",
+    "owner": "Dana",
+    "industry": "plumbing and drain services",
+    "location": "Denver, CO",
+    "website": "https://summitplumbing.example.com",
+    "tone": "straight-shooting, friendly, zero jargon — the plumber your neighbor recommends"
+  },
+  "agents": {
+    "sales": "Rex",
+    "dispatch": "Piper",
+    "billing": "Cole",
+    "care": "June",
+    "growth": "Sky"
+  },
+  "services": [
+    {
+      "name": "Drain Cleaning",
+      "priceFrom": 149,
+      "unit": "per visit"
+    },
+    {
+      "name": "Water Heater Install",
+      "priceFrom": 1400,
+      "unit": "per unit"
+    },
+    {
+      "name": "Emergency Call-Out",
+      "priceFrom": 249,
+      "unit": "per call"
+    }
+  ],
+  "quotes": {
+    "responseGoalMinutes": 2,
+    "includeBookingLink": "https://calendly.com/summit/estimate"
+  },
+  "followUps": {
+    "cadenceDays": [
+      1,
+      3,
+      7
+    ],
+    "maxTouches": 3
+  },
+  "reviews": {
+    "platform": "Google",
+    "link": "https://g.page/r/summit/review",
+    "requestAfterDays": 2
+  },
+  "marketing": {
+    "platforms": [
+      "facebook",
+      "nextdoor"
+    ]
+  },
+  "report": {
+    "recipient": "dana@summitplumbing.example.com",
+    "day": "monday"
+  }
+}

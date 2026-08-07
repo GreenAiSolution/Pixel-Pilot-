@@ -1,4 +1,4 @@
-# Pixel Pilot
+# PHX Growth
 
 **The autonomous media buyer that flies your ad spend to profit.**
 
@@ -30,20 +30,20 @@ app/
                                Creative Forge, n8n automation, pricing)
   layout.tsx                   root layout — fonts, metadata, <Shell>
   globals.css                  Tailwind v4 theme tokens
-  api/pixel-pilot/
+  api/phx-growth/
     connectors/[provider]/     GET → live OAuth consent URL (+ CSRF state cookie)
     higgsfield/                POST → fire a Creative Forge render
     lead/                      POST → capture a lead (CRM + Slack + store)
     workflows/[id]/            POST → trigger an n8n workflow webhook
 
-components/pixel-pilot/
+components/phx-growth/
   shell.tsx                    nav + footer + scroll progress (client chrome)
   page-transition.tsx          branded runway sweep between routes
   flight-scene.tsx             bespoke React Three Fiber scene
   creative-forge.tsx           live Higgsfield demo (client)
   lead-form.tsx                the /book conversion flow (client)
 
-pixel-pilot/                   the engine — pure typed data + wiring (see its README)
+phx-growth/                   the engine — pure typed data + wiring (see its README)
   connectors.ts services.ts workflows.ts higgsfield.ts creative-apps.ts pricing.ts
 
 lib/cn.ts                      class-name helper
@@ -51,8 +51,8 @@ lib/cn.ts                      class-name helper
 
 ## The engine
 
-The `pixel-pilot/` folder is the product's brain — no React, just typed data and
-wiring the UI and API routes both import from. See [`pixel-pilot/README.md`](./pixel-pilot/README.md)
+The `phx-growth/` folder is the product's brain — no React, just typed data and
+wiring the UI and API routes both import from. See [`phx-growth/README.md`](./phx-growth/README.md)
 for the four connectors (Meta Ads, Google Ads, TikTok Ads, Shopify), the ten
 services, the n8n workflows, the Higgsfield client, and the full environment
 reference.
@@ -78,12 +78,12 @@ GitHub API (which signs them) rather than plain pushes.
 `vercel.json` schedules the platform's real 24/7 pulse — cadences that Vercel Pro
 unlocks over Hobby's once-a-day cap:
 
-- `*/15 * * * *` → `/api/pixel-pilot/cron/autopilot` — optimization sweep across the crew
-- `0 * * * *` → `/api/pixel-pilot/cron/nurture` — lead re-engagement sweep
+- `*/15 * * * *` → `/api/phx-growth/cron/autopilot` — optimization sweep across the crew
+- `0 * * * *` → `/api/phx-growth/cron/nurture` — lead re-engagement sweep
 
 Set **`CRON_SECRET`** in the Vercel project so the scheduler's `Authorization:
 Bearer` is enforced (unauthenticated hits get 401). Each run records a mode-tagged
-flight-log entry to the store; `GET /api/pixel-pilot/autopilot` reads it back — the
+flight-log entry to the store; `GET /api/phx-growth/autopilot` reads it back — the
 logs behind the "24/7, with the logs to prove it" claim. Pro's 300s function
 ceiling also lets the Creative Forge finish genuine multi-minute Higgsfield renders
 instead of timing out.

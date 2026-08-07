@@ -1,9 +1,9 @@
-# Pixel Pilot — n8n workflow exports
+# PHX Growth — n8n workflow exports
 
-Importable n8n workflows for the Pixel Pilot automation spine. Each JSON here is a
+Importable n8n workflows for the PHX Growth automation spine. Each JSON here is a
 full n8n export (`Import from File` in the n8n editor). The in-app metadata twin
-lives in [`pixel-pilot/workflows.ts`](../pixel-pilot/workflows.ts), and any spine
-workflow can be triggered in-app via `POST /api/pixel-pilot/workflows/<id>`.
+lives in [`phx-growth/workflows.ts`](../phx-growth/workflows.ts), and any spine
+workflow can be triggered in-app via `POST /api/phx-growth/workflows/<id>`.
 
 ## Audience Sync (`audience-sync.json`)
 
@@ -15,7 +15,7 @@ an approval gate:
 - **Retarget** — warm (MQL/SQL/opportunity), stalled open deals
 - **Seed → Lookalike** — closed-won contacts seed platform lookalikes
 
-**Flow:** Daily Schedule → Compute Audiences (`GET /api/pixel-pilot/audiences`) →
+**Flow:** Daily Schedule → Compute Audiences (`GET /api/phx-growth/audiences`) →
 `Auto-Approve?` → (else) Request Approval → Wait for Approval → `Approved?` →
 Fan Apply → **Apply Meta · Apply Google · Apply TikTok** → Summarize Apply →
 `Applied Clean?` → Commit Snapshot → Log Result.
@@ -24,7 +24,7 @@ Fan Apply → **Apply Meta · Apply Google · Apply TikTok** → Summarize Apply
 
 Our backend computes segments from HubSpot and **SHA-256-hashes every email before
 it leaves the app** — n8n and the platforms only ever see hashes. The compute
-endpoint (`/api/pixel-pilot/audiences`) is guarded by `x-pp-signature` when
+endpoint (`/api/phx-growth/audiences`) is guarded by `x-pp-signature` when
 `N8N_WEBHOOK_SECRET` is set; the workflow sends that header.
 
 ### Approval
@@ -85,7 +85,7 @@ Point a HubSpot webhook at the n8n webhook URL for this workflow
 - a HubSpot **Workflow** with a "Send webhook" action on stage change.
 
 You can also fire it in-app for replay/backfill:
-`POST /api/pixel-pilot/workflows/pipeline-truth-sync` (returns a dry-run receipt
+`POST /api/phx-growth/workflows/pipeline-truth-sync` (returns a dry-run receipt
 when `N8N_BASE_URL` is unset — same behavior as the rest of the spine).
 
 ### Guarantees

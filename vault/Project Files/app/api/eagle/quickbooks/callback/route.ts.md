@@ -1,11 +1,11 @@
 ---
-tags: [pixel-pilot, source]
+tags: [phx-growth, source]
 file: app/api/eagle/quickbooks/callback/route.ts
 ---
 
 # `app/api/eagle/quickbooks/callback/route.ts`
 
-Part of [[📁 Codebase]] — live copy at `~/Pixel-Pilot/app/api/eagle/quickbooks/callback/route.ts`
+Part of [[📁 Codebase]] — live copy at `~/PHX-Growth/app/api/eagle/quickbooks/callback/route.ts`
 
 **Imports** [[Project Files/eagle/quickbooks.ts|quickbooks.ts]]
 

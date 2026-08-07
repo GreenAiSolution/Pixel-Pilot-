@@ -1,5 +1,5 @@
 ---
-tags: [pixel-pilot, agent, maverick]
+tags: [phx-growth, agent, maverick]
 ---
 
 # Maverick Agent
@@ -11,8 +11,8 @@ The 24/7 autonomous operator. File: `.claude/agents/maverick.md`.
 
 ## How to reach him
 - **On demand:** `@maverick` in Claude Code on this project.
-- **Automatic:** scheduled cloud task `maverick-pixel-pilot-heartbeat`, **daily 8:10am**.
-- **Reports:** posts flight-logs to Slack **#pixel-pilot** as *Maverick · Pixel Pilot*.
+- **Automatic:** scheduled cloud task `maverick-phx-growth-heartbeat`, **daily 8:10am**.
+- **Reports:** posts flight-logs to Slack **#phx-growth** as *Maverick · PHX Growth*.
 
 ## His 5 instruments
 Gmail · Google Calendar · Zapier (Slack) · Higgsfield (creative) · GitHub.
@@ -23,6 +23,6 @@ Recon → ship one on-brand marketing unit → work leads → one product improv
 ## Guardrails
 Safe-by-default staging. No auto-publish to public social, no auto-send cold email, no merge to `main` without explicit go. Defensible claims only.
 
-Logging = local `out/` files + `#pixel-pilot` (not Google Sheets).
+Logging = local `out/` files + `#phx-growth` (not Google Sheets).
 
 Related: [[Architecture]] · [[Deployment]] · [[App Connections]]

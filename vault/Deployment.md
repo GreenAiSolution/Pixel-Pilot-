@@ -1,15 +1,15 @@
 ---
-tags: [pixel-pilot, devops]
+tags: [phx-growth, devops]
 ---
 
 # Deployment
 
 ## Pipeline
 ```
-GitHub repo (Pixel-Pilot-)  →  Vercel  →  Live site (pixel-pilot-snowy.vercel.app)
+GitHub repo (PHX-Growth-)  →  Vercel  →  Live site (phx-growth-snowy.vercel.app)
 ```
 - Vercel **auto-deploys `main`** — a merged PR is a live release.
-- Vercel project: `pixel-pilot` (team: *jaden green's projects*).
+- Vercel project: `phx-growth` (team: *jaden green's projects*).
 - Node 20+ on Vercel (local dev is Node 18 — `next build` runs on CI, not locally).
 
 ## Workflow rules
@@ -19,7 +19,7 @@ GitHub repo (Pixel-Pilot-)  →  Vercel  →  Live site (pixel-pilot-snowy.verce
 
 ## Local dev
 ```bash
-cd ~/Pixel-Pilot
+cd ~/PHX-Growth
 npm install
 npm run dev      # http://localhost:3000
 ```

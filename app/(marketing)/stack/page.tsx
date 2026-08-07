@@ -1,15 +1,15 @@
-// ─── PIXEL PILOT · THE STACK ─────────────────────────────────────────────────
+// ─── PHX GROWTH · THE STACK ─────────────────────────────────────────────────
 // The "business brain" page — the full catalog of apps, connectors and tools,
 // grouped by function, with live status read from the environment server-side.
-// Renders from pixel-pilot/stack.ts (single source of truth).
+// Renders from phx-growth/stack.ts (single source of truth).
 
 import type { Metadata } from 'next';
-import { stackByCategory, stackStats, toolIsLive, type StackTool, type IntegrationVia } from '@/pixel-pilot';
+import { stackByCategory, stackStats, toolIsLive, type StackTool, type IntegrationVia } from '@/phx-growth';
 
 export const metadata: Metadata = {
-  title: 'The Stack — Pixel Pilot',
+  title: 'The Stack — PHX Growth',
   description:
-    'Pixel Pilot’s business brain: every app, connector and tool it flies with — advertising, commerce, attribution, CRM, finance and data — with live status. Shopify and QuickBooks feed the profit ground truth; the ad platforms take the orders.',
+    'PHX Growth’s business brain: every app, connector and tool it flies with — advertising, commerce, attribution, CRM, finance and data — with live status. Shopify and QuickBooks feed the profit ground truth; the ad platforms take the orders.',
 };
 
 const VIA_LABEL: Record<IntegrationVia, string> = {
@@ -78,7 +78,7 @@ export default function StackPage() {
         <div className="container mx-auto max-w-6xl">
           <div className="text-xs uppercase tracking-[0.3em] text-[#00D4FF]">── The Stack</div>
           <h1 className="mt-4 text-4xl md:text-6xl font-semibold tracking-tight leading-[0.98]">
-            Pixel Pilot’s{' '}
+            PHX Growth’s{' '}
             <span
               className="bg-clip-text text-transparent"
               style={{ backgroundImage: 'linear-gradient(90deg,#00D4FF,#6C63FF,#FF2E9A)' }}
@@ -140,7 +140,7 @@ export default function StackPage() {
       <section className="px-6 pb-32">
         <div className="container mx-auto max-w-3xl text-center">
           <h2 className="text-3xl md:text-4xl font-semibold tracking-tight">
-            Plug in your stack. Let Pixel Pilot fly it.
+            Plug in your stack. Let PHX Growth fly it.
           </h2>
           <p className="mt-3 text-text-secondary">
             Connect the core in minutes; reach everything else through the Zapier bridge. Then hand

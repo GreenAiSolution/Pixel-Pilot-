@@ -1,15 +1,15 @@
 ---
-tags: [pixel-pilot, source]
+tags: [phx-growth, source]
 file: scripts/sync-vault.mjs
 ---
 
 # `scripts/sync-vault.mjs`
 
-Part of [[📁 Codebase]] — live copy at `~/Pixel-Pilot/scripts/sync-vault.mjs`
+Part of [[📁 Codebase]] — live copy at `~/PHX-Growth/scripts/sync-vault.mjs`
 
 ````js
 #!/usr/bin/env node
-// ─── PIXEL PILOT · VAULT SYNC ────────────────────────────────────────────────
+// ─── PHX GROWTH · VAULT SYNC ────────────────────────────────────────────────
 // Mirrors the *entire* tracked codebase into the Obsidian vault under
 // "vault/Project Files/", one note per source file, and regenerates the
 // "📁 Codebase.md" index. Idempotent — run it any time the code changes:
@@ -106,9 +106,9 @@ for (const file of tracked) {
     ? `**Imports** ${deps.map((d) => `[[Project Files/${d}|${path.basename(d)}]]`).join(' · ')}\n\n`
     : '';
   const note =
-    `---\ntags: [pixel-pilot, source]\nfile: ${file}\n---\n\n` +
+    `---\ntags: [phx-growth, source]\nfile: ${file}\n---\n\n` +
     `# \`${file}\`\n\n` +
-    `Part of [[📁 Codebase]] — live copy at \`~/Pixel-Pilot/${file}\`\n\n` +
+    `Part of [[📁 Codebase]] — live copy at \`~/PHX-Growth/${file}\`\n\n` +
     depsLine +
     `${fence}${lang}\n${content.replace(/\n$/, '')}\n${fence}\n`;
 
@@ -121,11 +121,11 @@ for (const file of tracked) {
 // Regenerate the codebase index note.
 const tree = tracked.join('\n');
 const index =
-  `---\ntags: [pixel-pilot, source, moc]\n---\n\n` +
+  `---\ntags: [phx-growth, source, moc]\n---\n\n` +
   `# 📁 Codebase\n\n` +
-  `The complete Pixel Pilot repo, mirrored as notes under **Project Files/**. Back to [[🚀 Pixel Pilot — Home]].\n\n` +
+  `The complete PHX Growth repo, mirrored as notes under **Project Files/**. Back to [[🚀 PHX Growth — Home]].\n\n` +
   `> [!info] Source of truth\n` +
-  `> Live repo \`GreenAiSolution/Pixel-Pilot-\` (local \`~/Pixel-Pilot\`). Snapshot — edit code in the repo, then run \`node scripts/sync-vault.mjs\` to refresh. \`package-lock.json\` omitted; images/video are attached raw in the Obsidian copy.\n\n` +
+  `> Live repo \`GreenAiSolution/PHX-Growth-\` (local \`~/PHX-Growth\`). Snapshot — edit code in the repo, then run \`node scripts/sync-vault.mjs\` to refresh. \`package-lock.json\` omitted; images/video are attached raw in the Obsidian copy.\n\n` +
   `**${tracked.length} files** mirrored.\n\n` +
   `## File tree\n\n\`\`\`\n${tree}\n\`\`\`\n`;
 fs.writeFileSync(path.join(ROOT, 'vault', '📁 Codebase.md'), index);
@@ -138,7 +138,7 @@ console.log(`Vault synced: ${written} source notes written under "Project Files/
 // force-mirrored with stale-file cleanup; hand-written notes are copied only
 // when missing so edits made inside Obsidian are never overwritten.
 const OBSIDIAN = path.join(
-  process.env.HOME, 'Documents', 'Obsidian Vault', 'Pixel Pilot',
+  process.env.HOME, 'Documents', 'Obsidian Vault', 'PHX Growth',
 );
 if (fs.existsSync(path.dirname(OBSIDIAN))) {
   const destFiles = path.join(OBSIDIAN, 'Project Files');

@@ -1,6 +1,6 @@
-// ─── PIXEL PILOT · LEAD FOLLOW-UP WORKFLOW ───────────────────────────────────
+// ─── PHX GROWTH · LEAD FOLLOW-UP WORKFLOW ───────────────────────────────────
 // The durable cadence behind lead intake, built on the Vercel Workflow DevKit
-// ("use workflow" / "use step"). Started by /api/pixel-pilot/lead right after
+// ("use workflow" / "use step"). Started by /api/phx-growth/lead right after
 // the personalized quote goes out, then it runs unattended:
 //
 //   quote sent ──▶ sleep 2d ──▶ touch 1 ("did it land?")
@@ -13,9 +13,9 @@
 // appended to `pp:followups` so the deck can show what went out.
 
 import { sleep, FatalError } from 'workflow';
-import { sendFollowUpEmail, emailConfigured, type LeadInput } from '@/pixel-pilot/quote';
-import { get, pushToList } from '@/pixel-pilot/store';
-import { listClients } from '@/pixel-pilot/crm';
+import { sendFollowUpEmail, emailConfigured, type LeadInput } from '@/phx-growth/quote';
+import { get, pushToList } from '@/phx-growth/store';
+import { listClients } from '@/phx-growth/crm';
 
 export async function leadFollowUp(lead: LeadInput, quotedPlan: string) {
   'use workflow';

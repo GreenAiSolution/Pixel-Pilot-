@@ -1,4 +1,4 @@
-// ─── PIXEL PILOT · OPERATOR DECK LAYOUT ──────────────────────────────────────
+// ─── PHX GROWTH · OPERATOR DECK LAYOUT ──────────────────────────────────────
 // Private chrome for business-owner surfaces (/deck/*). No marketing nav, no
 // footer links, noindex — this is the cockpit, not the brochure.
 
@@ -6,7 +6,7 @@ import type { Metadata } from 'next';
 import Link from 'next/link';
 
 export const metadata: Metadata = {
-  title: 'Operator Deck — Pixel Pilot',
+  title: 'Operator Deck — PHX Growth',
   robots: { index: false, follow: false },
 };
 
@@ -25,9 +25,9 @@ export default function DeckLayout({ children }: { children: React.ReactNode }) 
             <div className="leading-tight">
               <div className="text-sm font-semibold tracking-[0.18em] uppercase">
                 <span className="bg-clip-text text-transparent" style={{ backgroundImage: GRAD }}>
-                  Pixel
+                  PHX
                 </span>
-                /Pilot
+                &nbsp;Growth
               </div>
               <div className="text-[10px] uppercase tracking-[0.3em] text-text-tertiary">Operator Deck · Owners Only</div>
             </div>

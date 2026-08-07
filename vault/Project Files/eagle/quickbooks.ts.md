@@ -1,11 +1,11 @@
 ---
-tags: [pixel-pilot, source]
+tags: [phx-growth, source]
 file: eagle/quickbooks.ts
 ---
 
 # `eagle/quickbooks.ts`
 
-Part of [[📁 Codebase]] — live copy at `~/Pixel-Pilot/eagle/quickbooks.ts`
+Part of [[📁 Codebase]] — live copy at `~/PHX-Growth/eagle/quickbooks.ts`
 
 ````ts
 // ─── EAGLE LANDSCAPING · QUICKBOOKS ONLINE (native) ──────────────────────────

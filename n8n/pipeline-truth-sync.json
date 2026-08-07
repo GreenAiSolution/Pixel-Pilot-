@@ -1,5 +1,5 @@
 {
-  "name": "Pixel Pilot · Pipeline Truth Sync",
+  "name": "PHX Growth · Pipeline Truth Sync",
   "nodes": [
     {
       "parameters": {
@@ -442,7 +442,7 @@
   },
   "pinData": {},
   "meta": {
-    "pixelPilot": {
+    "phxgrowth": {
       "id": "pipeline-truth-sync",
       "webhookPath": "/webhook/pp-pipeline-truth-sync"
     }

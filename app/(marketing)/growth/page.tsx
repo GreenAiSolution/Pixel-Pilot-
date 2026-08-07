@@ -1,8 +1,8 @@
 "use client";
 
-// ─── PIXEL PILOT · GROWTH CALCULATOR ─────────────────────────────────────────
+// ─── PHX GROWTH · GROWTH CALCULATOR ─────────────────────────────────────────
 // An interactive, on-theme page: drag the levers and watch the pilot project how
-// many NEW customers and leads your spend can buy — before vs. after Pixel Pilot
+// many NEW customers and leads your spend can buy — before vs. after PHX Growth
 // tightens CAC and lifts conversion. Pure client math (transparent, no backend),
 // every result wired straight into the /book lead flow.
 
@@ -18,7 +18,7 @@ function num(n: number): string {
   return Math.round(n).toLocaleString();
 }
 
-// How much Pixel Pilot is modeled to improve the funnel (conservative, honest).
+// How much PHX Growth is modeled to improve the funnel (conservative, honest).
 const CAC_IMPROVEMENT = 0.28; // ~28% lower cost per acquisition
 const LEAD_LIFT = 0.42; // ~42% more leads from the same spend (better creative + targeting)
 
@@ -106,7 +106,7 @@ export default function GrowthPage() {
           </h1>
           <p className="text-text-secondary text-lg">
             Same budget, tighter flying. Drag the levers and watch the pilot project the new
-            customers, leads and profit Pixel Pilot can pull from the spend you already have.
+            customers, leads and profit PHX Growth can pull from the spend you already have.
           </p>
         </div>
       </section>
@@ -149,7 +149,7 @@ export default function GrowthPage() {
             {/* Numbers grid */}
             <div className="grid sm:grid-cols-2 gap-4">
               <NumberCard title="Today" tone="muted" cac={money(model.before.cac)} customers={num(model.before.customers)} revenue={money(model.before.revenue)} />
-              <NumberCard title="With Pixel Pilot" tone="bright" cac={money(model.after.cac)} customers={num(model.after.customers)} revenue={money(model.after.revenue)} />
+              <NumberCard title="With PHX Growth" tone="bright" cac={money(model.after.cac)} customers={num(model.after.customers)} revenue={money(model.after.revenue)} />
             </div>
 
             {/* CTA */}
@@ -186,7 +186,7 @@ function CompareBar({ beforeVal, afterVal, unit, accent = "#10B981" }: { beforeV
   return (
     <div className="space-y-3">
       <Row label="Today" val={beforeVal} max={max} unit={unit} color="rgba(255,255,255,0.18)" text="text-text-secondary" />
-      <Row label="Pixel Pilot" val={afterVal} max={max} unit={unit} color={accent} text="text-text-primary" glow />
+      <Row label="PHX Growth" val={afterVal} max={max} unit={unit} color={accent} text="text-text-primary" glow />
     </div>
   );
 }

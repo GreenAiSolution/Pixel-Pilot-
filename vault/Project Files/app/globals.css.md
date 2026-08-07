@@ -1,11 +1,11 @@
 ---
-tags: [pixel-pilot, source]
+tags: [phx-growth, source]
 file: app/globals.css
 ---
 
 # `app/globals.css`
 
-Part of [[📁 Codebase]] — live copy at `~/Pixel-Pilot/app/globals.css`
+Part of [[📁 Codebase]] — live copy at `~/PHX-Growth/app/globals.css`
 
 ````css
 @import "tailwindcss";
@@ -16,7 +16,7 @@ Part of [[📁 Codebase]] — live copy at `~/Pixel-Pilot/app/globals.css`
   --secondary: #00D4FF; /* cyan neon */
   --accent: #FF6B35;    /* ember orange */
   --gold: #C9A84C;      /* apex gold */
-  --magenta: #FF2E9A;   /* pixel-pilot signature */
+  --magenta: #FF2E9A;   /* phx-growth signature */
 
   /* Backgrounds — deep space */
   --bg-primary: #05060f;

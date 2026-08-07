@@ -1,6 +1,6 @@
 "use client";
 
-// ─── PIXEL PILOT · THE AUTOMATOR ─────────────────────────────────────────────
+// ─── PHX GROWTH · THE AUTOMATOR ─────────────────────────────────────────────
 // The post-sign-up experience. Not a form — a design studio. Pick any of the ten
 // services, then fully customize its automation: trigger, channels, objective,
 // autonomy, guardrails, notifications — and watch the workflow graph recompose
@@ -21,9 +21,9 @@ import {
   type Objective,
   type TriggerKind,
   type Service,
-} from "@/pixel-pilot";
-import { AutomationGraph } from "@/components/pixel-pilot/automation-graph";
-import type { ConnectorId } from "@/pixel-pilot";
+} from "@/phx-growth";
+import { AutomationGraph } from "@/components/phx-growth/automation-graph";
+import type { ConnectorId } from "@/phx-growth";
 
 type Manifest = ReturnType<typeof toManifest>;
 
@@ -77,7 +77,7 @@ export default function AutomatorPage() {
     // QuickBooks check — then returns a receipt per integration. Every step
     // degrades gracefully, so a deploy always resolves.
     try {
-      const res = await fetch("/api/pixel-pilot/automations", {
+      const res = await fetch("/api/phx-growth/automations", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ manifest: m }),

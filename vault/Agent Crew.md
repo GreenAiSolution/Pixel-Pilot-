@@ -1,10 +1,10 @@
 ---
-tags: [pixel-pilot, agents, brain]
+tags: [phx-growth, agents, brain]
 ---
 
 # Agent Crew
 
-Pixel Pilot isn't one giant prompt — it's a **crew of specialist operators**. Source: `pixel-pilot/agents.ts` · rendered in the site's **Agents** section · defined in `.claude/agents/`.
+PHX Growth isn't one giant prompt — it's a **crew of specialist operators**. Source: `phx-growth/agents.ts` · rendered in the site's **Agents** section · defined in `.claude/agents/`.
 
 ## The operators
 - **Media Buyer** — cross-channel budget, scaling, cutting losers
@@ -19,4 +19,4 @@ Plus operational helpers: **Backend Reviewer/Runner**, **Vercel Ops**.
 
 Above them all: [[Maverick Agent|Maverick]] — the 24/7 Squadron Commander who orchestrates the crew.
 
-Related: [[The Stack]] · [[Maverick Agent]] · [[Architecture]] · [[🚀 Pixel Pilot — Home]]
+Related: [[The Stack]] · [[Maverick Agent]] · [[Architecture]] · [[🚀 PHX Growth — Home]]

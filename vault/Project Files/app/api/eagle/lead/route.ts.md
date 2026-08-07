@@ -1,11 +1,11 @@
 ---
-tags: [pixel-pilot, source]
+tags: [phx-growth, source]
 file: app/api/eagle/lead/route.ts
 ---
 
 # `app/api/eagle/lead/route.ts`
 
-Part of [[📁 Codebase]] — live copy at `~/Pixel-Pilot/app/api/eagle/lead/route.ts`
+Part of [[📁 Codebase]] — live copy at `~/PHX-Growth/app/api/eagle/lead/route.ts`
 
 **Imports** [[Project Files/eagle/index.ts|index.ts]]
 

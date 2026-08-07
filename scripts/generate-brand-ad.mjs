@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-// ─── PIXEL PILOT · GEMINI BRAND-AD GENERATOR ─────────────────────────────────
+// ─── PHX GROWTH · GEMINI BRAND-AD GENERATOR ─────────────────────────────────
 // Generates an on-brand, ad-ready image with Google's Gemini image models.
 // Zero dependencies — uses Node's built-in fetch (Node 18+). No SDK to install.
 //
@@ -21,7 +21,7 @@
 
 // ── Brand system (mirrors app/globals.css + the engine's brand constants) ────
 const BRAND = {
-  name: "Pixel Pilot",
+  name: "PHX Growth",
   wordmark: "PIXEL / PILOT",
   promise: "The autonomous media buyer that flies your ad spend to profit.",
   // Signature gradient + palette
@@ -72,7 +72,7 @@ const FORMATS = {
 
 // ── CLI parsing ──────────────────────────────────────────────────────────────
 function parseArgs(argv) {
-  const a = { format: "hero", concept: "ascent", model: "gemini-2.5-flash-image", n: 1, out: "out/pixel-pilot-ad", prompt: null };
+  const a = { format: "hero", concept: "ascent", model: "gemini-2.5-flash-image", n: 1, out: "out/phx-growth-ad", prompt: null };
   for (let i = 2; i < argv.length; i++) {
     const k = argv[i];
     const v = argv[i + 1];
@@ -161,7 +161,7 @@ async function main() {
   const prompt = args.prompt || buildPrompt(args.concept, args.format);
   const isImagen = /^imagen/i.test(args.model);
 
-  console.log(`\n🛰️  Pixel Pilot ad generator`);
+  console.log(`\n🛰️  PHX Growth ad generator`);
   console.log(`   model:   ${args.model}${isImagen ? " (Imagen)" : " (Flash Image)"}`);
   console.log(`   concept: ${args.prompt ? "custom prompt" : args.concept}`);
   console.log(`   format:  ${args.format} (${fmt.ratio}) · ${fmt.note}`);

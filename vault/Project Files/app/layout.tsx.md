@@ -1,11 +1,11 @@
 ---
-tags: [pixel-pilot, source]
+tags: [phx-growth, source]
 file: app/layout.tsx
 ---
 
 # `app/layout.tsx`
 
-Part of [[📁 Codebase]] — live copy at `~/Pixel-Pilot/app/layout.tsx`
+Part of [[📁 Codebase]] — live copy at `~/PHX-Growth/app/layout.tsx`
 
 ````tsx
 import type { Metadata, Viewport } from 'next';
@@ -15,9 +15,9 @@ const SITE_URL =
   process.env.NEXT_PUBLIC_SITE_URL ||
   (process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : 'http://localhost:3000');
 
-const TITLE = 'Pixel Pilot — the autonomous media buyer';
+const TITLE = 'PHX Growth — the autonomous media buyer';
 const DESCRIPTION =
-  'Pixel Pilot flies Meta, Google & TikTok to real profit — 24/7, hands off the wheel. An immersive 3D platform for the ads / media-buying niche.';
+  'PHX Growth flies Meta, Google & TikTok to real profit — 24/7, hands off the wheel. An immersive 3D platform for the ads / media-buying niche.';
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
@@ -25,7 +25,7 @@ export const metadata: Metadata = {
   description: DESCRIPTION,
   // Open Graph + Twitter images are auto-attached by Next.js from
   // app/opengraph-image.png and app/twitter-image.png (the Gemini brand ad).
-  openGraph: { title: TITLE, description: DESCRIPTION, type: 'website', siteName: 'Pixel Pilot' },
+  openGraph: { title: TITLE, description: DESCRIPTION, type: 'website', siteName: 'PHX Growth' },
   twitter: { card: 'summary_large_image', title: TITLE, description: DESCRIPTION },
 };
 

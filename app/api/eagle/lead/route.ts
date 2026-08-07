@@ -8,8 +8,8 @@
 
 import { NextRequest, NextResponse } from 'next/server';
 import { getEagleService, createCustomer, quickbooksConfigured } from '@/eagle';
-import { fetchWithTimeout } from '@/pixel-pilot/http';
-import { guard } from '@/pixel-pilot/api';
+import { fetchWithTimeout } from '@/phx-growth/http';
+import { guard } from '@/phx-growth/api';
 
 export const maxDuration = 15;
 

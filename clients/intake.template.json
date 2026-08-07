@@ -1,0 +1,51 @@
+{
+  "$comment": "PHX Growth client intake — fill this out, then run: npm run new:client -- path/to/this-file.json. Compatible with Pixel Automation System's client.config.json (same shape, plus the optional `agents` block).",
+  "business": {
+    "name": "Acme Services Co",
+    "owner": "Alex",
+    "industry": "plumbing and drain services",
+    "location": "Kansas City, MO",
+    "website": "https://example.com",
+    "tone": "warm, confident, plain-spoken — a trusted local pro, not a corporation"
+  },
+  "agents": {
+    "$comment": "Optional — the AI employees' names. Defaults shown.",
+    "sales": "Rowan",
+    "dispatch": "Sage",
+    "billing": "Quill",
+    "care": "Wren",
+    "growth": "Marlo"
+  },
+  "services": [
+    { "name": "Drain Cleaning", "priceFrom": 149, "unit": "per visit" },
+    { "name": "Water Heater Install", "priceFrom": 1400, "unit": "per unit" }
+  ],
+  "quotes": {
+    "responseGoalMinutes": 2,
+    "includeBookingLink": "https://calendly.com/example/estimate",
+    "guarantee": "If we're ever late, that visit is free."
+  },
+  "followUps": {
+    "cadenceDays": [1, 3, 7],
+    "maxTouches": 3
+  },
+  "reviews": {
+    "platform": "Google",
+    "link": "https://g.page/r/example/review",
+    "requestAfterDays": 2
+  },
+  "marketing": {
+    "platforms": ["facebook", "instagram"],
+    "angles": [
+      "before/after transformation",
+      "seasonal tip that saves money",
+      "behind-the-scenes story",
+      "customer win story",
+      "limited seasonal offer"
+    ]
+  },
+  "report": {
+    "recipient": "owner@example.com",
+    "day": "monday"
+  }
+}

@@ -1,14 +1,15 @@
 {
-  "name": "pixel-pilot",
+  "name": "phx-growth",
   "version": "1.0.0",
   "private": true,
-  "description": "Pixel Pilot — the autonomous media buyer that flies your ad spend to profit. An immersive 3D platform for the ads / media-buying niche.",
+  "description": "PHX Growth — the autonomous media buyer that flies your ad spend to profit. An immersive 3D platform for the ads / media-buying niche.",
   "scripts": {
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
     "lint": "eslint",
-    "gen:ad": "node scripts/generate-brand-ad.mjs"
+    "gen:ad": "node scripts/generate-brand-ad.mjs",
+    "new:client": "node scripts/new-client.mjs"
   },
   "dependencies": {
     "@react-three/fiber": "^9.6.1",

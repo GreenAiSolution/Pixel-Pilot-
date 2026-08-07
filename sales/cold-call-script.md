@@ -1,4 +1,4 @@
-# Pixel Pilot — Cold Call Script (studied to close)
+# PHX Growth — Cold Call Script (studied to close)
 
 > **The one job of the call:** not to sell the platform — to earn a **20-minute "Flight Plan" demo**.
 > You are a confident peer with a contrarian insight, not a vendor reading features.
@@ -15,7 +15,7 @@
 ---
 
 ## 1 · The opener — pattern interrupt + permission (10 seconds)
-> "Hey [Name], it's [You] with **Pixel Pilot**. Full honesty — this is a cold call. Can I take **30 seconds** to tell you why I called, and if it's not relevant you tell me to get lost? Fair?"
+> "Hey [Name], it's [You] with **PHX Growth**. Full honesty — this is a cold call. Can I take **30 seconds** to tell you why I called, and if it's not relevant you tell me to get lost? Fair?"
 
 *Why it works: radical candor + micro-commitment disarms the reflex "not interested." Wait for the yes.*
 
@@ -74,16 +74,16 @@ Then weave **only the 2–3 services that hit their pain.** Don't list all ten �
 ---
 
 ## 6 · The close — assumptive, low-friction, book the flight
-> "Here's what I'd suggest — **no pitch.** Give me a product URL and **20 minutes**, and I'll show you Pixel Pilot go from that URL to a live campaign strategy in under an hour, optimizing to your **real margin.** Worst case, you steal the strategy. Are you better **Tuesday morning or Thursday afternoon**?"
+> "Here's what I'd suggest — **no pitch.** Give me a product URL and **20 minutes**, and I'll show you PHX Growth go from that URL to a live campaign strategy in under an hour, optimizing to your **real margin.** Worst case, you steal the strategy. Are you better **Tuesday morning or Thursday afternoon**?"
 
 *Double-bind close. Get the calendar hold before you hang up. Send the invite while on the phone.*
 
 ---
 
 ## 7 · Voicemail (keep it under 15 seconds)
-> "[Name], [You] with Pixel Pilot — we build autonomous media buyers that optimize to real profit, not ROAS, for brands spending $50k+ a month. I've got a 20-minute thing that'll show you the margin you're leaving on the table. I'll text the details. Talk soon."
+> "[Name], [You] with PHX Growth — we build autonomous media buyers that optimize to real profit, not ROAS, for brands spending $50k+ a month. I've got a 20-minute thing that'll show you the margin you're leaving on the table. I'll text the details. Talk soon."
 
-*Then text: "Pixel Pilot — the autonomous media buyer. 20-min flight plan? [link]"*
+*Then text: "PHX Growth — the autonomous media buyer. 20-min flight plan? [link]"*
 
 ---
 

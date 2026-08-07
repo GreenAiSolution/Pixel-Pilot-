@@ -1,6 +1,6 @@
 // ─── EAGLE LANDSCAPING · BRAND ───────────────────────────────────────────────
 // Brand constants for the Eagle Landscaping client instance. Professional,
-// natural, trustworthy — forest greens + warm earth, not the Pixel Pilot neon.
+// natural, trustworthy — forest greens + warm earth, not the PHX Growth neon.
 // One source of truth for the site chrome and the ops dashboard.
 
 export const EAGLE = {

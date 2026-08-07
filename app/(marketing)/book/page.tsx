@@ -1,10 +1,10 @@
 import type { Metadata } from "next";
-import { LeadForm } from "@/components/pixel-pilot/lead-form";
+import { LeadForm } from "@/components/phx-growth/lead-form";
 
 export const metadata: Metadata = {
-  title: "Get More Customers — Pixel Pilot",
+  title: "Get More Customers — PHX Growth",
   description:
-    "Book a flight with Pixel Pilot. Tell us your goal and get a custom customer-acquisition plan from the autonomous media buyer that optimizes to real profit — your books, not platform ROAS.",
+    "Book a flight with PHX Growth. Tell us your goal and get a custom customer-acquisition plan from the autonomous media buyer that optimizes to real profit — your books, not platform ROAS.",
 };
 
 const GRADIENT = "linear-gradient(90deg,#00D4FF,#6C63FF,#FF2E9A)";

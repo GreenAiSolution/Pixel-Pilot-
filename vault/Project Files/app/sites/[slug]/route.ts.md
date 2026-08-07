@@ -1,24 +1,24 @@
 ---
-tags: [pixel-pilot, source]
+tags: [phx-growth, source]
 file: app/sites/[slug]/route.ts
 ---
 
 # `app/sites/[slug]/route.ts`
 
-Part of [[📁 Codebase]] — live copy at `~/Pixel-Pilot/app/sites/[slug]/route.ts`
+Part of [[📁 Codebase]] — live copy at `~/PHX-Growth/app/sites/[slug]/route.ts`
 
-**Imports** [[Project Files/app/api/pixel-pilot/tools/website/route.ts|route.ts]] · [[Project Files/pixel-pilot/store.ts|store.ts]]
+**Imports** [[Project Files/app/api/phx-growth/tools/website/route.ts|route.ts]] · [[Project Files/phx-growth/store.ts|store.ts]]
 
 ````ts
-// ─── PIXEL PILOT · HOSTED SITES ──────────────────────────────────────────────
+// ─── PHX GROWTH · HOSTED SITES ──────────────────────────────────────────────
 // GET /sites/[slug]
 // Serves a site generated + auto-deployed by the Website tool. Reads the stored
 // HTML from the KV store and returns it as a standalone page. This is the "host"
-// that makes /api/pixel-pilot/tools/website deploys live and shareable.
+// that makes /api/phx-growth/tools/website deploys live and shareable.
 
 import { NextRequest } from 'next/server';
-import { get } from '@/pixel-pilot/store';
-import type { DeployedSite } from '@/app/api/pixel-pilot/tools/website/route';
+import { get } from '@/phx-growth/store';
+import type { DeployedSite } from '@/app/api/phx-growth/tools/website/route';
 
 export async function GET(_req: NextRequest, { params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;

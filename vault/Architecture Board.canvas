@@ -10,7 +10,7 @@
     {"id":"auto","type":"text","text":"🛠️ **The Automator**\nagent creator · design + deploy","x":0,"y":140,"width":260,"height":70,"color":"4"},
     {"id":"site","type":"text","text":"🌐 **Marketing site**\nFlight Plan · pricing · live","x":600,"y":140,"width":260,"height":70,"color":"4"},
 
-    {"id":"api","type":"text","text":"⚙️ **/api/pixel-pilot/automations**\npersist + run each deploy","x":0,"y":300,"width":260,"height":70,"color":"4"},
+    {"id":"api","type":"text","text":"⚙️ **/api/phx-growth/automations**\npersist + run each deploy","x":0,"y":300,"width":260,"height":70,"color":"4"},
     {"id":"oauth","type":"text","text":"🔐 **OAuth connectors**\nMeta · Google · TikTok · Shopify","x":300,"y":300,"width":260,"height":70,"color":"4"},
     {"id":"qbc","type":"text","text":"🔗 **QuickBooks connect**\none-click OAuth route","x":600,"y":300,"width":260,"height":70,"color":"4"},
     {"id":"kv","type":"text","text":"💾 **Upstash KV store**\nsaves deploys · ⚠️ needs keys","x":0,"y":410,"width":260,"height":70,"color":"3"},
@@ -29,12 +29,12 @@
 
     {"id":"mav","type":"text","text":"✈️ **Maverick — AI operator**\nscheduled daily · 8:10am","x":310,"y":850,"width":260,"height":70,"color":"6"},
     {"id":"creative","type":"text","text":"🎨 **Creative**\nHiggsfield ad visuals","x":0,"y":990,"width":260,"height":70,"color":"4"},
-    {"id":"slack2","type":"text","text":"💬 **Slack #pixel-pilot**\nposts flight-logs","x":300,"y":990,"width":260,"height":70,"color":"4"},
+    {"id":"slack2","type":"text","text":"💬 **Slack #phx-growth**\nposts flight-logs","x":300,"y":990,"width":260,"height":70,"color":"4"},
     {"id":"prs","type":"text","text":"🔀 **GitHub PRs**\nships code changes","x":600,"y":990,"width":260,"height":70,"color":"4"},
 
     {"id":"gh","type":"text","text":"📦 **GitHub repo**\nsource of truth","x":0,"y":1170,"width":260,"height":66,"color":"4"},
     {"id":"vercel","type":"text","text":"▲ **Vercel**\nauto-deploys main","x":300,"y":1170,"width":260,"height":66,"color":"4"},
-    {"id":"live","type":"text","text":"🟢 **Live site**\npixel-pilot-snowy","x":600,"y":1170,"width":260,"height":66,"color":"4"}
+    {"id":"live","type":"text","text":"🟢 **Live site**\nphx-growth-snowy","x":600,"y":1170,"width":260,"height":66,"color":"4"}
   ],
   "edges": [
     {"id":"e1","fromNode":"cust","fromSide":"bottom","toNode":"auto","toSide":"top"},

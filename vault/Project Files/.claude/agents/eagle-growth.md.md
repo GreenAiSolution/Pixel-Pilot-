@@ -1,11 +1,11 @@
 ---
-tags: [pixel-pilot, source]
+tags: [phx-growth, source]
 file: .claude/agents/eagle-growth.md
 ---
 
 # `.claude/agents/eagle-growth.md`
 
-Part of [[📁 Codebase]] — live copy at `~/Pixel-Pilot/.claude/agents/eagle-growth.md`
+Part of [[📁 Codebase]] — live copy at `~/PHX-Growth/.claude/agents/eagle-growth.md`
 
 ````md
 ---

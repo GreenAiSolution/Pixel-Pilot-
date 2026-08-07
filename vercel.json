@@ -2,11 +2,11 @@
   "$schema": "https://openapi.vercel.sh/vercel.json",
   "crons": [
     {
-      "path": "/api/pixel-pilot/cron/autopilot",
+      "path": "/api/phx-growth/cron/autopilot",
       "schedule": "*/15 * * * *"
     },
     {
-      "path": "/api/pixel-pilot/cron/nurture",
+      "path": "/api/phx-growth/cron/nurture",
       "schedule": "0 * * * *"
     }
   ]

@@ -1,11 +1,11 @@
 ---
-tags: [pixel-pilot, source]
+tags: [phx-growth, source]
 file: tsconfig.json
 ---
 
 # `tsconfig.json`
 
-Part of [[📁 Codebase]] — live copy at `~/Pixel-Pilot/tsconfig.json`
+Part of [[📁 Codebase]] — live copy at `~/PHX-Growth/tsconfig.json`
 
 ````json
 {

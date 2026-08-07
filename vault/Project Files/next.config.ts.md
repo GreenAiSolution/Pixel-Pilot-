@@ -1,11 +1,11 @@
 ---
-tags: [pixel-pilot, source]
+tags: [phx-growth, source]
 file: next.config.ts
 ---
 
 # `next.config.ts`
 
-Part of [[📁 Codebase]] — live copy at `~/Pixel-Pilot/next.config.ts`
+Part of [[📁 Codebase]] — live copy at `~/PHX-Growth/next.config.ts`
 
 ````ts
 import type { NextConfig } from 'next';
@@ -39,7 +39,7 @@ const nextConfig: NextConfig = {
   },
 
   env: {
-    NEXT_PUBLIC_APP_NAME: 'Pixel Pilot',
+    NEXT_PUBLIC_APP_NAME: 'PHX Growth',
   },
 
   productionBrowserSourceMaps: false,

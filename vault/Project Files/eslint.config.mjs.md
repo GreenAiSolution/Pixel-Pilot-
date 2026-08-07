@@ -1,11 +1,11 @@
 ---
-tags: [pixel-pilot, source]
+tags: [phx-growth, source]
 file: eslint.config.mjs
 ---
 
 # `eslint.config.mjs`
 
-Part of [[📁 Codebase]] — live copy at `~/Pixel-Pilot/eslint.config.mjs`
+Part of [[📁 Codebase]] — live copy at `~/PHX-Growth/eslint.config.mjs`
 
 ````js
 import { defineConfig, globalIgnores } from "eslint/config";

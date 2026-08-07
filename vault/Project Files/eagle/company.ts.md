@@ -1,16 +1,16 @@
 ---
-tags: [pixel-pilot, source]
+tags: [phx-growth, source]
 file: eagle/company.ts
 ---
 
 # `eagle/company.ts`
 
-Part of [[📁 Codebase]] — live copy at `~/Pixel-Pilot/eagle/company.ts`
+Part of [[📁 Codebase]] — live copy at `~/PHX-Growth/eagle/company.ts`
 
 ````ts
 // ─── EAGLE LANDSCAPING · BRAND ───────────────────────────────────────────────
 // Brand constants for the Eagle Landscaping client instance. Professional,
-// natural, trustworthy — forest greens + warm earth, not the Pixel Pilot neon.
+// natural, trustworthy — forest greens + warm earth, not the PHX Growth neon.
 // One source of truth for the site chrome and the ops dashboard.
 
 export const EAGLE = {
